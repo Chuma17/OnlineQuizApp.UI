@@ -1,0 +1,20 @@
+.homepage{
+    background-color: #0275d8;
+    height: 100vh;
+    align-items: center;
+    padding-top: 160px;
+}
+.big-note {
+    text-align: center;
+    /* color: white; */
+    font-size: 4rem;
+    font-weight: 600px;
+
+}
+
+.small-note {
+    text-align: center;
+    /* color: white; */
+    font-size: 1.5rem;
+    font-weight: 600px;
+}
