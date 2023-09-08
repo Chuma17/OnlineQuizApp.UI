@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/OnlineQuizApp.UI/static/css/main.8cc52e2c.css",
-    "main.js": "/OnlineQuizApp.UI/static/js/main.818f9609.js",
-    "static/js/787.8c1851eb.chunk.js": "/OnlineQuizApp.UI/static/js/787.8c1851eb.chunk.js",
-    "index.html": "/OnlineQuizApp.UI/index.html",
-    "main.8cc52e2c.css.map": "/OnlineQuizApp.UI/static/css/main.8cc52e2c.css.map",
-    "main.818f9609.js.map": "/OnlineQuizApp.UI/static/js/main.818f9609.js.map",
-    "787.8c1851eb.chunk.js.map": "/OnlineQuizApp.UI/static/js/787.8c1851eb.chunk.js.map"
+    "main.css": "/static/css/main.8cc52e2c.css",
+    "main.js": "/static/js/main.c25219f6.js",
+    "static/js/787.8c1851eb.chunk.js": "/static/js/787.8c1851eb.chunk.js",
+    "index.html": "/index.html",
+    "main.8cc52e2c.css.map": "/static/css/main.8cc52e2c.css.map",
+    "main.c25219f6.js.map": "/static/js/main.c25219f6.js.map",
+    "787.8c1851eb.chunk.js.map": "/static/js/787.8c1851eb.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8cc52e2c.css",
-    "static/js/main.818f9609.js"
+    "static/js/main.c25219f6.js"
   ]
 }
