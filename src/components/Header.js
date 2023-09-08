@@ -10,7 +10,7 @@ const Header = () => {
         e.preventDefault()
         if (window.confirm('Are you sure you want to log out?')) {
             localStorage.removeItem("userDetails");
-            navigate("/");
+            navigate("/OnlineQuizApp.UI");
         }
     }
 
@@ -23,7 +23,7 @@ const Header = () => {
             <div className="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
 
                 <div className="">
-                    <Link to="/" className="text-dark fs-5">Quiz App</Link>
+                    <Link to="/OnlineQuizApp.UI" className="text-dark fs-5">Quiz App</Link>
                 </div>
 
                 <div className="d-flex justify-content-around">

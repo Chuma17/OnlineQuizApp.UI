@@ -56,7 +56,7 @@ const App = () => {
       <Route path="/" element={<Layout />}>
         {/* public routes */}
 
-        <Route path="/" exact element={<HomePage />} />        
+        <Route path="/OnlineQuizApp.UI" exact element={<HomePage />} />        
         <Route path="/login" element={<Login />} />
         <Route path="/halls" element={<Halls />} />
 
