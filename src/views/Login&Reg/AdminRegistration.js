@@ -1,31 +1,30 @@
 import axios from "../../axios/axios";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Loading from "../../components/Loading";
 
 const AdminRegistration = () => {
     const navigate = useNavigate();
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("userDetails"));
 
     const [isLoading, setIsLoading] = useState();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
-        
+
     const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");    
+    const [success, setSuccess] = useState("");
 
     async function submitHandler(e) {
-        e.preventDefault();        
+        e.preventDefault();
 
         try {
             setIsLoading(true);
 
-            const response = await axios.post(`Authentication/register-admin`, {email, firstName, lastName},
+            const response = await axios.post(`Authentication/register-admin`, { email, firstName, lastName },
                 {
                     headers: {
-                        Authorization: `Bearer ${user.accessToken}`,
-                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${user.accessToken}`
                     },
                 },
             );
@@ -33,25 +32,24 @@ const AdminRegistration = () => {
             if (response.status === 200) {
                 setIsLoading(false);
 
-                console.log(response.data);
-                setSuccess('Successfully created hall admin');
-                setError('');
+                console.log(response);
+                setSuccess(response.data);
+                // setError('');
             }
         } catch (error) {
             setIsLoading(false);
 
             if (error.response.status === 401) {
                 window.alert('Your session has expired. Login again!');
-                localStorage.removeItem('user');
+                localStorage.removeItem('userDetails');
 
-                navigate('/admin-login');
+                navigate('/login');
             } else {
-                console.error(error.response.data);
-                setError('An error occurred while creating hall admin');
-                setSuccess('');
+                console.error(error.response);
+                setError(error.response.data);
             }
         }
-    }    
+    }
 
     useEffect(() => {
         let errorTimeoutId;
@@ -66,7 +64,7 @@ const AdminRegistration = () => {
         if (success) {
             successTimeoutId = setTimeout(() => {
                 setSuccess(null);
-            }, 3000);
+            }, 2000);
         }
 
         return () => {
@@ -77,12 +75,12 @@ const AdminRegistration = () => {
     }, [error, success]);
 
     return <>
-        <section className="background-radial-gradient overflow-hidden">
+        <section className="vh-100 background-radial-gradient overflow-hidden">
 
-            <div className="container px-4 py-2 px-md-5 text-center text-lg-start my-5">
+            <div className="container px-4 py-2 px-md-5 text-lg-start my-5">
                 <div className="row gx-lg-5 align-items-center mb-4">
 
-                    <div className="col-lg-8 mb-5 ms-auto me-auto mb-lg-0 position-relative">
+                    <div className="col-lg-7 mt-5 ms-auto me-auto mb-lg-0 position-relative">
                         <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong"></div>
                         <div id="radius-shape-2" className="position-absolute shadow-5-strong"></div>
 
@@ -90,34 +88,38 @@ const AdminRegistration = () => {
                             <div className="card-body px-4 py-5 px-md-5">
 
                                 <form className="form" onSubmit={submitHandler}>
-                                    <h5 className="fw-normal text-center mb-3 pb-3" style={{ letterSpacing: '1px' }}>Register Hall Admin Account</h5>
+                                    <h4 className="fw-normal text-center mb-3 pb-3" style={{ letterSpacing: '1px' }}>Register Admin Account</h4>
 
+                                    {isLoading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
                                     {error && <div className="me-4 ms-4 alert alert-danger text-center">{error}</div>}
                                     {success && <div className="me-4 ms-4 alert alert-success text-center">{success}</div>}
 
-                                    <div className="mb-4 me-4 ms-4">
-                                        <label className="form-label">First Name</label>
-                                        <input
-                                            type="text"
-                                            value={firstName}
-                                            onChange={e => setFirstName(e.target.value)}
-                                            required
-                                            className="form-control"
-                                        />
+                                    <div className="d-flex">
+
+                                        <div className="mb-4 col-md-6 form-group">
+                                            <label className="form-label">First Name</label>
+                                            <input
+                                                type="text"
+                                                value={firstName}
+                                                onChange={e => setFirstName(e.target.value)}
+                                                required
+                                                className="form-control"
+                                            />
+                                        </div>
+
+                                        <div className="mb-4 col-md-6 form-group">
+                                            <label className="form-label">Last Name</label>
+                                            <input
+                                                type="text"
+                                                value={lastName}
+                                                onChange={e => setLastName(e.target.value)}
+                                                required
+                                                className="form-control"
+                                            />
+                                        </div>
                                     </div>
 
-                                    <div className="mb-4 me-4 ms-4">
-                                        <label className="form-label">Last Name</label>
-                                        <input
-                                            type="text"
-                                            value={lastName}
-                                            onChange={e => setLastName(e.target.value)}
-                                            required
-                                            className="form-control"
-                                        />
-                                    </div>
-
-                                    <div className="mb-4 me-4 ms-4">
+                                    <div className="mb-4 col-md-12 form-group">
                                         <label className="form-label">Email</label>
                                         <input
                                             type="email"
@@ -126,12 +128,12 @@ const AdminRegistration = () => {
                                             required
                                             className="form-control"
                                         />
-                                    </div>                                    
+                                    </div>
 
                                     <div className="text-center">
 
-                                        <button type="submit" className="btn btn-dark w-50 btn-block mb-4">
-                                            {isLoading ? 'LOADING' : 'Register'}
+                                        <button type="submit" className="btn btn-dark w-25 btn-block ms-auto me-auto">
+                                            Register
                                         </button>
                                     </div>
 

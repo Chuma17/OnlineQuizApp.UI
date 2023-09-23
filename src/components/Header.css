@@ -1,3 +1,62 @@
 link {
     text-decoration: none;
 }
+
+.nav-username:hover{    
+    cursor: pointer;
+}
+
+/* .nav-login{
+    background: whitesmoke;
+    border-radius: 5%;
+} */
+
+/* TABLET SCREENS */
+@media (max-width: 1182px) {
+    .navbar-toggler {
+        display: block !important;
+    }
+}
+
+/* LAPTOP SCREENS */
+@media (min-width: 1235px) {
+    
+    .navbar-toggler {
+        display: none !important;
+    }
+    .second-line{
+        margin-left: 2%;
+    }   
+}
+
+
+/* MOBILE SCREENS */
+@media (max-width: 1182px) {
+
+    .navbar-toggler {
+        display: block !important;
+    }
+
+    .second-line{
+        margin-left: 4%;
+    }    
+
+    .nav-login{        
+        color: black !important;
+        background: whitesmoke;
+        border-radius: 3%;        
+        text-align: center;
+        width: 35%;        
+    }
+
+    .nav-details{
+        display: flex;
+        justify-content: space-between;
+    }    
+}
+
+@media (min-width: 768px) {
+    .hr-mobile-only {
+      display: none; /* Hide the hr on screens larger than 768px */
+    }
+  }

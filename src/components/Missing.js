@@ -4,11 +4,11 @@ const Missing = () => {
     return <>
 
         <div className="missing">
-            <article style={{ padding: "100px" }}>
-                <h1>Oops!</h1>
-                <p>Page Not Found</p>
+            <article style={{ padding: "100px"}}>
+                <h1 className="text-light">Oops!</h1>
+                <p className="text-light">Page Not Found</p>
                 <div className="flexGrow">
-                    <Link to="/">Visit Our Homepage</Link>
+                    <Link className="text-light" to="/OnlineQuizApp.UI">Visit Our Homepage</Link>
                 </div>
             </article>
         </div>

@@ -9,11 +9,18 @@ import Unauthorized from './components/Unauthorized';
 import RequireAuth from './components/RequireAuth';
 import Header from './components/Header';
 
-//Login
+//Login & Registration
 import Login from './views/Login&Reg/Login';
-
-//Registration
 import AdminRegistration from './views/Login&Reg/AdminRegistration';
+import UserRegistration from './views/Login&Reg/UserRegistration';
+
+//Account
+import ChangeNames from './views/AccountSettings/ChangeNames';
+import ChangeUsername from './views/AccountSettings/ChangeUsername';
+import ChangeEmail from './views/AccountSettings/ChangeEmail';
+import ChangePassword from './views/AccountSettings/ChangePassword';
+import TwoFactorAuthentication from './views/AccountSettings/TwoFactorAuthentication';
+import ProfilePicture from './views/AccountSettings/ProfilePicture';
 
 //Views
 import HomePage from './views/HomePage';
@@ -21,7 +28,8 @@ import Halls from './views/Halls';
 
 const ROLES = {
   'Admin': "Admin",
-  'Participant': "Participant",  
+  'SuperAdmin': "SuperAdmin",
+  'Participant': "Participant",
 }
 
 function checkLocalStorageExpiration() {
@@ -56,17 +64,28 @@ const App = () => {
       <Route path="/" element={<Layout />}>
         {/* public routes */}
 
-        <Route path="/OnlineQuizApp.UI" exact element={<HomePage />} />        
+        <Route path="/OnlineQuizApp.UI" exact element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/halls" element={<Halls />} />
+        <Route path="/user-registration" element={<UserRegistration />} />
 
         <Route path="/unauthorized" element={<Unauthorized />} />
 
-        {/* protected routes */}                
+        {/* protected routes */}
 
-        <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-          <Route path="/create-admin" element={<AdminRegistration />} />        
-        </Route>        
+        <Route element={<RequireAuth allowedRoles={[ROLES.Admin, ROLES.SuperAdmin, ROLES.Participant]} />}>
+          <Route path="/change-names" element={<ChangeNames />} />
+          <Route path="/change-username" element={<ChangeUsername />} />
+          <Route path="/change-email" element={<ChangeEmail />} />
+          <Route path="/change-password" element={<ChangePassword />} />
+          <Route path="/two-factor-authentication" element={<TwoFactorAuthentication />} />
+          <Route path="/profile-picture" element={<ProfilePicture />} />
+
+        </Route>
+
+        <Route element={<RequireAuth allowedRoles={[ROLES.SuperAdmin]} />}>
+          <Route path="/admin-registration" element={<AdminRegistration />} />
+        </Route>
 
         {/* catch all */}
         <Route path="*" element={<Missing />} />

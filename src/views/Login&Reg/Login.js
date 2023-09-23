@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "../../axios/axios";
+import Loading from "../../components/Loading";
 import { Link, useNavigate } from "react-router-dom";
+import "./Login.css"
 
 
 const Login = () => {
@@ -30,17 +32,39 @@ const Login = () => {
 
         } catch (error) {
             setIsLoading(false);
-            setError(error.response.data.message);
+            setError(error.response.data);
         }
 
     };
 
+    useEffect(() => {
+        let errorTimeoutId;
+
+        if (error) {
+            errorTimeoutId = setTimeout(() => {
+                setError(null);
+            }, 3000);
+        }
+
+        return () => {
+            clearTimeout(errorTimeoutId);
+        };
+
+    }, [error]);
+
     return <>
-        <section className="vh-110" >
-            <div className="container py-5 mt-5 h-100">
-                <div className="row d-flex justify-content-center align-items-center h-100">
-                    <div className="col col-xl-7">
-                        <div className="card" style={{ borderRadius: '1rem' }}>
+
+        <section className="vh-100 background-radial-gradient overflow-hidden">
+
+            <div className="container px-4 py-5 px-md-5 text-lg-start my-5">
+                <div className="row gx-lg-5 align-items-center mb-4">
+
+                    <div className="col-lg-9 mb-5 ms-auto me-auto mb-lg-0 position-relative">
+                        <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong"></div>
+                        <div id="radius-shape-2" className="position-absolute shadow-5-strong"></div>
+
+                        <div className="card bg-glass">
+
                             <div className="row g-0">
 
                                 <div className="col-md-6 col-lg-5 d-none d-md-block mt-auto mb-auto">
@@ -49,15 +73,15 @@ const Login = () => {
                                 </div>
 
                                 <div className="col-md-6 col-lg-7 d-flex align-items-center">
-                                    <div className="card-body p-4 p-lg-5 text-black">
-
+                                    <div className="card-body px-4 py-5 px-md-5 p-4 p-lg-5 text-black">
                                         <form className="form" onSubmit={submitHandler}>
 
-                                            <h5 className="fw-normal mb-3 pb-3 text-center" style={{ letterSpacing: '1px' }}>Login</h5>
+                                            <h4 className="fw-normal mb-3 pb-3 text-center" style={{ letterSpacing: '1px' }}>Login</h4>
 
-                                            {error && <div className="me-4 ms-4 alert alert-danger text-center" style={{ letterSpacing: '1px' }}>{error}</div>}
+                                            {isLoading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
+                                            {error && <div className="alert alert-danger text-center" style={{ letterSpacing: '1px' }}>{error}</div>}
 
-                                            <div className="mb-2 me-4 ms-4">
+                                            <div className="mb-2">
                                                 <label className="form-label" htmlFor="userNameAddress">Email / User Name</label>
                                                 <input
                                                     type="text"
@@ -69,7 +93,83 @@ const Login = () => {
                                                 />
                                             </div>
 
-                                            <div className="mb-3 me-4 ms-4">
+                                            <div className="mb-3">
+                                                <label className="form-label" htmlFor="userPassword">Password</label>
+                                                <input
+                                                    type="password"
+                                                    id="userPassword"
+                                                    value={password}
+                                                    onChange={e => setPassword(e.target.value)}
+                                                    required
+                                                    className="form-control"
+                                                />
+                                            </div>
+
+                                            <button type="submit" className="login-button text-light btn btn-dark btn-block w-25 mb-4 mt-4">
+                                                Sign In
+                                            </button>
+                                            <p className="mb-0 pb-lg-2 text-center"><Link to="/OnlineQuizApp.UI"
+                                                style={{ color: '#393f81' }}>Go to Home</Link></p>
+
+
+                                            <p className="mb-2 pb-lg-2 text-center">Don't have an account? <Link to="/user-registration"
+                                                style={{ color: '#393f81' }}>Register here</Link></p>
+
+
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        {/* <section className="vh-110 background-radial-gradient overflow-hidden">
+
+            <div className="container px-4 py-5 px-md-5 text-lg-start my-5">
+                <div className="row gx-lg-5 d-flex justify-content-center align-items-center h-100">
+
+                    <div className="col col-xl-9 ms-auto me-auto mb-lg-0 position-relative">
+                        <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong"></div>
+                        <div id="radius-shape-2" className="position-absolute shadow-5-strong"></div>
+
+                        <div className="card bg-glass" style={{ borderRadius: '1rem' }}>
+                            <div className="row g-0">
+
+                                <div className="col-md-6 col-lg-5 d-none d-md-block mt-auto mb-auto">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                                        alt="login form" className="img-fluid" style={{ borderRadius: '1rem 0 0 1rem' }} />
+                                </div>
+
+                                <div className="col-md-6 col-lg-7 d-flex align-items-center">
+                                    <div className="card-body px-4 py-5 px-md-5 p-4 p-lg-5 text-black">
+
+                                        <form className="form" onSubmit={submitHandler}>
+
+                                            <h4 className="fw-normal mb-3 pb-3 text-center" style={{ letterSpacing: '1px' }}>Login</h4>
+
+                                            {isLoading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
+                                            {error && <div className="ms-4 alert alert-danger text-center" style={{ letterSpacing: '1px' }}>{error}</div>}
+
+                                            <div className="mb-2 ms-4">
+                                                <label className="form-label" htmlFor="userNameAddress">Email / User Name</label>
+                                                <input
+                                                    type="text"
+                                                    id="userNameAddress"
+                                                    value={username}
+                                                    onChange={e => setUserName(e.target.value)}
+                                                    required
+                                                    className="form-control"
+                                                />
+                                            </div>
+
+                                            <div className="mb-3 ms-4">
                                                 <label className="form-label" htmlFor="userPassword">Password</label>
                                                 <input
                                                     type="password"
@@ -82,9 +182,9 @@ const Login = () => {
                                             </div>
 
                                             <button type="submit" className="login-button text-light btn btn-dark btn-block w-25 ms-4 mb-4 mt-4">
-                                                {isLoading ? 'LOADING' : 'Sign in'}
+                                                Sign In
                                             </button>
-                                            <p className="mb-0 pb-lg-2 text-center"><Link to="/">Go to Home</Link></p>
+                                            <p className="mb-0 pb-lg-2 text-center"><Link to="/OnlineQuizApp.UI">Go to Home</Link></p>
 
                                         </form>
 
@@ -95,7 +195,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-        </section>
+        </section> */}
 
     </>
 }
