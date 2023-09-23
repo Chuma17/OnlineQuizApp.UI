@@ -6,6 +6,7 @@ import "./Account.css"
 
 const ChangeNames = () => {
     const navigate = useNavigate();
+
     const user = JSON.parse(localStorage.getItem("userDetails"));
 
     const [isLoading, setIsLoading] = useState();
@@ -17,11 +18,12 @@ const ChangeNames = () => {
 
     async function submitHandler(e) {
         e.preventDefault();
-
-        try {
+        setError(false);
+        setSuccess(false);
+        try {            
             setIsLoading(true);
 
-            const response = await axios.post(`Authentication/register-admin`, { firstName, lastName },
+            const response = await axios.post(`User/update-details`, { firstName, lastName },
                 {
                     headers: {
                         Authorization: `Bearer ${user.accessToken}`
@@ -51,6 +53,8 @@ const ChangeNames = () => {
 
                 navigate('/login');
             } else {
+                setIsLoading(false);                
+
                 console.error(error.response);
                 setError(error.response.data);
             }
@@ -132,7 +136,7 @@ const ChangeNames = () => {
                                     </Link>
                                 </ul >
 
-                                <div className="card col-lg-6 ms-auto me-auto mt-4 bg-glass">
+                                <div className="card col-lg-6 ms-auto me-auto bg-glass">
                                     <div className="card-body px-4 py-5 px-md-5">
 
                                         <form className="form" onSubmit={submitHandler}>
@@ -169,8 +173,8 @@ const ChangeNames = () => {
 
                                             <div className="text-center">
 
-                                                <button type="submit" className="btn btn-dark w-50 btn-block ms-auto me-auto">
-                                                    Update
+                                                <button type="submit" className="edit-button btn btn-dark w-25 btn-block ms-auto me-auto">
+                                                    Edit
                                                 </button>
                                             </div>
 

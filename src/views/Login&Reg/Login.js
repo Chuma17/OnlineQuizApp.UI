@@ -82,7 +82,7 @@ const Login = () => {
                                             {error && <div className="alert alert-danger text-center" style={{ letterSpacing: '1px' }}>{error}</div>}
 
                                             <div className="mb-2">
-                                                <label className="form-label" htmlFor="userNameAddress">Email / User Name</label>
+                                                <label className="form-label" htmlFor="userNameAddress">Email / Username</label>
                                                 <input
                                                     type="text"
                                                     id="userNameAddress"

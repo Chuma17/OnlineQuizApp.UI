@@ -8,7 +8,11 @@
 }
 
 @media (max-width: 1182px) {
-    .login-button {
+    .edit-button {
         width: 30% !important;
+    }
+
+    .token-button{
+        width: 60% !important;
     }
 }
