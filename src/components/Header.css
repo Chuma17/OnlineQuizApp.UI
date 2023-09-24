@@ -2,7 +2,12 @@ link {
     text-decoration: none;
 }
 
-.nav-username:hover{    
+.nav-username{
+    margin-top: 11px !important;
+    margin-bottom: 11px !important;
+}
+
+.nav-username:hover {
     cursor: pointer;
 }
 
@@ -61,7 +66,25 @@ link {
     .nav-details {
         display: flex;
         justify-content: space-between;
-    }    
+    }
+
+    .nav-picture {        
+        width: 34px !important;
+        height: 33.44px !important;
+        margin-top: 11px !important;
+        margin-bottom: 11px !important;
+        object-fit: cover;
+    }
+    
+    .nav-username{
+        margin-top: 11px !important;
+        margin-bottom: 11px !important;
+    }
+
+        /* margin-bottom: 11px;
+        object-fit: cover;
+    } */
+    
 }
 
 @media (min-width: 768px) {
