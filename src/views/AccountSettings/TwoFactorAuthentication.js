@@ -87,7 +87,7 @@ const TwoFactorAuthentication = () => {
     }, [error, success]);
 
     return <>
-        <section className="vh-100 background-radial-gradient overflow-hidden">
+        <section className="vh-110 background-radial-gradient overflow-hidden">
 
             <div className="container px-4 py-4 px-md-5 text-lg-start my-5">
                 <div className="row gx-lg-5 align-items-center mb-4">
@@ -148,7 +148,13 @@ const TwoFactorAuthentication = () => {
                                             {error && <div className="me-4 ms-4 alert alert-danger text-center">{error}</div>}
                                             {success && <div className="me-4 ms-4 alert alert-success text-center">{success}</div>}
 
-                                            <p className="fs-5">Prevent hackers from accessing your account with an additional layer of security.</p>
+                                            <p className="fs-5">
+                                                Prevent hackers from accessing your account with an additional layer of security.
+                                                When you sign in, 2-Step verification helps make sure your personal information 
+                                                stays private, safe and secure.
+                                            </p>
+
+                                            <hr />
 
                                             <p className="fs-5">Current Status: {user.twofactorenabled ? "ENABLED" : "DISABLED"}</p>
 
