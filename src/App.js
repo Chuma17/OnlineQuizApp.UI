@@ -62,6 +62,8 @@ const App = () => {
     <Header />
     <Routes>
       <Route path="/" element={<Layout />}>
+
+        <Route index element={<HomePage />} /> {/* Added index attribute */}
         {/* public routes */}
 
         <Route path="/OnlineQuizApp.UI" exact element={<HomePage />} />

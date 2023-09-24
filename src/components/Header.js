@@ -16,7 +16,7 @@ const Header = () => {
         e.preventDefault()
         localStorage.removeItem("userDetails");
         navigate("/OnlineQuizApp.UI");
-        window.location.reload();
+        // window.location.reload();
     }
 
     return <>
@@ -84,8 +84,22 @@ const Header = () => {
 
                         {userInfo && <>
                             <div className="d-flex">
-                                <i className="fas fa-user mt-auto mb-auto fs-5 me-2 nav-username text-light"></i>
-                                <span className="me-2 mt-auto mb-auto fs-6 nav-username text-light">Hi, {userInfo && userInfo.firstName}</span>
+                                {userInfo.profileUrl ? (
+                                    <Link to="/profile-picture">
+                                        <img
+                                            className=" me-2 nav-picture"
+                                            src={userInfo.profileUrl}
+                                            alt="Profile"
+                                        />
+                                    </Link>
+
+                                ) : (
+                                    <i className="fas fa-user mt-auto mb-auto fs-5 me-2 nav-username text-light"></i>
+                                )}
+                                <Link to="/change-names" className="mt-auto mb-auto">
+                                    <span className="me-2 fs-6 nav-username text-light">Hi, {userInfo && userInfo.firstName}</span>
+                                </Link>
+
                             </div>
 
                         </>}
@@ -100,15 +114,15 @@ const Header = () => {
 
                             {userInfo &&
                                 <>
-                                    <button type="button" className="btn btn-danger btn-sm my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <button type="button" className="btn btn-danger btn-sm my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#signOutModal">
                                         <i className="fa-solid fa-arrow-right-from-bracket me-1 text-light"></i> Sign Out
                                     </button>
 
-                                    <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div className="modal fade" id="signOutModal" tabindex="-1" aria-labelledby="signOutModalLabel" aria-hidden="true">
                                         <div className="modal-dialog text-light">
                                             <div className="modal-content bg-dark">
                                                 <div className="modal-header">
-                                                    <h1 className="modal-title fs-5 text-light" id="exampleModalLabel">Sign Out</h1>
+                                                    <h1 className="modal-title fs-5 text-light" id="signOutModalLabel">Sign Out</h1>
                                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div className="modal-body text-light">
@@ -116,7 +130,7 @@ const Header = () => {
                                                 </div>
                                                 <div className="modal-footer">
                                                     <button type="button" className="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                    <button className="btn btn-danger text-light" onClick={Logout}>
+                                                    <button className="btn btn-danger text-light" data-bs-dismiss="modal" onClick={Logout}>
                                                         Confirm
                                                     </button>
                                                 </div>
