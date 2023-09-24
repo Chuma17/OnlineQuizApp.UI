@@ -24,7 +24,6 @@ import ProfilePicture from './views/AccountSettings/ProfilePicture';
 
 //Views
 import HomePage from './views/HomePage';
-import Halls from './views/Halls';
 
 const ROLES = {
   'Admin': "Admin",
@@ -68,7 +67,6 @@ const App = () => {
 
         <Route path="/OnlineQuizApp.UI" exact element={<HomePage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/halls" element={<Halls />} />
         <Route path="/user-registration" element={<UserRegistration />} />
 
         <Route path="/unauthorized" element={<Unauthorized />} />
