@@ -8,7 +8,7 @@ const Missing = () => {
                 <h1 className="text-light">Oops!</h1>
                 <p className="text-light">Page Not Found</p>
                 <div className="flexGrow">
-                    <Link className="text-light" to="/OnlineQuizApp.UI">Visit Our Homepage</Link>
+                    <Link className="text-light" to="/">Visit Our Homepage</Link>
                 </div>
             </article>
         </div>

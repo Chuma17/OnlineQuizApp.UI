@@ -108,7 +108,7 @@ const Login = () => {
                                             <button type="submit" className="login-button text-light btn btn-dark btn-block w-25 mb-4 mt-4">
                                                 Sign In
                                             </button>
-                                            <p className="mb-0 pb-lg-2 text-center"><Link to="/OnlineQuizApp.UI"
+                                            <p className="mb-0 pb-lg-2 text-center"><Link to="/"
                                                 style={{ color: '#393f81' }}>Go to Home</Link></p>
 
 

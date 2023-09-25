@@ -65,7 +65,7 @@ const App = () => {
         <Route index element={<HomePage />} /> {/* Added index attribute */}
         {/* public routes */}
 
-        <Route path="/OnlineQuizApp.UI" exact element={<HomePage />} />
+        <Route path="/" exact element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/user-registration" element={<UserRegistration />} />
 
