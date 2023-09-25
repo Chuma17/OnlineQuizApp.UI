@@ -26,7 +26,7 @@ const Login = () => {
                 const currentTime = new Date().getTime();
                 localStorage.setItem('userDetails', JSON.stringify(response.data));
                 localStorage.setItem('userDetailsTimestamp', currentTime);
-                navigate("/OnlineQuizApp.UI");
+                navigate("/");
                 console.log(response.data);
             }
 
