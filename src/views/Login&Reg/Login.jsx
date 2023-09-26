@@ -4,12 +4,12 @@ import Loading from "../../components/Loading";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css"
 
-
 const Login = () => {
 
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState();
+
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ const Login = () => {
         setIsLoading(true);
 
         try {
-            const response = await axios.post("Authentication/login", { username, password });
+            const response = await axios.post("Authentication/login", { username, password });            
 
             if (response.status === 200) {
                 setIsLoading(false);
@@ -34,7 +34,7 @@ const Login = () => {
             setIsLoading(false);
             setError(error.response.data);
         }
-    };    
+    };
 
 
     useEffect(() => {
@@ -43,8 +43,8 @@ const Login = () => {
         if (error) {
             errorTimeoutId = setTimeout(() => {
                 setError(null);
-            }, 3000);
-        }
+            }, 2000);
+        }        
 
         return () => {
             clearTimeout(errorTimeoutId);
@@ -113,10 +113,6 @@ const Login = () => {
 
                                             <p className="mb-0 pb-lg-2 text-center">Confirmation Link expired? <Link to="/resend-confirmation-link"
                                                 style={{ color: '#393f81' }}>Resend</Link></p>
-
-                                            <p className="mb-2 pb-lg-2 text-center">Don't have an account? <Link to="/user-registration"
-                                                style={{ color: '#393f81' }}>Register here</Link></p>
-
 
                                         </form>
 

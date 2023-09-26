@@ -160,8 +160,8 @@ const TwoFactorAuthentication = () => {
 
                                             <div className="text-center mt-4">
 
-                                                <button type="submit" className="edit-button btn btn-dark w-25 btn-block ms-auto me-auto">
-                                                    {user.twofactorenabled ? "Disable" : "Enable"}
+                                                <button type="submit" disabled className="edit-button btn btn-dark w-25 btn-block ms-auto me-auto">
+                                                    Coming Soon
                                                 </button>
                                             </div>
 

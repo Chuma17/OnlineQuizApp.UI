@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "../../axios/axios";
 import Loading from "../../components/Loading";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Account.css"
 
 const ForgotPassword = () => {
@@ -10,6 +10,7 @@ const ForgotPassword = () => {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [isLoading, setIsLoading] = useState();
+    const navigate = useNavigate();
 
 
     async function submitHandler(e) {
@@ -46,10 +47,8 @@ const ForgotPassword = () => {
 
         if (success) {
             successTimeoutId = setTimeout(() => {
-                // const navigate = useNavigate();
-
                 setSuccess(null);
-                // navigate("/reset-password");
+                navigate("/reset-password");
                 // window.location.reload();
             }, 3000);
         }
@@ -112,6 +111,9 @@ const ForgotPassword = () => {
 
                                     <p className="mb-2 pb-lg-2 text-center">Remember it now? <Link to="/login"
                                         style={{ color: '#393f81' }}>Login here</Link></p>
+
+                                    <p className="mb-2 pb-lg-2 text-center">Go to <Link to="/reset-password"
+                                        style={{ color: '#393f81' }}>Reset Password</Link></p>
 
                                 </form>
 
