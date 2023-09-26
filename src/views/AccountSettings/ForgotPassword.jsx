@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "../../axios/axios";
 import Loading from "../../components/Loading";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Account.css"
 
 const ForgotPassword = () => {
@@ -46,10 +46,10 @@ const ForgotPassword = () => {
 
         if (success) {
             successTimeoutId = setTimeout(() => {
-                const navigate = useNavigate();
+                // const navigate = useNavigate();
 
                 setSuccess(null);
-                navigate("/reset-password");
+                // navigate("/reset-password");
                 // window.location.reload();
             }, 3000);
         }
