@@ -11,7 +11,6 @@ const ForgotPassword = () => {
     const [success, setSuccess] = useState("");
     const [isLoading, setIsLoading] = useState();
 
-    const navigate = useNavigate();
 
     async function submitHandler(e) {
         e.preventDefault();
@@ -47,6 +46,8 @@ const ForgotPassword = () => {
 
         if (success) {
             successTimeoutId = setTimeout(() => {
+                const navigate = useNavigate();
+
                 setSuccess(null);
                 navigate("/reset-password");
                 // window.location.reload();
