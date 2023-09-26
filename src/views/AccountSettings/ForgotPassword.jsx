@@ -58,7 +58,7 @@ const ForgotPassword = () => {
             clearTimeout(successTimeoutId);
         };
 
-    }, [error, success]);
+    }, [error, success, navigate]);
 
     return <>
         <section className="vh-100 background-radial-gradient overflow-hidden">
