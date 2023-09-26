@@ -12,7 +12,7 @@ link {
 }
 
 .nav-picture {
-    width: 45px !important;
+    width: 48px !important;
     height: 45px !important;
     border-radius: 50%;
     object-fit: contain;
@@ -59,8 +59,10 @@ link {
         color: black !important;
         background: whitesmoke;
         border-radius: 3%;
+        padding-left: 0;
+        padding-right: 0;
         text-align: center;
-        width: 35%;
+        width: 28%;
     }
 
     .nav-details {
@@ -69,10 +71,10 @@ link {
     }
 
     .nav-picture {        
-        width: 34px !important;
-        height: 33.44px !important;
-        margin-top: 11px !important;
-        margin-bottom: 11px !important;
+        width: 54px !important;
+        height: 53.44px !important;
+        /* margin-top: 11px !important;
+        margin-bottom: 11px !important; */
         object-fit: cover;
     }
     

@@ -3,3 +3,7 @@
         width: 30% !important;
     }
 }
+
+.forgot-password:hover{
+    cursor: pointer;
+}

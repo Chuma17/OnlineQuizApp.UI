@@ -21,6 +21,9 @@ import ChangeEmail from './views/AccountSettings/ChangeEmail';
 import ChangePassword from './views/AccountSettings/ChangePassword';
 import TwoFactorAuthentication from './views/AccountSettings/TwoFactorAuthentication';
 import ProfilePicture from './views/AccountSettings/ProfilePicture';
+import ForgotPassword from './views/AccountSettings/ForgotPassword';
+import ResetPassword from './views/AccountSettings/ResetPassword';
+import ResendLink from './views/AccountSettings/ResendLink';
 
 //Views
 import HomePage from './views/HomePage';
@@ -68,7 +71,9 @@ const App = () => {
         <Route path="/" exact element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/user-registration" element={<UserRegistration />} />
-
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/resend-confirmation-link" element={<ResendLink />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 
         {/* protected routes */}
@@ -80,6 +85,7 @@ const App = () => {
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/two-factor-authentication" element={<TwoFactorAuthentication />} />
           <Route path="/profile-picture" element={<ProfilePicture />} />
+
 
         </Route>
 

@@ -132,7 +132,7 @@ const AdminRegistration = () => {
 
                                     <div className="text-center">
 
-                                        <button type="submit" className="btn btn-dark w-25 btn-block ms-auto me-auto">
+                                        <button type="submit" className="btn btn-dark ms-auto me-auto">
                                             Register
                                         </button>
                                     </div>

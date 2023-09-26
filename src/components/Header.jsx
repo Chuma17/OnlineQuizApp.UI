@@ -28,7 +28,7 @@ const Header = () => {
                 </Link>
 
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span> <i class="fa-solid fa-bars text-light"></i></span>
+                    <span> <i className="fa-solid fa-bars text-light"></i></span>
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarNav">
@@ -42,9 +42,7 @@ const Header = () => {
                             <div className="nav-item">
                                 <hr className="text-light hr-mobile-only" />
 
-                                <div className="d-flex nav-details">
-                                    {/* <Link to="/login" className="nav-login text-light nav-link"> Sign In</Link>
-                                    <Link to="/user-registration" className="nav-login text-light nav-link"> Sign Up</Link> */}
+                                <div className="d-flex nav-details">                                    
                                     <Link to="/login" className="nav-login text-light nav-link mb-2"> <i className="nav-login fa-solid fa-arrow-right-to-bracket text-light"></i> Sign In</Link>
                                     <Link to="/user-registration" className="nav-login text-light nav-link mb-2"> <i className="nav-login fas fa-pen text-light"></i> Sign Up</Link>
                                 </div>
@@ -57,7 +55,7 @@ const Header = () => {
                                 <>
                                     <hr className="text-light hr-mobile-only" />
 
-                                    <div className="admin-links d-flex fs-6 nav-item mb-2">
+                                    <div className="admin-links d-flex justify-content-between fs-6 nav-item mb-2">
                                         {userInfo && userInfo.roles.includes(ROLES.SuperAdmin) &&
                                             <Link to="/admin-registration" className="text-light nav-link">Admin</Link>
                                         }
@@ -71,7 +69,7 @@ const Header = () => {
                         </div>
 
                         {userInfo && userInfo.roles.includes(ROLES.Participant) &&
-                            <div className="d-flex fs-6">
+                            <div className="d-flex text-center fs-6">
                                 <hr className="text-light hr-mobile-only" />
 
                                 <Link to="/" className="text-light nav-link">Results</Link>
@@ -80,25 +78,23 @@ const Header = () => {
 
                     </div>
 
-                    <div className="d-flex second-line mb-2">
+                    <div className="d-flex justify-content-around second-line mb-2">
 
                         {userInfo && <>
                             <div className="d-flex">
                                 {userInfo.profileUrl ? (
                                     <Link to="/profile-picture">
                                         <img
-                                            className=" me-2 nav-picture"
+                                            className="me-2 nav-picture"
                                             src={userInfo.profileUrl}
                                             alt="Profile"
                                         />
                                     </Link>
 
-                                ) : (
-                                    <i className="fas fa-user mt-auto mb-auto fs-5 me-2 nav-username text-light"></i>
+                                ) : (                                    
+                                    <i className="fas fa-user mt-auto mb-auto fs-5 me- nav-username text-light"></i>
                                 )}
-                                <Link to="/change-names" className="mt-auto mb-auto">
-                                    <span className="me-2 fs-6 nav-username text-light">Hi, {userInfo && userInfo.firstName}</span>
-                                </Link>
+                                
 
                             </div>
 
@@ -107,14 +103,14 @@ const Header = () => {
                         <div className="d-flex superadmin-button">
 
                             {userInfo &&
-                                <button className="btn btn-light my-2 my-sm-0 btn-sm p-0 me-2 ms-2">
-                                    <Link to="/change-names" className="text-dark nav-link"><i class="fa-solid fa-gear"></i> Account</Link>
+                                <button className="btn btn-light my-2 my-sm-0 btn-sm p-0 me-2">
+                                    <Link to="/change-names" className="text-dark nav-link"><i className="fa-solid fa-gear"></i> Account</Link>
                                 </button>
                             }
 
                             {userInfo &&
                                 <>
-                                    <button type="button" className="btn btn-danger btn-sm my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#signOutModal">
+                                    <button type="button" className="btn btn-danger btn-sm my-2 ms-0 my-sm-0" data-bs-toggle="modal" data-bs-target="#signOutModal">
                                         <i className="fa-solid fa-arrow-right-from-bracket me-1 text-light"></i> Sign Out
                                     </button>
 
