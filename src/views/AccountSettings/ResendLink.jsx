@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "../../axios/axios";
 import Loading from "../../components/Loading";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Account.css"
 
 const ResendLink = () => {
@@ -11,7 +11,6 @@ const ResendLink = () => {
     const [success, setSuccess] = useState("");
     const [isLoading, setIsLoading] = useState();
 
-    const navigate = useNavigate();
 
     async function submitHandler(e) {
         e.preventDefault();

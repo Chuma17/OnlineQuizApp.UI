@@ -22,7 +22,7 @@ import ChangePassword from './views/AccountSettings/ChangePassword';
 import TwoFactorAuthentication from './views/AccountSettings/TwoFactorAuthentication';
 import ProfilePicture from './views/AccountSettings/ProfilePicture';
 import ForgotPassword from './views/AccountSettings/ForgotPassword';
-import ResetPassword from './views/AccountSettings/ResetPassword';
+// import ResetPassword from './views/AccountSettings/ResetPassword';
 import ResendLink from './views/AccountSettings/ResendLink';
 
 //Views
@@ -72,7 +72,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/user-registration" element={<UserRegistration />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+        {/* <Route path="/reset-password" element={<ResetPassword />} /> */}
         <Route path="/resend-confirmation-link" element={<ResendLink />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 
