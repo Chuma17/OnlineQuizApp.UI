@@ -12,11 +12,13 @@ const CreateQuiz = () => {
     const [isLoading, setIsLoading] = useState();
     const [quizName, setQuizName] = useState("");
     const [quizDescription, setQuizDescription] = useState("");
+    const [categories, setCategories] = useState([]);
 
     const [profileImage, setProfileImage] = useState(null);
     const [preview, setPreview] = useState(null);
     const fileInput = useRef(null);
 
+    const [selectedOptions, setSelectedOptions] = useState([]);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
@@ -29,7 +31,6 @@ const CreateQuiz = () => {
         if (profileImage) {
             formData.append("profileImage", profileImage);
         }
-
 
         setError(false);
         setSuccess(false);
@@ -49,7 +50,21 @@ const CreateQuiz = () => {
                 quizId = quizResponse.data.quizId;
                 console.log(quizResponse);
                 setSuccess(quizResponse.data.message);
-                // setError('');
+
+
+                // Step 2: Associate Categories with Quiz
+                const categoryResponse = await axios.post(`Quiz/add-category-to-quiz/${quizId}`, {                    
+                    categoryIds: selectedOptions
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`
+                    },
+                });
+
+                if (categoryResponse.status === 200) {                    
+                    setIsLoading(false);
+                    setSuccess(categoryResponse.data);
+                }
             }
         }
 
@@ -107,6 +122,31 @@ const CreateQuiz = () => {
             }
         }
     }
+
+    const handleSelectChange = (e) => {
+        const selected = Array.from(e.target.selectedOptions, option => option.value);
+        setSelectedOptions(selected.slice(0, 3)); // Limit to 3 selections
+    }
+
+    useEffect(() => {
+        async function getCategories() {
+            try {
+                const response = await axios.get(`Category/get-all-categories`, {
+
+                });
+
+                const { data } = response;
+                if (data) {
+                    setCategories(data);
+                }
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        getCategories()
+    });
 
     useEffect(() => {
         let errorTimeoutId;
@@ -225,14 +265,18 @@ const CreateQuiz = () => {
                                                     />
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label for="exampleFormControlSelect2">Example multiple select</label>
-                                                    <select multiple class="form-control" id="exampleFormControlSelect2">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
+                                                <div className="form-group">
+                                                    <label htmlFor="exampleFormControlSelect2">Categories (You can only select 3) <br /> (Hold Ctrl to select on PC)</label>
+                                                    <select
+                                                        multiple
+                                                        className="form-control"
+                                                        id="exampleFormControlSelect2"
+                                                        onChange={handleSelectChange}
+                                                        value={selectedOptions}
+                                                    >
+                                                        {categories.length > 0 && categories.map(category => {
+                                                            return <option key={category.categoryId} value={category.categoryId}> {category.categoryName} </option>
+                                                        })}
                                                     </select>
                                                 </div>
                                             </div>
