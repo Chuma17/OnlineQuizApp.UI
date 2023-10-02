@@ -143,7 +143,7 @@ const AdminUnpublished = () => {
 
                                 </ul >
 
-                                <div style={{ height: '800px' }} className="card ms-auto me-auto bg-glass">
+                                <div style={{ height: quizzes.length > 0 ? '800px' : '430px' }} className="card ms-auto me-auto bg-glass">
                                     <div className="card-body px-4 py-5 px-md-5">
 
                                         {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :
@@ -175,16 +175,18 @@ const AdminUnpublished = () => {
                                                         )}
                                                     </div>
 
-                                                    <div className="mt-3">
-                                                        <div className="ms-2 mb-1">
-                                                            <button className="btn btn-sm btn-light p-1 m-1" onClick={handleFirstPage} disabled={pagination.currentPage === 1}>First</button>
-                                                            <button className="btn btn-sm btn-light p-1 m-1" onClick={handlePrevPage} disabled={pagination.currentPage === 1}>Previous</button>
-                                                            <span className="text-dark"> Page: {pagination.currentPage} of {pagination.totalPages} </span>
-                                                            <button className="btn btn-sm btn-light p-1 m-1" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}>Next</button>
-                                                            <button className="btn btn-sm btn-light p-1 m-1" onClick={handleLastPage} disabled={pagination.currentPage === pagination.totalPages}>Last</button>
+                                                    {quizzes.length > 0 && (
+                                                        <div className="mt-3">
+                                                            <div className="ms-2 mb-1">
+                                                                <button className="btn btn-sm btn-light p-1 m-1" onClick={handleFirstPage} disabled={pagination.currentPage === 1}>First</button>
+                                                                <button className="btn btn-sm btn-light p-1 m-1" onClick={handlePrevPage} disabled={pagination.currentPage === 1}>Previous</button>
+                                                                <span className="text-dark"> Page: {pagination.currentPage} of {pagination.totalPages} </span>
+                                                                <button className="btn btn-sm btn-light p-1 m-1" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}>Next</button>
+                                                                <button className="btn btn-sm btn-light p-1 m-1" onClick={handleLastPage} disabled={pagination.currentPage === pagination.totalPages}>Last</button>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    
+                                                    )}
+
                                                 </div>
 
                                             </div>
