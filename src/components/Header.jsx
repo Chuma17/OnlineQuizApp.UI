@@ -57,9 +57,9 @@ const Header = () => {
 
                                     <div className="admin-links d-flex justify-content-between fs-6 nav-item mb-2">
                                         {userInfo && userInfo.roles.includes(ROLES.SuperAdmin) &&
-                                            <Link to="/admin-registration" className="text-light nav-link">Admin</Link>
+                                            <Link to="/admin-registration" className="text-light nav-link">S. Admin</Link>
                                         }
-                                        <Link to="/" className="text-light nav-link">Quiz</Link>
+                                        <Link to="/create-quiz" className="text-light nav-link">Quiz</Link>
                                         <Link to="/" className="text-light nav-link">Question</Link>
                                         <Link to="/" className="text-light nav-link">Result</Link>
                                     </div>

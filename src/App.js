@@ -25,6 +25,12 @@ import ForgotPassword from './views/AccountSettings/ForgotPassword';
 import ResetPassword from './views/AccountSettings/ResetPassword';
 import ResendLink from './views/AccountSettings/ResendLink';
 
+//Quiz
+import CreateQuiz from './views/Quiz/CreateQuiz';
+import AdminQuizzes from './views/Quiz/AdminQuizzes';
+import AdminPublished from './views/Quiz/AdminPublished';
+import AdminUnpublished from './views/Quiz/AdminUnpublished';
+
 //Views
 import HomePage from './views/HomePage';
 
@@ -85,8 +91,13 @@ const App = () => {
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/two-factor-authentication" element={<TwoFactorAuthentication />} />
           <Route path="/profile-picture" element={<ProfilePicture />} />
+        </Route>
 
-
+        <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+          <Route path="/create-quiz" element={<CreateQuiz />} />
+          <Route path="/admin-quizzes" element={<AdminQuizzes />} />
+          <Route path="/admin-published-quizzes" element={<AdminPublished />} />
+          <Route path="/admin-unpublished-quizzes" element={<AdminUnpublished />} />
         </Route>
 
         <Route element={<RequireAuth allowedRoles={[ROLES.SuperAdmin]} />}>

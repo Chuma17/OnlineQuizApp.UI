@@ -1,5 +1,5 @@
 .home-card {
-    height: 500px; /* Set a fixed height */
+    height: 400px; /* Set a fixed height */
     width: 100%;
     overflow: hidden; /* Hide any content that overflows */
     border-radius: 1.5%;
@@ -7,7 +7,7 @@
 
 .home-card .card-img-top {
     object-fit: cover; /* Ensure the image covers the whole area */
-    height: 60%; /* Adjust as needed */
+    height: 50%; /* Adjust as needed */
 }
 
 .home-card .card-body {

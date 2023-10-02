@@ -1,0 +1,26 @@
+/* CSS for hover state */
+.nav-tabs .nav-link:hover {
+    color: #000 !important; /* Set the text color on hover */
+}
+
+.picture-preview:hover{
+    cursor: pointer;
+}
+
+.nav-tabs .nav-link.active{
+    color: #000 !important; /* Set the text color on focus */
+}
+
+@media (max-width: 1182px) {
+    .edit-button {
+        width: 40% !important;
+    }
+
+    .create-quiz{
+        flex-direction: column;
+    }
+
+    .create-form{
+        margin-bottom: 20px;
+    }
+}
