@@ -1,12 +1,10 @@
 import axios from "../../axios/axios";
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Loading from "../../components/Loading";
 import "./Quiz.css"
 
 const AdminPublished = () => {
-    const navigate = useNavigate();
-
     const user = JSON.parse(localStorage.getItem("userDetails"));
 
     const [loading, setLoading] = useState();
@@ -52,7 +50,7 @@ const AdminPublished = () => {
         }
 
         getQuizzes()
-    }, [pagination.itemsPerPage, pagination.currentPage]);
+    }, [pagination.itemsPerPage, pagination.currentPage, user.accessToken]);
 
     useEffect(() => {
         let errorTimeoutId;
