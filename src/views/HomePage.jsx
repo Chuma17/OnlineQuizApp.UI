@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 
 const HomePage = () => {
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState();
     const [quizzes, setQuizzes] = useState([]);
     const [pagination, setPagination] = useState({
         currentPage: 1,
-        itemsPerPage: 4,
+        itemsPerPage: 8,
         totalItems: 0,
         totalPages: 0
     });
@@ -104,7 +104,7 @@ const HomePage = () => {
                     <div className="ms-2 mb-1">
                         <button className="btn btn-sm btn-light p-1 m-1" onClick={handleFirstPage} disabled={pagination.currentPage === 1}>First</button>
                         <button className="btn btn-sm btn-light p-1 m-1" onClick={handlePrevPage} disabled={pagination.currentPage === 1}>Previous</button>
-                        <span className="text-light"> Page: {pagination.currentPage} of {pagination.totalPages} </span>
+                        <span className="text-dark"> Page: {pagination.currentPage} of {pagination.totalPages} </span>
                         <button className="btn btn-sm btn-light p-1 m-1" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}>Next</button>
                         <button className="btn btn-sm btn-light p-1 m-1" onClick={handleLastPage} disabled={pagination.currentPage === pagination.totalPages}>Last</button>
                     </div>

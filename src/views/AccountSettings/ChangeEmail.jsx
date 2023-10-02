@@ -61,8 +61,12 @@ const ChangeEmail = () => {
         e.preventDefault();
         setError(false);
         setSuccess(false);
-        try {            
-            setIsLoading(true);
+        try {        
+            if (email.length < 1) {
+                setError("Type in your Email address");
+                return;
+            }    
+            setIsLoading(true);            
 
             const response = await axios.post(`Authentication/request-change-email?email=${email}`, {}, {
 

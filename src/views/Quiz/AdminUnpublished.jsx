@@ -4,63 +4,55 @@ import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 import "./Quiz.css"
 
-
 const AdminUnpublished = () => {
     const navigate = useNavigate();
 
     const user = JSON.parse(localStorage.getItem("userDetails"));
 
-    const [isLoading, setIsLoading] = useState();
-    const [firstName, setFirstName] = useState(user.firstName);
-    const [lastName, setLastName] = useState(user.lastName);
+    const [loading, setLoading] = useState();
+    const [quizzes, setQuizzes] = useState([]);
+    const [pagination, setPagination] = useState({
+        currentPage: 1,
+        itemsPerPage: 8,
+        totalItems: 0,
+        totalPages: 0
+    });
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
-    async function submitHandler(e) {
-        e.preventDefault();
-        setError(false);
-        setSuccess(false);
-        try {
-            setIsLoading(true);
+    useEffect(() => {
+        async function getQuizzes() {
+            try {
+                setLoading(true);
 
-            const response = await axios.post(`User/update-details`, { firstName, lastName },
-                {
+                const response = await axios.get(`Quiz/get-admin-unpublished-quizzes`, {
                     headers: {
                         Authorization: `Bearer ${user.accessToken}`
                     },
-                },
-            );
+                    params: {
+                        PageNumber: pagination.currentPage,
+                        PageSize: pagination.itemsPerPage
+                    }
+                });
 
-            if (response.status === 200) {
-                setIsLoading(false);
+                const { data } = response;
+                if (data) {
+                    setLoading(false);
+                }
 
-                user.firstName = firstName;
-                user.lastName = lastName;
+                setQuizzes(data);
 
-                const updatedStudent = JSON.stringify(user);
-                localStorage.setItem('userDetails', updatedStudent);
+                const paginationHeader = JSON.parse(response.headers["pagination"]);
+                setPagination(paginationHeader);
+            } catch (error) {
 
-                console.log(response);
-                setSuccess(response.data);
-                // setError('');
             }
-        } catch (error) {
-            setIsLoading(false);
 
-            if (error.response.status === 401) {
-                window.alert('Your session has expired. Login again!');
-                localStorage.removeItem('userDetails');
-
-                navigate('/login');
-            } else {
-                setIsLoading(false);
-
-                console.error(error.response);
-                setError(error.response.data);
-            }
         }
-    }
+
+        getQuizzes()
+    }, [pagination.itemsPerPage, pagination.currentPage]);
 
     useEffect(() => {
         let errorTimeoutId;
@@ -85,10 +77,36 @@ const AdminUnpublished = () => {
 
     }, [error, success]);
 
-    return <>
-        <section className="vh-100 background-radial-gradient overflow-hidden">
+    function handleNextPage() {
+        setPagination(prev => {
+            if (prev.currentPage < prev.totalPages) {
+                return { ...prev, currentPage: prev.currentPage + 1 };
+            }
+            return prev;
+        });
+    }
 
-            <div className="container px-4 py-4 px-md-5 text-lg-start my-5">
+    function handlePrevPage() {
+        setPagination(prev => {
+            if (prev.currentPage > 1) {
+                return { ...prev, currentPage: prev.currentPage - 1 };
+            }
+            return prev;
+        });
+    }
+
+    function handleFirstPage() {
+        setPagination(prev => ({ ...prev, currentPage: 1 }));
+    }
+
+    function handleLastPage() {
+        setPagination(prev => ({ ...prev, currentPage: pagination.totalPages }));
+    }
+
+    return <>
+        <section className="vh-110 background-radial-gradient overflow-hidden">
+
+            <div className="container px-4 py-4 px-md-5 text-lg-start my-">
                 <div className="row gx-lg-5 align-items-center mb-4">
 
                     <div className="col-lg-12 ms-auto me-auto mb-lg-0 position-relative">
@@ -126,49 +144,52 @@ const AdminUnpublished = () => {
 
                                 </ul >
 
-                                <div className="card col-lg-6 ms-auto me-auto bg-glass">
+                                <div style={{ height: '800px' }} className="card ms-auto me-auto bg-glass">
                                     <div className="card-body px-4 py-5 px-md-5">
 
-                                        <form className="form" onSubmit={submitHandler}>
-                                            <h4 className="fw-normal text-center mb-3 pb-3" style={{ letterSpacing: '1px' }}>Edit Names</h4>
+                                        {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :
 
-                                            {isLoading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
-                                            {error && <div className="me-4 ms-4 alert alert-danger text-center">{error}</div>}
-                                            {success && <div className="me-4 ms-4 alert alert-success text-center">{success}</div>}
+                                            <div style={{ height: '730px', overflowY: 'auto' }}>
+                                                <div class="vh-110 container px-1 text-center">
 
-                                            <div className="">
+                                                    <div className="row">
+                                                        {quizzes.length > 0 ? (
+                                                            quizzes.map(quiz => (
+                                                                <>
+                                                                    <div className="col-md-3 d-flex justify-content-evenly ms-auto me-auto" key={quiz.id}>
+                                                                        <div className="card mt-4 home-card">
+                                                                            <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="home-card-image card-img-top p-3" alt="Default Quiz" />
+                                                                            <div className="card-body text-center fs-5">
+                                                                                <h3 className="card-title">{quiz.quizName}</h3>
+                                                                                <hr />
+                                                                                <p className="card-description">{quiz.quizDescription}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </>
+                                                            ))
 
-                                                <div className="mb-4 form-group">
-                                                    <label className="form-label">First Name</label>
-                                                    <input
-                                                        type="text"
-                                                        value={firstName}
-                                                        onChange={e => setFirstName(e.target.value)}
-                                                        required
-                                                        className="form-control"
-                                                    />
+                                                        ) : (
+                                                            <div className="col-12 text-center">
+                                                                <h4>No quizzes</h4>
+                                                            </div>
+                                                        )}
+                                                    </div>
+
+                                                    <div className="mt-3">
+                                                        <div className="ms-2 mb-1">
+                                                            <button className="btn btn-sm btn-light p-1 m-1" onClick={handleFirstPage} disabled={pagination.currentPage === 1}>First</button>
+                                                            <button className="btn btn-sm btn-light p-1 m-1" onClick={handlePrevPage} disabled={pagination.currentPage === 1}>Previous</button>
+                                                            <span className="text-dark"> Page: {pagination.currentPage} of {pagination.totalPages} </span>
+                                                            <button className="btn btn-sm btn-light p-1 m-1" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}>Next</button>
+                                                            <button className="btn btn-sm btn-light p-1 m-1" onClick={handleLastPage} disabled={pagination.currentPage === pagination.totalPages}>Last</button>
+                                                        </div>
+                                                    </div>
+                                                    
                                                 </div>
 
-                                                <div className="mb-4 form-group">
-                                                    <label className="form-label">Last Name</label>
-                                                    <input
-                                                        type="text"
-                                                        value={lastName}
-                                                        onChange={e => setLastName(e.target.value)}
-                                                        required
-                                                        className="form-control"
-                                                    />
-                                                </div>
                                             </div>
-
-                                            <div className="text-center">
-
-                                                <button type="submit" className="edit-button btn btn-dark w-25 btn-block ms-auto me-auto">
-                                                    Edit
-                                                </button>
-                                            </div>
-
-                                        </form>
+                                        }
 
                                     </div>
                                 </div>
@@ -176,8 +197,8 @@ const AdminUnpublished = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </div >
+        </section >
     </>
 }
 

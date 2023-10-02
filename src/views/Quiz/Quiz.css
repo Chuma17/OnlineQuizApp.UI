@@ -11,6 +11,113 @@
     color: #000 !important; /* Set the text color on focus */
 }
 
+
+
+.home-card {
+    height: 300px !important; /* Set a fixed height */
+    width: 100%;
+    overflow: hidden; /* Hide any content that overflows */
+    border-radius: 1.5%;
+}
+
+.home-card .card-img-top {
+    object-fit: cover; /* Ensure the image covers the whole area */
+    height: 50%; /* Adjust as needed */
+}
+
+.home-card .card-body {
+    padding: 1rem;
+}
+
+.card-title {
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide any text that overflows */
+    text-overflow: ellipsis; /* Show an ellipsis (...) for truncated text */
+}
+
+.card-description {
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide any text that overflows */
+    text-overflow: ellipsis; /* Show an ellipsis (...) for truncated text */
+}
+
+/* MOBILE SCREENS */
+@media (max-width: 500px) {
+
+    .col-md-3 {
+        flex: 0 0 48%; /* Set the flex basis to 48% to fit two cards in a row */
+        /* margin-bottom: 1rem;         */
+    }    
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }    
+
+
+    /* height */
+    .home-card {
+        height: 300px; /* Set a fixed height */
+        width: 185px !important;
+        overflow: hidden; /* Hide any content that overflows */
+        border-radius: 1.5%;
+    }
+    
+    .home-card .card-img-top {
+        object-fit: cover; /* Ensure the image covers the whole area */
+        height: 50%; /* Adjust as needed */
+    }
+    
+    .home-card .card-body {
+        padding: 1rem;
+    }
+    
+    .card-title {
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide any text that overflows */
+        text-overflow: ellipsis; /* Show an ellipsis (...) for truncated text */
+    }
+
+    .card-description {
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide any text that overflows */
+        text-overflow: ellipsis; /* Show an ellipsis (...) for truncated text */
+    }
+}
+
+@media (max-width: 393px) {    
+
+    /* height */
+    .home-card {
+        height: 250px; /* Set a fixed height */
+        width: 165px !important;
+        overflow: hidden; /* Hide any content that overflows */
+        border-radius: 1.5%;
+    }
+    
+    .home-card .card-img-top {
+        object-fit: cover; /* Ensure the image covers the whole area */
+        height: 50%; /* Adjust as needed */
+    }
+    
+    .home-card .card-body {
+        padding: 1rem;
+    }
+    
+    .card-title {
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide any text that overflows */
+        text-overflow: ellipsis; /* Show an ellipsis (...) for truncated text */
+    }
+
+    .card-description {
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide any text that overflows */
+        text-overflow: ellipsis; /* Show an ellipsis (...) for truncated text */
+    }
+}
+
 @media (max-width: 1182px) {
     .edit-button {
         width: 40% !important;

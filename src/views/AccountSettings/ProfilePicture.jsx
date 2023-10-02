@@ -33,7 +33,7 @@ const ProfilePicture = () => {
             const response = await axios.post(`User/upload-profile-picture`, formData, {
                 headers: {
                     Authorization: `Bearer ${user.accessToken}`
-                },
+                }
             });
 
             if (response.status === 200) {
