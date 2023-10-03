@@ -25,11 +25,14 @@ import ForgotPassword from './views/AccountSettings/ForgotPassword';
 import ResetPassword from './views/AccountSettings/ResetPassword';
 import ResendLink from './views/AccountSettings/ResendLink';
 
-//Quiz
+//Admin Quiz
 import CreateQuiz from './views/Quiz/CreateQuiz';
 import AdminQuizzes from './views/Quiz/AdminQuizzes';
 import AdminPublished from './views/Quiz/AdminPublished';
 import AdminUnpublished from './views/Quiz/AdminUnpublished';
+
+//Participant Quiz
+import SingleQuiz from './views/ParticipantQuiz/SingleQuiz';
 
 //Views
 import HomePage from './views/HomePage';
@@ -81,6 +84,7 @@ const App = () => {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/resend-confirmation-link" element={<ResendLink />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="/single-participant-quiz/:id" element={<SingleQuiz />} />
 
         {/* protected routes */}
 
