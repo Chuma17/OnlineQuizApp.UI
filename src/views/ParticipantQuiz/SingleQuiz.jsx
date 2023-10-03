@@ -104,27 +104,29 @@ const SingleQuiz = () => {
                                 {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :
 
 
-                                    <div style={{ height: '730px', overflowY: 'auto' }}>
-
-                                        <div className="d-flex">
-                                            <button className="btn btn-dark mb-3 me-auto" onClick={goBack}>Go Back</button>
-                                            <button className="btn btn-success mb-3 me-auto" onClick={goBack}>Take Quiz</button>
-                                        </div>
+                                    <div style={{ height: '730px', overflowY: 'auto' }}>                                        
 
                                         <div class="vh-110 container px-1 text-center">
 
                                             <div className="row ">
-                                                <div className="d-flex justify-content-between">
-                                                    <div className="quiz-picture me-4">
-                                                        <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="quiz-picture" alt="Default Quiz" />
+
+                                                <div className="d-flex details justify-content-between">
+                                                    <div className="col-md-7 ms-0">
+                                                        <div className="d-flex justify-content-between">
+                                                            <button className="btn btn-dark mb-3" onClick={goBack}>Go Back</button>
+                                                            <button className="btn btn-success mb-3" onClick={goBack}>Take Quiz</button>
+                                                        </div>
+                                                        <div className="quiz-picture">
+                                                            <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="quiz-picture" alt="Default Quiz" />
+                                                        </div>
                                                     </div>
 
-                                                    <div className="text-center fs-5">
+                                                    <div className="text-center col-md-5 fs-5">
                                                         <h3 className="">{quiz.quizName}</h3>
                                                         <hr />
                                                         <div>
                                                             <div>
-                                                                <p className="text-left fs-4 mb-0">Categories:</p>
+                                                                <p className="fs-4 mb-0">Categories:</p>
                                                                 {category.length > 0 ? (
                                                                     category.map((item, index) => (
                                                                         <div key={index}>{item}</div>
@@ -141,7 +143,7 @@ const SingleQuiz = () => {
                                                 </div>
                                             </div>
 
-                                            <div className="text-left">
+                                            <div className="text-left ms-2">
                                                 <h3 style={{ letterSpacing: '1px' }} className="mt-5">COMMENTS</h3>
 
                                                 <p>Coming Soon...</p>
