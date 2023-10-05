@@ -199,7 +199,7 @@ const AddQuestionToBank = () => {
             // Remove background color
 
         }
-    }, [questionDetails.questionId]);
+    }, [questionDetails.questionId, savedQuestionDetails, savedSelectedQuestionId]);
 
     function clearQuestionDetails() {
         localStorage.removeItem('questionDetails');
