@@ -94,7 +94,7 @@ const AddQuestionToBank = () => {
         }
 
         getQuestionType()
-    });
+    }, [user.accessToken, navigate]);
 
     useEffect(() => {
         async function getCategories() {
@@ -114,7 +114,7 @@ const AddQuestionToBank = () => {
         }
 
         getCategories()
-    });
+    }, [user.accessToken, navigate]);
 
     async function AddQuestion() {
 
