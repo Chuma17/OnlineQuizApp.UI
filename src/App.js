@@ -31,6 +31,9 @@ import AdminQuizzes from './views/Quiz/AdminQuizzes';
 import AdminPublished from './views/Quiz/AdminPublished';
 import AdminUnpublished from './views/Quiz/AdminUnpublished';
 
+//Admin Question
+import AddQuestionToBank from './views/Question/AddQuestionToBank';
+
 //Participant Quiz
 import SingleQuiz from './views/ParticipantQuiz/SingleQuiz';
 
@@ -45,7 +48,7 @@ const ROLES = {
 
 function checkLocalStorageExpiration() {
   const userDetailsTimestamp = parseInt(localStorage.getItem('userDetailsTimestamp'));
-  const expirationTime = 60 * 60 * 1000; // 1 hour in milliseconds
+  const expirationTime = 60 * 55 * 1000; // 1 hour in milliseconds
 
   if (userDetailsTimestamp) {
     const currentTime = new Date().getTime();
@@ -102,6 +105,7 @@ const App = () => {
           <Route path="/admin-quizzes" element={<AdminQuizzes />} />
           <Route path="/admin-published-quizzes" element={<AdminPublished />} />
           <Route path="/admin-unpublished-quizzes" element={<AdminUnpublished />} />
+          <Route path="/add-questions-to-bank" element={<AddQuestionToBank />} />
         </Route>
 
         <Route element={<RequireAuth allowedRoles={[ROLES.SuperAdmin]} />}>

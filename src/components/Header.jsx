@@ -60,7 +60,7 @@ const Header = () => {
                                             <Link to="/admin-registration" className="text-light nav-link">S. Admin</Link>
                                         }
                                         <Link to="/create-quiz" className="text-light nav-link">Quiz</Link>
-                                        <Link to="/" className="text-light nav-link">Question</Link>
+                                        <Link to="/add-questions-to-bank" className="text-light nav-link">Question</Link>
                                         <Link to="/" className="text-light nav-link">Result</Link>
                                     </div>
                                 </>
