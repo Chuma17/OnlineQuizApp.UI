@@ -11,6 +11,7 @@ const AddQuestionToBank = () => {
 
     const [questionDetails, setQuestionDetails] = useState([]);
     const [selectedQuestionId, setSelectedQuestionId] = useState("");
+    
 
     const [questionText, setQuestionText] = useState("");
     const [questionTypes, setQuestionTypes] = useState([]);
@@ -26,8 +27,7 @@ const AddQuestionToBank = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const user = JSON.parse(localStorage.getItem("userDetails"));
-    const savedQuestionDetails = JSON.parse(localStorage.getItem('questionDetails'));
-    const savedSelectedQuestionId = localStorage.getItem('selectedQuestionId');
+    
 
     useEffect(() => {
         async function getQuestions() {
@@ -94,7 +94,7 @@ const AddQuestionToBank = () => {
         }
 
         getQuestionType()
-    }, [user.accessToken, navigate]);
+    });
 
     useEffect(() => {
         async function getCategories() {
@@ -114,7 +114,7 @@ const AddQuestionToBank = () => {
         }
 
         getCategories()
-    }, [user.accessToken, navigate]);
+    });
 
     async function AddQuestion() {
 
@@ -187,6 +187,8 @@ const AddQuestionToBank = () => {
     }
 
     useEffect(() => {
+        const savedQuestionDetails = JSON.parse(localStorage.getItem('questionDetails'));
+        const savedSelectedQuestionId = localStorage.getItem('selectedQuestionId');
 
         if (savedQuestionDetails) {
             setQuestionDetails(savedQuestionDetails);
@@ -199,7 +201,7 @@ const AddQuestionToBank = () => {
             // Remove background color
 
         }
-    }, [questionDetails.questionId, savedQuestionDetails, savedSelectedQuestionId]);
+    }, [questionDetails.questionId]);
 
     function clearQuestionDetails() {
         localStorage.removeItem('questionDetails');
