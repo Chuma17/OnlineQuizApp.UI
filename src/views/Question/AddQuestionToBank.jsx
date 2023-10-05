@@ -1,6 +1,6 @@
 import "./Question.css"
 import axios from "../../axios/axios";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 
@@ -18,8 +18,8 @@ const AddQuestionToBank = () => {
     const [categories, setCategories] = useState([]);
     const [categoryId, setCategoryId] = useState("");
 
-    const [preview, setPreview] = useState(null);
-    const fileInput = useRef(null);
+    // const [preview, setPreview] = useState(null);
+    // const fileInput = useRef(null);
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -61,7 +61,7 @@ const AddQuestionToBank = () => {
         }
 
         getQuestions()
-    }, []);
+    }, [user.accessToken, navigate]);
 
     useEffect(() => {
         async function getQuestionType() {
