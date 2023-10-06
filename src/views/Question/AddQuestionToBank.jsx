@@ -28,6 +28,8 @@ const AddQuestionToBank = () => {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [isAsideLoading, setIsAsideLoading] = useState(false);
+    const [isMainLoading, setIsMainLoading] = useState(false);
 
     const user = JSON.parse(localStorage.getItem("userDetails"));
 
@@ -37,9 +39,10 @@ const AddQuestionToBank = () => {
     }
     const savedAnswers = JSON.parse(localStorage.getItem('questionAnswers'));
 
+
     async function getQuestions() {
         try {
-            setIsLoading(true);
+            setIsAsideLoading(true);
 
             const response = await axios.get(`Question/get-unpublished-questions`, {
                 headers: {
@@ -49,8 +52,43 @@ const AddQuestionToBank = () => {
 
             const { data } = response;
             if (response.status === 200) {
-                setIsLoading(false);
+                setIsAsideLoading(false);
                 setQuestions(data);
+            }
+
+        } catch (error) {
+            if (error.response.status === 401) {
+                window.alert('Your session has expired. Login again!');
+                localStorage.removeItem('userDetails');
+
+                navigate('/login');
+            } else {
+                setIsAsideLoading(false);
+
+                console.error(error.response);
+            }
+        }
+    }
+
+    useEffect(() => {
+
+        getQuestions()
+    }, [user.accessToken, navigate]);
+
+
+    async function getQuestionTypes() {
+        try {
+            const response = await axios.get(`QuestionType/get-all-questionTypes`, {
+
+                headers: {
+                    Authorization: `Bearer ${user.accessToken}`
+                }
+
+            });
+
+            const { data } = response;
+            if (data) {
+                setQuestionTypes(data);
             }
 
         } catch (error) {
@@ -66,69 +104,28 @@ const AddQuestionToBank = () => {
             }
         }
     }
-    
-    useEffect(() => {        
 
-        getQuestions()
-    }, [user.accessToken, navigate]);
+    async function getCategories() {
+        try {
+            const response = await axios.get(`Category/get-all-categories`, {
 
-    useEffect(() => {
-        async function getQuestionType() {
-            try {
-                const response = await axios.get(`QuestionType/get-all-questionTypes`, {
+            });
 
-                    headers: {
-                        Authorization: `Bearer ${user.accessToken}`
-                    }
-
-                });
-
-                const { data } = response;
-                if (data) {
-                    setQuestionTypes(data);
-                }
-
-            } catch (error) {
-                if (error.response.status === 401) {
-                    window.alert('Your session has expired. Login again!');
-                    localStorage.removeItem('userDetails');
-
-                    navigate('/login');
-                } else {
-                    setIsLoading(false);
-
-                    console.error(error.response);
-                }
+            const { data } = response;
+            if (data) {
+                setCategories(data);
             }
+
+        } catch (error) {
+            console.error(error);
         }
+    }
 
-        getQuestionType()
-    });
-
-    useEffect(() => {
-        async function getCategories() {
-            try {
-                const response = await axios.get(`Category/get-all-categories`, {
-
-                });
-
-                const { data } = response;
-                if (data) {
-                    setCategories(data);
-                }
-
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        getCategories()
-    });
 
     async function AddQuestion() {
 
         try {
-            setIsLoading(true);
+            setIsAsideLoading(true);
 
             const response = await axios.post(`Question/add-question-to-bank`,
                 { questionText, questionTypeId, categoryId },
@@ -139,13 +136,13 @@ const AddQuestionToBank = () => {
                 });
 
             if (response.status === 200) {
-                setIsLoading(false);
+                setIsAsideLoading(false);
                 console.log(response.data);
                 setSuccess(response.data);
                 getQuestions();
             }
         } catch (error) {
-            setIsLoading(false);
+            setIsAsideLoading(false);
 
             if (error.response.status === 401) {
                 window.alert('Your session has expired. Login again!');
@@ -153,7 +150,7 @@ const AddQuestionToBank = () => {
 
                 navigate('/login');
             } else {
-                setIsLoading(false);
+                setIsAsideLoading(false);
 
                 console.error(error.response);
                 setError("Fill out all the fields");
@@ -205,7 +202,6 @@ const AddQuestionToBank = () => {
         const savedSelectedQuestionId = localStorage.getItem('selectedQuestionId');
 
 
-
         if (savedQuestionDetails) {
             setQuestionDetails(savedQuestionDetails);
         }
@@ -235,8 +231,6 @@ const AddQuestionToBank = () => {
             successTimeoutId = setTimeout(() => {
                 setSuccess(null);
                 setQuestionText("");
-                setCategoryId("");
-                setQuestionTypeId("");
             }, 2000);
         }
 
@@ -271,7 +265,7 @@ const AddQuestionToBank = () => {
     // Function to add answers to the backend for a specific question
     const handleAddAnswers = async (selectedQuestionId) => {
         try {
-            setIsLoading(true);
+            setIsMainLoading(true);
 
             const response = await axios.post(
                 `Answer/add-multiple-answers-to-single-question?questionId=${selectedQuestionId}`,
@@ -310,7 +304,7 @@ const AddQuestionToBank = () => {
                     }
 
                     catch (error) {
-                        setIsLoading(false);
+                        setIsMainLoading(false);
 
                         if (error.questionPicResponse.status === 401) {
                             window.alert('Your session has expired. Login again!');
@@ -318,7 +312,7 @@ const AddQuestionToBank = () => {
 
                             navigate('/login');
                         } else {
-                            setIsLoading(false);
+                            setIsMainLoading(false);
 
                             console.error(error.questionPicResponse);
                             setError(error.questionPicResponse.data);
@@ -339,7 +333,7 @@ const AddQuestionToBank = () => {
                     );
 
                     if (response.status === 200) {
-                        setIsLoading(false);
+                        setIsMainLoading(false);
                         console.log(response.data);
                         clearQuestionDetails();
                         window.location.reload();
@@ -347,7 +341,7 @@ const AddQuestionToBank = () => {
                     }
 
                 } catch (error) {
-                    setIsLoading(false);
+                    setIsMainLoading(false);
 
                     if (error.response.status === 401) {
                         window.alert('Your session has expired. Login again!');
@@ -355,7 +349,7 @@ const AddQuestionToBank = () => {
 
                         navigate('/login');
                     } else {
-                        setIsLoading(false);
+                        setIsMainLoading(false);
 
                         console.error(error.response);
                         setError("Error publishing question.");
@@ -364,7 +358,7 @@ const AddQuestionToBank = () => {
             }
 
         } catch (error) {
-            setIsLoading(false);
+            setIsMainLoading(false);
 
             if (error.response.status === 401) {
                 window.alert('Your session has expired. Login again!');
@@ -372,7 +366,7 @@ const AddQuestionToBank = () => {
 
                 navigate('/login');
             } else {
-                setIsLoading(false);
+                setIsMainLoading(false);
 
                 console.error(error.response);
                 setError("Error adding answers.");
@@ -423,6 +417,11 @@ const AddQuestionToBank = () => {
         }
     }
 
+    async function GetQuestCats(params) {
+        getQuestionTypes();
+        getCategories();
+    }
+
     return <>
         <div id="page-content">
 
@@ -452,7 +451,7 @@ const AddQuestionToBank = () => {
 
                                     <div className="col-md-6 col-lg-6 d-flex align-items-center">
                                         <div className="card-body p-4 p-lg-5 text-black">
-                                            {isLoading && <div className="" style={{ textAlign: 'center' }}><Loading /> </div>}
+                                            {isMainLoading && <div className="" style={{ textAlign: 'center' }}><Loading /> </div>}
 
                                             <div className="">
                                                 {questionDetails.questionText}
@@ -527,13 +526,13 @@ const AddQuestionToBank = () => {
                 </div>
             </main>
 
-            <aside>
+            <aside style={{ overflowY: 'auto' }}>
                 <div className="d-flex justify-content-between">
                     <div className="mt-auto mb-auto">
                         Questions
                     </div>
                     <div>
-                        <button type="button" className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#QuestionModal" title="Add Question">
+                        <button onClick={GetQuestCats} type="button" className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#QuestionModal" title="Add Question">
                             <i class="fa-solid fa-plus text-light"></i>
                         </button>
 
@@ -546,7 +545,7 @@ const AddQuestionToBank = () => {
                                     </div>
                                     <div class="modal-body">
 
-                                        {isLoading && <div className="" style={{ textAlign: 'center' }}><Loading /> </div>}
+                                        {isAsideLoading && <div className="" style={{ textAlign: 'center' }}><Loading /> </div>}
                                         {error && <div className=" me-4 ms-4 alert alert-danger text-center">{error}</div>}
                                         {success && <div className=" me-4 ms-4 alert alert-success text-center">{success}</div>}
 
@@ -598,21 +597,28 @@ const AddQuestionToBank = () => {
 
                 <hr />
 
-                {isLoading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
+                {isAsideLoading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
 
-                <div style={{ overflowY: 'auto' }}>
-                    {questions && questions.map((question, i) => {
-                        const truncatedText = question.questionText.length > 15 ? question.questionText.slice(0, 15) + '...' : question.questionText;
+                <div>
+                    {questions.length > 0 ? (
+                        questions.map((question, i) => {
+                            const truncatedText = question.questionText.length > 15 ? question.questionText.slice(0, 15) + '...' : question.questionText;
 
-                        return <div className={`unpublished-questions p-2 d-flex justify-content-between ${selectedQuestionId === question.questionId ? 'selected-question' : ''}`} key={question.questionId}>
-                            <div onClick={() => ShowDetails(question.questionId)} className="question-text me-0">
-                                <button disabled className="btn btn-dark">Q{i + 1}</button> <span className={`mt-auto mb-auto question-text ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}>{truncatedText}</span>
-                            </div>
-                            <div className="mt-auto mb-auto">
-                                <i onClick={() => DeleteQuestion(question.questionId)} class={`fa-solid fa-trash ms-0 me-2 ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}></i>
-                            </div>
-                        </div>
-                    })}
+                            return (
+                                <div className={`unpublished-questions p-2 d-flex justify-content-between ${selectedQuestionId === question.questionId ? 'selected-question' : ''}`} key={question.questionId}>
+                                    <div onClick={() => ShowDetails(question.questionId)} className="question-text me-0">
+                                        <button disabled className="btn btn-dark">Q{i + 1}</button> <span className={`mt-auto mb-auto question-text ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}>{truncatedText}</span>
+                                    </div>
+                                    <div className="mt-auto mb-auto">
+                                        <i onClick={() => DeleteQuestion(question.questionId)} className={`fa-solid fa-trash ms-0 me-2 ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}></i>
+                                    </div>
+                                </div>
+                            );
+                        })
+                    ) : (
+                        <div className="text-center mt-3">No questions</div>
+                    )}
+
                 </div>
             </aside>
 
