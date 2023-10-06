@@ -37,36 +37,37 @@ const AddQuestionToBank = () => {
     }
     const savedAnswers = JSON.parse(localStorage.getItem('questionAnswers'));
 
-    useEffect(() => {
-        async function getQuestions() {
-            try {
-                setIsLoading(true);
+    async function getQuestions() {
+        try {
+            setIsLoading(true);
 
-                const response = await axios.get(`Question/get-unpublished-questions`, {
-                    headers: {
-                        Authorization: `Bearer ${user.accessToken}`
-                    }
-                });
-
-                const { data } = response;
-                if (response.status === 200) {
-                    setIsLoading(false);
-                    setQuestions(data);
+            const response = await axios.get(`Question/get-unpublished-questions`, {
+                headers: {
+                    Authorization: `Bearer ${user.accessToken}`
                 }
+            });
 
-            } catch (error) {
-                if (error.response.status === 401) {
-                    window.alert('Your session has expired. Login again!');
-                    localStorage.removeItem('userDetails');
+            const { data } = response;
+            if (response.status === 200) {
+                setIsLoading(false);
+                setQuestions(data);
+            }
 
-                    navigate('/login');
-                } else {
-                    setIsLoading(false);
+        } catch (error) {
+            if (error.response.status === 401) {
+                window.alert('Your session has expired. Login again!');
+                localStorage.removeItem('userDetails');
 
-                    console.error(error.response);
-                }
+                navigate('/login');
+            } else {
+                setIsLoading(false);
+
+                console.error(error.response);
             }
         }
+    }
+    
+    useEffect(() => {        
 
         getQuestions()
     }, [user.accessToken, navigate]);
@@ -141,6 +142,7 @@ const AddQuestionToBank = () => {
                 setIsLoading(false);
                 console.log(response.data);
                 setSuccess(response.data);
+                getQuestions();
             }
         } catch (error) {
             setIsLoading(false);
@@ -413,6 +415,7 @@ const AddQuestionToBank = () => {
             if (deleteResponse.status === 200) {
 
                 console.log(deleteResponse);
+                getQuestions();
                 // setError('');
             }
         } catch (error) {
