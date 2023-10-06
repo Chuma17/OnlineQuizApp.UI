@@ -1,17 +1,19 @@
 import "./Question.css"
 import axios from "../../axios/axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 
 const AddQuestionToBank = () => {
     const navigate = useNavigate();
 
+    // New state to store answers for each question
+    const [questionAnswers, setQuestionAnswers] = useState({});
+
     const [questions, setQuestions] = useState([]);
 
     const [questionDetails, setQuestionDetails] = useState([]);
     const [selectedQuestionId, setSelectedQuestionId] = useState("");
-    
 
     const [questionText, setQuestionText] = useState("");
     const [questionTypes, setQuestionTypes] = useState([]);
@@ -19,15 +21,21 @@ const AddQuestionToBank = () => {
     const [categories, setCategories] = useState([]);
     const [categoryId, setCategoryId] = useState("");
 
-    // const [preview, setPreview] = useState(null);
-    // const fileInput = useRef(null);
+    const [profileImage, setProfileImage] = useState(null);
+    const [preview, setPreview] = useState(null);
+    const fileInput = useRef(null);
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
     const user = JSON.parse(localStorage.getItem("userDetails"));
-    
+
+    const formData = new FormData();
+    if (profileImage) {
+        formData.append("profileImage", profileImage);
+    }
+    const savedAnswers = JSON.parse(localStorage.getItem('questionAnswers'));
 
     useEffect(() => {
         async function getQuestions() {
@@ -184,6 +192,10 @@ const AddQuestionToBank = () => {
                 // setError(error.response.data);
             }
         }
+    };
+
+    async function DeletePreview(params) {
+        setPreview(null);
     }
 
     useEffect(() => {
@@ -194,12 +206,10 @@ const AddQuestionToBank = () => {
             setQuestionDetails(savedQuestionDetails);
         }
 
+
         if (savedSelectedQuestionId === questionDetails.questionId) {
             // Apply background color
             setSelectedQuestionId(questionDetails.questionId);
-        } else {
-            // Remove background color
-
         }
     }, [questionDetails.questionId]);
 
@@ -234,6 +244,181 @@ const AddQuestionToBank = () => {
 
     }, [error, success]);
 
+    useEffect(() => {
+        if (savedAnswers) {
+            setQuestionAnswers(savedAnswers);
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('questionAnswers', JSON.stringify(questionAnswers));
+    }, [questionAnswers]);
+
+    // Function to handle answer change for a specific question
+    const handleAnswerChange = (selectedQuestionId, index, value) => {
+        const updatedAnswers = { ...questionAnswers };
+        if (!updatedAnswers[selectedQuestionId]) {
+            updatedAnswers[selectedQuestionId] = [];
+        }
+        updatedAnswers[selectedQuestionId][index] = value;
+        setQuestionAnswers(updatedAnswers);
+    };
+
+
+    // Function to add answers to the backend for a specific question
+    const handleAddAnswers = async (selectedQuestionId) => {
+        try {
+            setIsLoading(true);
+
+            const response = await axios.post(
+                `Answer/add-multiple-answers-to-single-question?questionId=${selectedQuestionId}`,
+                {
+                    answerText: questionAnswers[selectedQuestionId]
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`
+                    }
+                }
+            );
+
+            if (response.status === 200) {
+                console.log(response.data);
+                setSuccess(response.data);
+                // Add code to publish the question
+
+                if (profileImage) {
+                    try {
+
+                        const questionPicResponse = await axios.post(`Question/upload-question-picture?questionId=${selectedQuestionId}`, formData,
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${user.accessToken}`
+                                },
+                            },
+                        );
+
+                        if (questionPicResponse.status === 200) {
+
+                            console.log(questionPicResponse);
+                            setSuccess(questionPicResponse.data.message);
+                            // setError('');
+                        }
+                    }
+
+                    catch (error) {
+                        setIsLoading(false);
+
+                        if (error.questionPicResponse.status === 401) {
+                            window.alert('Your session has expired. Login again!');
+                            localStorage.removeItem('userDetails');
+
+                            navigate('/login');
+                        } else {
+                            setIsLoading(false);
+
+                            console.error(error.questionPicResponse);
+                            setError(error.questionPicResponse.data);
+                        }
+                    }
+                }
+
+                try {
+
+                    const response = await axios.post(
+                        `Question/publish-question?questionId=${selectedQuestionId}`,
+                        {},
+                        {
+                            headers: {
+                                Authorization: `Bearer ${user.accessToken}`
+                            }
+                        }
+                    );
+
+                    if (response.status === 200) {
+                        setIsLoading(false);
+                        console.log(response.data);
+                        clearQuestionDetails();
+                        window.location.reload();
+                        // Add code to handle successful question publishing
+                    }
+
+                } catch (error) {
+                    setIsLoading(false);
+
+                    if (error.response.status === 401) {
+                        window.alert('Your session has expired. Login again!');
+                        localStorage.removeItem('userDetails');
+
+                        navigate('/login');
+                    } else {
+                        setIsLoading(false);
+
+                        console.error(error.response);
+                        setError("Error publishing question.");
+                    }
+                }
+            }
+
+        } catch (error) {
+            setIsLoading(false);
+
+            if (error.response.status === 401) {
+                window.alert('Your session has expired. Login again!');
+                localStorage.removeItem('userDetails');
+
+                navigate('/login');
+            } else {
+                setIsLoading(false);
+
+                console.error(error.response);
+                setError("Error adding answers.");
+            }
+        }
+    };
+
+
+    // Function to render answer textboxes for a specific question
+    const renderAnswerTextboxes = (selectedQuestionId, numberOfOptions) => {
+        const answerTextboxes = [];
+        for (let i = 0; i < numberOfOptions; i++) {
+            answerTextboxes.push(
+                <div key={i} className="mb-3">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder={`Answer ${i + 1}`}
+                        value={questionAnswers[selectedQuestionId]?.[i] || ''}
+                        onChange={(e) => handleAnswerChange(selectedQuestionId, i, e.target.value)}
+                        required
+                    />
+                </div>
+            );
+        }
+        return answerTextboxes;
+    };
+
+
+    async function DeleteQuestion(questionId) {
+        try {
+            const deleteResponse = await axios.delete(`Question/delete-unpublished-questions?questionId=${questionId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`
+                    },
+                },
+            );
+
+            if (deleteResponse.status === 200) {
+
+                console.log(deleteResponse);
+                // setError('');
+            }
+        } catch (error) {
+
+        }
+    }
+
     return <>
         <div id="page-content">
 
@@ -253,48 +438,6 @@ const AddQuestionToBank = () => {
             </header>
 
             <main>
-                {/* <div className="d-flex justify-content-around">
-
-                    <div className="">
-                        {questionDetails.questionText}
-                    </div>
-
-                    <div className="mb-4">
-                        <input
-                            type="file"
-                            onChange={(e) => {
-                                setProfileImage(e.target.files[0]);
-                                setPreview(URL.createObjectURL(e.target.files[0]));
-                            }}
-                            style={{ display: "none" }}
-                            ref={fileInput}
-                        />
-                        <div className="picture-preview" style={{ display: "flex", flexDirection: "column", textAlign: "center" }}>
-                            {questionDetails.imageUrl ? (
-                                <img
-                                    className="ms-auto me-auto mb-4 mt-2"
-                                    src={preview || questionDetails.imageUrl}
-                                    alt="Profile"
-                                    style={{ width: "80%", height: "45%", borderRadius: "10px" }}
-                                    onClick={() => fileInput.current.click()}
-                                />
-                            ) : (
-                                <img
-                                    className="ms-auto me-auto mb-4 mt-2"
-                                    src={preview || require("./QuizUploadDefault.jpg")}
-                                    alt="Preview"
-                                    style={{ width: "80%", height: "45%", borderRadius: "10px" }}
-                                    onClick={() => fileInput.current.click()}
-                                />
-                            )}
-                            <div className="text-center">
-                                <button type="button" className="btn btn-dark w-" onClick={() => fileInput.current.click()}>
-                                    Choose a picture
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
 
                 <div className="container py-5 h-100">
                     <div className="row d-flex justify-content-center align-items-center h-100">
@@ -303,37 +446,75 @@ const AddQuestionToBank = () => {
                                 <div className="row g-0">
 
 
-                                    <div className="col-md-6 col-lg-7 d-flex align-items-center">
+                                    <div className="col-md-6 col-lg-6 d-flex align-items-center">
                                         <div className="card-body p-4 p-lg-5 text-black">
+                                            {isLoading && <div className="" style={{ textAlign: 'center' }}><Loading /> </div>}
 
-                                            <form className="form">
+                                            <div className="">
+                                                {questionDetails.questionText}
+                                            </div>
 
-                                                <div className="d-flex align-items-center mb-3 pb-1">
-                                                    <i className="fas fa-cubes fa-2x me-3" style={{ color: '#ff6219' }}></i>
-                                                    <span className="h1 fw-bold mb-0">Dreamchasers</span>
-                                                </div>
+                                            <div>
+                                                <p>(The first answer is the correct one)</p>
+                                            </div>
 
-                                                <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: '1px' }}>Sign into your account</h5>
+                                            <form onSubmit={() => handleAddAnswers(selectedQuestionId)}>
+                                                {renderAnswerTextboxes(selectedQuestionId, questionDetails.numberOfOptions)}
 
-                                                {error && <div className="alert alert-danger">{error}</div>}
-
-
-                                                <div className="">
-                                                    <a className="small text-muted" href="#!">Forgot password?</a>
-                                                    <p className="mb-4 pb-lg-2">Don't have an account? <a href="/register"
-                                                        style={{ color: '#393f81' }}>Register here</a></p>
-                                                    <a href="/about" className="small text-muted">Terms of use</a><br />
-                                                    <a href="/privacy" className="small text-muted">Privacy policy</a>
-                                                </div>
-
+                                                <button type="submit" className="btn btn-success">Add</button>
                                             </form>
+
 
                                         </div>
                                     </div>
 
-                                    <div className="col-md-6 col-lg-5 d-none d-md-block">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
-                                            alt="login form" className="img-fluid h-100" style={{ borderRadius: '0 1rem 1rem 0' }} />
+                                    <div className="col-md-5 col-lg-5 d-none d-md-block">
+                                        <div className="">
+                                            <input
+                                                type="file"
+                                                onChange={(e) => {
+                                                    setProfileImage(e.target.files[0]);
+                                                    setPreview(URL.createObjectURL(e.target.files[0]));
+                                                }}
+                                                style={{ display: "none" }}
+                                                ref={fileInput}
+                                            />
+                                            <div className="" style={{ display: "flex", textAlign: "center" }}>
+                                                {questionDetails.imageUrl ? (
+                                                    <img
+                                                        className="ms-auto me-auto mb-2 mt-2"
+                                                        src={preview || questionDetails.imageUrl}
+                                                        alt="Profile"
+                                                        style={{ width: "369px", height: "350px", borderRadius: "10px" }}
+                                                    // onClick={() => fileInput.current.click()}
+                                                    />
+                                                ) : (
+                                                    <img
+                                                        className="ms-auto me-auto mb-2 mt-1"
+                                                        src={preview || require("./QuizUploadDefault.jpg")}
+                                                        alt="Preview"
+                                                        style={{ width: "369px", height: "350px", borderRadius: "10px" }}
+                                                    // onClick={() => fileInput.current.click()}
+                                                    />
+                                                )}
+
+                                            </div>
+                                        </div>
+
+                                        <div className="text-center d-flex justify-content-around mb-2 ms-auto me-auto">
+                                            <div>
+                                                <button type="button" className="btn btn-dark" onClick={() => fileInput.current.click()}>
+                                                    <i class="fa-solid fa-image text-light"></i>
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button type="button" className="btn btn-danger" onClick={() => DeletePreview()}>
+                                                    <i class="fa-solid fa-trash text-light"></i>
+                                                </button>
+                                            </div>
+
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -424,7 +605,7 @@ const AddQuestionToBank = () => {
                                 <button disabled className="btn btn-dark">Q{i + 1}</button> <span className={`mt-auto mb-auto question-text ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}>{truncatedText}</span>
                             </div>
                             <div className="mt-auto mb-auto">
-                                <i class={`fa-solid fa-trash ms-0 me-2 ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}></i>
+                                <i onClick={() => DeleteQuestion(question.questionId)} class={`fa-solid fa-trash ms-0 me-2 ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}></i>
                             </div>
                         </div>
                     })}

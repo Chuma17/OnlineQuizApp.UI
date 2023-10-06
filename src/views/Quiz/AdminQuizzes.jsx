@@ -143,7 +143,7 @@ const AdminQuizzes = () => {
 
                                 </ul >
 
-                                <div style={{ height: quizzes.length > 0 ? '800px' : '430px' }} className="card ms-auto me-auto bg-glass">
+                                <div style={{ height: quizzes.length > 0 ? '700px' : '430px' }} className="card ms-auto me-auto bg-glass">
                                     <div className="card-body px-4 py-5 px-md-5">
 
                                         {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :

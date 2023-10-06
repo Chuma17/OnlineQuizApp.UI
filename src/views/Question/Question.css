@@ -1,11 +1,11 @@
 #page-content{
     display: grid;
-    grid-template-columns: (12, 1fr);     
+    grid-template-columns: repeat(12, 1fr);     
     margin: 0 auto;
     grid-gap: 10px;    
     grid-template-areas: 
     "header header header header header header header header header header header header"
-    "aside main main main main main main main main main main section";
+    "aside main main main main main main main main main section section";
 }
 
 #page-content > *{
@@ -23,12 +23,11 @@ header{
 }
 main{
     grid-area: main;
-    height: 100vh;
+    height: 100%;
 }
 aside{
     grid-area: aside;
     height: 100%;
-    /* width: 300px; */
 }
 section{
     grid-area: section;
