@@ -202,10 +202,11 @@ const AddQuestionToBank = () => {
         const savedQuestionDetails = JSON.parse(localStorage.getItem('questionDetails'));
         const savedSelectedQuestionId = localStorage.getItem('selectedQuestionId');
 
+
+
         if (savedQuestionDetails) {
             setQuestionDetails(savedQuestionDetails);
         }
-
 
         if (savedSelectedQuestionId === questionDetails.questionId) {
             // Apply background color
