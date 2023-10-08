@@ -1,7 +1,7 @@
 import "./Question.css"
 import axios from "../../axios/axios";
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 
 const AddQuestionToBank = () => {
@@ -426,12 +426,12 @@ const AddQuestionToBank = () => {
         <div id="page-content">
 
             <header className="d-flex justify-content-between">
-                <div className="mt-auto mb-auto">
+                <div className="mt-auto mb-auto nav-brand">
                     Question Bank
                 </div>
-                <div className="d-flex">
-                    <p className="mt-auto mb-auto me-4">Create</p>
-                    <p className="mt-auto mb-auto">View</p>
+                <div className="d-flex nav-item">
+                    <Link to="/add-questions-to-bank" className="mt-auto mb-auto nav-link text-dark">Create</Link>
+                    <Link to="/view-admin-questions-in-bank" className="mt-auto mb-auto nav-link text-dark">View</Link>
                 </div>
                 <div>
                     <button className="btn btn-dark">
@@ -443,13 +443,12 @@ const AddQuestionToBank = () => {
             <main>
 
                 <div className="container py-5 h-100">
-                    <div className="row d-flex justify-content-center align-items-center h-100">
-                        <div className="col col-xl-10">
+                    <div className="d-flex justify-content-center align-items-center h-100">
+                        <div className="col col-xl-11">
                             <div className="card" style={{ borderRadius: '1rem' }}>
-                                <div className="row g-0">
+                                <div className="d-flex justify-content-between col-lg-12">
 
-
-                                    <div className="col-md-6 col-lg-6 d-flex align-items-center">
+                                    <div className="col-md-6 col-lg-7 d-flex align-items-center">
                                         <div className="card-body p-4 p-lg-5 text-black">
                                             {isMainLoading && <div className="" style={{ textAlign: 'center' }}><Loading /> </div>}
 
@@ -471,8 +470,9 @@ const AddQuestionToBank = () => {
                                         </div>
                                     </div>
 
-                                    <div className="col-md-5 col-lg-5 d-none d-md-block">
-                                        <div className="">
+                                    <div className="col-md-5 col-lg-4 mt-auto mb-auto ms-auto me-auto">
+
+                                        <div>
                                             <input
                                                 type="file"
                                                 onChange={(e) => {
@@ -485,18 +485,18 @@ const AddQuestionToBank = () => {
                                             <div className="" style={{ display: "flex", textAlign: "center" }}>
                                                 {questionDetails.imageUrl ? (
                                                     <img
-                                                        className="ms-auto me-auto mb-2 mt-2"
+                                                        className="ms-auto me-auto mb-2 mt-2 question-pic"
                                                         src={preview || questionDetails.imageUrl}
                                                         alt="Profile"
-                                                        style={{ width: "369px", height: "350px", borderRadius: "10px" }}
+                                                        style={{ width: "350px", height: "175px", borderRadius: "10px" }}
                                                     // onClick={() => fileInput.current.click()}
                                                     />
                                                 ) : (
                                                     <img
-                                                        className="ms-auto me-auto mb-2 mt-1"
+                                                        className="ms-auto me-auto mb-2 mt-1 question-pic"
                                                         src={preview || require("./QuizUploadDefault.jpg")}
                                                         alt="Preview"
-                                                        style={{ width: "369px", height: "350px", borderRadius: "10px" }}
+                                                        style={{ width: "350px", height: "175px", borderRadius: "10px" }}
                                                     // onClick={() => fileInput.current.click()}
                                                     />
                                                 )}

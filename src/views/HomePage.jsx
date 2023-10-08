@@ -75,11 +75,11 @@ const HomePage = () => {
         {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :
 
             <div >
-                <div class="container px-1 text-center">
+                <div className="container px-1 text-center">
 
                     <div className="row">
                         {quizzes.map(quiz => (
-                            <div className="col-md-3 d-flex justify-content-evenly">
+                            <div className="col-md-3 d-flex justify-content-evenly" key={quiz.id}>
 
                                 <Link to={`/single-participant-quiz/${quiz.quizId}`}>
                                     <div className="card mt-4 home-card">

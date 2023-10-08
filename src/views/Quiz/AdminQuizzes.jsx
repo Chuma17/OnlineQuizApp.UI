@@ -16,9 +16,7 @@ const AdminQuizzes = () => {
         totalItems: 0,
         totalPages: 0
     });
-
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
+    
 
     useEffect(() => {
         async function getQuizzes() {
@@ -38,43 +36,22 @@ const AdminQuizzes = () => {
                 const { data } = response;
                 if (data) {
                     setLoading(false);
+
+                    setQuizzes(data);
+
+                    const paginationHeader = JSON.parse(response.headers["pagination"]);
+                    setPagination(paginationHeader);
                 }
 
-                setQuizzes(data);
-
-                const paginationHeader = JSON.parse(response.headers["pagination"]);
-                setPagination(paginationHeader);
             } catch (error) {
-
+                console.error(error)
             }
 
         }
 
         getQuizzes()
     }, [pagination.itemsPerPage, pagination.currentPage, user.accessToken]);
-
-    useEffect(() => {
-        let errorTimeoutId;
-        let successTimeoutId;
-
-        if (error) {
-            errorTimeoutId = setTimeout(() => {
-                setError(null);
-            }, 2000);
-        }
-
-        if (success) {
-            successTimeoutId = setTimeout(() => {
-                setSuccess(null);
-            }, 2000);
-        }
-
-        return () => {
-            clearTimeout(errorTimeoutId);
-            clearTimeout(successTimeoutId);
-        };
-
-    }, [error, success]);
+    
 
     function handleNextPage() {
         setPagination(prev => {
@@ -143,7 +120,7 @@ const AdminQuizzes = () => {
 
                                 </ul >
 
-                                <div style={{ height: quizzes.length > 0 ? '700px' : '430px' }} className="card ms-auto me-auto bg-glass">
+                                <div style={{ height: quizzes.length > 0 ? '800px' : '430px' }} className="card ms-auto me-auto bg-glass">
                                     <div className="card-body px-4 py-5 px-md-5">
 
                                         {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :

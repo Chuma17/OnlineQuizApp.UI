@@ -33,6 +33,7 @@ import AdminUnpublished from './views/Quiz/AdminUnpublished';
 
 //Admin Question
 import AddQuestionToBank from './views/Question/AddQuestionToBank';
+import AdminQuestionsInBank from './views/Question/AdminQuestionsInBank';
 
 //Participant Quiz
 import SingleQuiz from './views/ParticipantQuiz/SingleQuiz';
@@ -106,6 +107,7 @@ const App = () => {
           <Route path="/admin-published-quizzes" element={<AdminPublished />} />
           <Route path="/admin-unpublished-quizzes" element={<AdminUnpublished />} />
           <Route path="/add-questions-to-bank" element={<AddQuestionToBank />} />
+          <Route path="/view-admin-questions-in-bank" element={<AdminQuestionsInBank />} />
         </Route>
 
         <Route element={<RequireAuth allowedRoles={[ROLES.SuperAdmin]} />}>
