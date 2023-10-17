@@ -4,7 +4,10 @@
     margin: 0 auto;
     grid-template-areas: 
     "header header header header header header header header header header header header"
-    "aside aside main main main main main main main main section section";
+    "aside aside main main main main main main main main section section"
+    "aside aside main main main main main main main main section section"
+    "article article main main main main main main main main section section"
+    "article article main main main main main main main main section section";
 }
 
 #page-content > *{
@@ -19,6 +22,7 @@
 
 header{
     grid-area: header;
+    padding: 15px !important;
 }
 main{
     grid-area: main;
@@ -26,8 +30,15 @@ main{
 }
 aside{
     grid-area: aside;
-    max-height: 580px !important;
+    max-height: 290px !important;
+    min-height: 290px !important;
     /* height: 100%; */
+}
+article{
+    grid-area: article;
+    max-height: 290px !important;
+    min-height: 290px !important;
+
 }
 section{
     grid-area: section;

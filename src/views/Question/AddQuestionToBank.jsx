@@ -1,7 +1,7 @@
 import "./Question.css"
 import axios from "../../axios/axios";
 import { useState, useEffect, useRef } from "react";
-import { Link,  useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 
 const AddQuestionToBank = () => {
@@ -11,6 +11,9 @@ const AddQuestionToBank = () => {
     const [questionAnswers, setQuestionAnswers] = useState({});
 
     const [questions, setQuestions] = useState([]);
+    const [quizquestions, setQuizQuestions] = useState([]);
+    const [quizzes, setQuizzes] = useState([]);
+    const [quizId, setQuizId] = useState([]);
 
     const [questionDetails, setQuestionDetails] = useState([]);
     const [selectedQuestionId, setSelectedQuestionId] = useState("");
@@ -27,9 +30,9 @@ const AddQuestionToBank = () => {
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
     const [isAsideLoading, setIsAsideLoading] = useState(false);
     const [isMainLoading, setIsMainLoading] = useState(false);
+    const [isArticleLoading, setIsArticleLoading] = useState(false);
 
     const user = JSON.parse(localStorage.getItem("userDetails"));
 
@@ -44,7 +47,7 @@ const AddQuestionToBank = () => {
         try {
             setIsAsideLoading(true);
 
-            const response = await axios.get(`Question/get-unpublished-questions`, {
+            const response = await axios.get(`Question/get-unpublished-questions-in-bank`, {
                 headers: {
                     Authorization: `Bearer ${user.accessToken}`
                 }
@@ -70,9 +73,40 @@ const AddQuestionToBank = () => {
         }
     }
 
+    async function getQuizQuestions() {
+        try {
+            setIsArticleLoading(true);
+
+            const response = await axios.get(`Question/get-unpublished-questions-in-quiz`, {
+                headers: {
+                    Authorization: `Bearer ${user.accessToken}`
+                }
+            });
+
+            const { data } = response;
+            if (response.status === 200) {
+                setIsArticleLoading(false);
+                setQuizQuestions(data);
+            }
+
+        } catch (error) {
+            if (error.response.status === 401) {
+                window.alert('Your session has expired. Login again!');
+                localStorage.removeItem('userDetails');
+
+                navigate('/login');
+            } else {
+                setIsArticleLoading(false);
+
+                console.error(error.response);
+            }
+        }
+    }
+
     useEffect(() => {
 
-        getQuestions()
+        getQuestions();
+        getQuizQuestions();
     }, [user.accessToken, navigate]);
 
 
@@ -98,8 +132,6 @@ const AddQuestionToBank = () => {
 
                 navigate('/login');
             } else {
-                setIsLoading(false);
-
                 console.error(error.response);
             }
         }
@@ -122,7 +154,29 @@ const AddQuestionToBank = () => {
     }
 
 
-    async function AddQuestion() {
+    async function getQuizzes() {
+        try {
+
+            const response = await axios.get(`Quiz/get-all-admin-quizzes`, {
+                headers: {
+                    Authorization: `Bearer ${user.accessToken}`
+                }
+
+            });
+
+            const { data } = response;
+            if (data) {
+                setQuizzes(data);
+            }
+
+        } catch (error) {
+            console.error(error)
+        }
+
+    }
+
+
+    async function AddQuestionToBank() {
 
         try {
             setIsAsideLoading(true);
@@ -156,7 +210,43 @@ const AddQuestionToBank = () => {
                 setError("Fill out all the fields");
             }
         }
+
     };
+
+    async function AddQuestionsToQuiz() {
+        try {
+            setIsAsideLoading(true);
+
+            const response = await axios.post(`Question/add-questions-to-quiz`,
+                { questionText, questionTypeId, categoryId, quizId },
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`
+                    }
+                });
+
+            if (response.status === 200) {
+                setIsAsideLoading(false);
+                console.log(response.data);
+                setSuccess(response.data);
+                getQuizQuestions();
+            }
+        } catch (error) {
+            setIsAsideLoading(false);
+
+            if (error.response.status === 401) {
+                window.alert('Your session has expired. Login again!');
+                localStorage.removeItem('userDetails');
+
+                navigate('/login');
+            } else {
+                setIsAsideLoading(false);
+
+                console.error(error.response);
+                setError("Fill out all the fields");
+            }
+        }
+    }
 
     async function ShowDetails(questionId) {
         try {
@@ -284,77 +374,9 @@ const AddQuestionToBank = () => {
                 setSuccess(response.data);
                 // Add code to publish the question
 
-                if (profileImage) {
-                    try {
+                AddQuestionPicture(selectedQuestionId);
+                PublishQuestion(selectedQuestionId);
 
-                        const questionPicResponse = await axios.post(`Question/upload-question-picture?questionId=${selectedQuestionId}`, formData,
-                            {
-                                headers: {
-                                    Authorization: `Bearer ${user.accessToken}`
-                                },
-                            },
-                        );
-
-                        if (questionPicResponse.status === 200) {
-
-                            console.log(questionPicResponse);
-                            setSuccess(questionPicResponse.data.message);
-                            // setError('');
-                        }
-                    }
-
-                    catch (error) {
-                        setIsMainLoading(false);
-
-                        if (error.questionPicResponse.status === 401) {
-                            window.alert('Your session has expired. Login again!');
-                            localStorage.removeItem('userDetails');
-
-                            navigate('/login');
-                        } else {
-                            setIsMainLoading(false);
-
-                            console.error(error.questionPicResponse);
-                            setError(error.questionPicResponse.data);
-                        }
-                    }
-                }
-
-                try {
-
-                    const response = await axios.post(
-                        `Question/publish-question?questionId=${selectedQuestionId}`,
-                        {},
-                        {
-                            headers: {
-                                Authorization: `Bearer ${user.accessToken}`
-                            }
-                        }
-                    );
-
-                    if (response.status === 200) {
-                        setIsMainLoading(false);
-                        console.log(response.data);
-                        clearQuestionDetails();
-                        window.location.reload();
-                        // Add code to handle successful question publishing
-                    }
-
-                } catch (error) {
-                    setIsMainLoading(false);
-
-                    if (error.response.status === 401) {
-                        window.alert('Your session has expired. Login again!');
-                        localStorage.removeItem('userDetails');
-
-                        navigate('/login');
-                    } else {
-                        setIsMainLoading(false);
-
-                        console.error(error.response);
-                        setError("Error publishing question.");
-                    }
-                }
             }
 
         } catch (error) {
@@ -372,7 +394,84 @@ const AddQuestionToBank = () => {
                 setError("Error adding answers.");
             }
         }
-    };
+    };    
+
+
+    const AddQuestionPicture = async (selectedQuestionId) => {
+        if (profileImage) {
+            try {
+
+                const questionPicResponse = await axios.post(`Question/upload-question-picture?questionId=${selectedQuestionId}`, formData,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${user.accessToken}`
+                        },
+                    },
+                );
+
+                if (questionPicResponse.status === 200) {
+
+                    console.log(questionPicResponse);
+                    setSuccess(questionPicResponse.data.message);
+                    // setError('');
+                }
+            }
+
+            catch (error) {
+                setIsMainLoading(false);
+
+                if (error.questionPicResponse.status === 401) {
+                    window.alert('Your session has expired. Login again!');
+                    localStorage.removeItem('userDetails');
+
+                    navigate('/login');
+                } else {
+                    setIsMainLoading(false);
+
+                    console.error(error.questionPicResponse);
+                    setError(error.questionPicResponse.data);
+                }
+            }
+        }
+    }
+
+    const PublishQuestion = async (selectedQuestionId) => {
+        try {
+
+            const response = await axios.post(
+                `Question/publish-question?questionId=${selectedQuestionId}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`
+                    }
+                }
+            );
+
+            if (response.status === 200) {
+                setIsMainLoading(false);
+                console.log(response.data);
+                clearQuestionDetails();
+                window.location.reload();
+                // Add code to handle successful question publishing
+            }
+
+        } catch (error) {
+            setIsMainLoading(false);
+
+            if (error.response.status === 401) {
+                window.alert('Your session has expired. Login again!');
+                localStorage.removeItem('userDetails');
+
+                navigate('/login');
+            } else {
+                setIsMainLoading(false);
+
+                console.error(error.response);
+                setError("Error publishing question.");
+            }
+        }
+    }
 
 
     // Function to render answer textboxes for a specific question
@@ -398,7 +497,7 @@ const AddQuestionToBank = () => {
 
     async function DeleteQuestion(questionId) {
         try {
-            const deleteResponse = await axios.delete(`Question/delete-unpublished-questions?questionId=${questionId}`,
+            const deleteResponse = await axios.delete(`Question/delete-question?questionId=${questionId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${user.accessToken}`
@@ -410,6 +509,7 @@ const AddQuestionToBank = () => {
 
                 console.log(deleteResponse);
                 getQuestions();
+                getQuizQuestions();
                 // setError('');
             }
         } catch (error) {
@@ -420,6 +520,12 @@ const AddQuestionToBank = () => {
     async function GetQuestCats(params) {
         getQuestionTypes();
         getCategories();
+    }
+
+    async function GetQuestCatsQuiz(params) {
+        getQuestionTypes();
+        getCategories();
+        getQuizzes();
     }
 
     return <>
@@ -529,18 +635,18 @@ const AddQuestionToBank = () => {
             <aside style={{ overflowY: 'auto' }}>
                 <div className="d-flex justify-content-between">
                     <div className="mt-auto mb-auto">
-                        Questions
+                        Questions in Bank
                     </div>
                     <div>
-                        <button onClick={GetQuestCats} type="button" className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#QuestionModal" title="Add Question">
+                        <button onClick={GetQuestCats} type="button" className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#QuestionBankModal" title="Add Question">
                             <i class="fa-solid fa-plus text-light"></i>
                         </button>
 
-                        <div class="modal fade" id="QuestionModal" tabindex="-1" aria-labelledby="QuestionModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="QuestionBankModal" tabindex="-1" aria-labelledby="QuestionBankModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="QuestionModalLabel">Add Question</h1>
+                                        <h1 class="modal-title fs-5" id="QuestionBankModalLabel">Add Question to Bank</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -587,7 +693,7 @@ const AddQuestionToBank = () => {
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                        <button onClick={AddQuestion} type="button" class="btn btn-success">Add</button>
+                                        <button onClick={AddQuestionToBank} type="button" class="btn btn-success">Add</button>
                                     </div>
                                 </div>
                             </div>
@@ -622,6 +728,115 @@ const AddQuestionToBank = () => {
                 </div>
             </aside>
 
+
+
+            <article style={{ overflowY: 'auto' }}>
+                <div className="d-flex justify-content-between">
+                    <div className="mt-auto mb-auto">
+                        Questions in Quiz
+                    </div>
+                    <div>
+                        <button onClick={GetQuestCatsQuiz} type="button" className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#QuestionQuizModal" title="Add Question">
+                            <i class="fa-solid fa-plus text-light"></i>
+                        </button>
+
+                        <div class="modal fade" id="QuestionQuizModal" tabindex="-1" aria-labelledby="QuestionQuizModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="QuestionQuizModalLabel">Add Question to Quiz</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        {isArticleLoading && <div className="" style={{ textAlign: 'center' }}><Loading /> </div>}
+                                        {error && <div className=" me-4 ms-4 alert alert-danger text-center">{error}</div>}
+                                        {success && <div className=" me-4 ms-4 alert alert-success text-center">{success}</div>}
+
+                                        <form>
+                                            <div class="mb-3 me-4 ms-4">
+                                                <label for="recipient-name" class="col-form-label">Question Text:</label>
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="recipient-name"
+                                                    value={questionText}
+                                                    onChange={e => setQuestionText(e.target.value)}
+                                                    required
+                                                />
+                                            </div>
+
+                                            <div className="mb-4 me-4 ms-4">
+                                                <label className="form-label" htmlfor="halls">Question Type</label>
+                                                <select value={questionTypeId} onChange={e => setQuestionTypeId(e.target.value)} required className="form-control form-select">
+                                                    <option hidden value="">--- Select Question Type ---</option>
+
+                                                    {questionTypes.length > 0 && questionTypes.map(questionType => {
+                                                        return <option key={questionType.questionTypeId} value={questionType.questionTypeId}> {questionType.typeName} </option>
+                                                    })}
+                                                </select>
+                                            </div>
+
+                                            <div className="mb-4 me-4 ms-4">
+                                                <label className="form-label" htmlfor="halls">Category</label>
+                                                <select value={categoryId} onChange={e => setCategoryId(e.target.value)} required className="form-control form-select">
+                                                    <option hidden value="">--- Select Category ---</option>
+
+                                                    {categories.length > 0 && categories.map(category => {
+                                                        return <option key={category.categoryId} value={category.categoryId}> {category.categoryName} </option>
+                                                    })}
+                                                </select>
+                                            </div>
+
+                                            <div className="mb-4 me-4 ms-4">
+                                                <label className="form-label" htmlfor="halls">Quiz</label>
+                                                <select value={quizId} onChange={e => setQuizId(e.target.value)} required className="form-control form-select">
+                                                    <option hidden value="">--- Select Quiz ---</option>
+
+                                                    {quizzes.length > 0 && quizzes.map(quiz => {
+                                                        return <option key={quiz.quizId} value={quiz.quizId}> {quiz.quizName} </option>
+                                                    })}
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                        <button onClick={AddQuestionsToQuiz} type="button" class="btn btn-success">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                {isArticleLoading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
+
+                <div>
+                    {quizquestions.length > 0 ? (
+                        quizquestions.map((question, i) => {
+                            const truncatedText = question.questionText.length > 15 ? question.questionText.slice(0, 15) + '...' : question.questionText;
+
+                            return (
+                                <div className={`unpublished-questions p-2 d-flex justify-content-between ${selectedQuestionId === question.questionId ? 'selected-question' : ''}`} key={question.questionId}>
+                                    <div onClick={() => ShowDetails(question.questionId)} className="question-text me-0">
+                                        <button disabled className="btn btn-dark">Q{i + 1}</button> <span className={`mt-auto mb-auto question-text ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}>{truncatedText}</span>
+                                    </div>
+                                    <div className="mt-auto mb-auto">
+                                        <i onClick={() => DeleteQuestion(question.questionId)} className={`fa-solid fa-trash ms-0 me-2 ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}></i>
+                                    </div>
+                                </div>
+                            );
+                        })
+                    ) : (
+                        <div className="text-center mt-3">No questions</div>
+                    )}
+
+                </div>
+            </article>
+
             <section>
 
                 <div>
@@ -643,6 +858,15 @@ const AddQuestionToBank = () => {
                 </div>
                 <div className="text-center">
                     {questionDetails.categoryName}
+                </div>
+
+                <hr />
+
+                <div className="mb-2">
+                    Quiz :
+                </div>
+                <div className="text-center">
+                    {questionDetails.quizName == null ? 'NIL' : questionDetails.quizName}
                 </div>
 
             </section>
