@@ -16,7 +16,7 @@ const AdminQuizzes = () => {
         totalItems: 0,
         totalPages: 0
     });
-    
+
 
     useEffect(() => {
         async function getQuizzes() {
@@ -51,7 +51,7 @@ const AdminQuizzes = () => {
 
         getQuizzes()
     }, [pagination.itemsPerPage, pagination.currentPage, user.accessToken]);
-    
+
 
     function handleNextPage() {
         setPagination(prev => {
@@ -120,7 +120,7 @@ const AdminQuizzes = () => {
 
                                 </ul >
 
-                                <div style={{ height: quizzes.length > 0 ? '800px' : '430px' }} className="card ms-auto me-auto bg-glass">
+                                <div style={{ height: quizzes.length > 0 ? '800px' : '500px' }} className="card ms-auto me-auto bg-glass">
                                     <div className="card-body px-4 py-5 px-md-5">
 
                                         {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :
@@ -133,12 +133,14 @@ const AdminQuizzes = () => {
                                                             quizzes.map(quiz => (
                                                                 <div className="col-md-3 d-flex justify-content-evenly ms-auto me-auto" key={quiz.id}>
                                                                     <div className="card mt-4 home-card">
-                                                                        <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="home-card-image card-img-top p-3" alt="Default Quiz" />
-                                                                        <div className="card-body text-center fs-5">
-                                                                            <h3 className="card-title">{quiz.quizName}</h3>
-                                                                            <hr />
-                                                                            <p className="card-description">{quiz.quizDescription}</p>
-                                                                        </div>
+                                                                        <Link to={`/single-admin-quiz/${quiz.quizId}`}>
+                                                                            <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="home-card-image card-img-top p-3" alt="Default Quiz" />
+                                                                            <div className="card-body text-center fs-5">
+                                                                                <h3 className="card-title">{quiz.quizName}</h3>
+                                                                                <hr />
+                                                                                <p className="card-description">{quiz.quizDescription}</p>
+                                                                            </div>
+                                                                        </Link>
                                                                     </div>
                                                                 </div>
                                                             ))

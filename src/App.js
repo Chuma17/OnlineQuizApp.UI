@@ -30,11 +30,13 @@ import CreateQuiz from './views/Quiz/CreateQuiz';
 import AdminQuizzes from './views/Quiz/AdminQuizzes';
 import AdminPublished from './views/Quiz/AdminPublished';
 import AdminUnpublished from './views/Quiz/AdminUnpublished';
+import SingleAdminQuiz from './views/Quiz/SingleAdminQuiz';
 
 //Admin Question
 import AddQuestionToBank from './views/Question/AddQuestionToBank';
 import AdminQuestionsInBank from './views/Question/AdminQuestionsInBank';
 import AllQuestionsInBank from './views/Question/AllQuestionsInBank';
+import AdminQuestionsInQuiz from './views/Question/AdminQuestionsInQuiz';
 
 //Participant Quiz
 import SingleQuiz from './views/ParticipantQuiz/SingleQuiz';
@@ -50,7 +52,7 @@ const ROLES = {
 
 function checkLocalStorageExpiration() {
   const userDetailsTimestamp = parseInt(localStorage.getItem('userDetailsTimestamp'));
-  const expirationTime = 60 * 55 * 1000; // 1 hour in milliseconds
+  const expirationTime = (4 * 60 + 55) * 60 * 1000; // 4 hours 55 minutes in milliseconds
 
   if (userDetailsTimestamp) {
     const currentTime = new Date().getTime();
@@ -110,6 +112,9 @@ const App = () => {
           <Route path="/add-questions-to-bank" element={<AddQuestionToBank />} />
           <Route path="/view-admin-questions-in-bank" element={<AdminQuestionsInBank />} />
           <Route path="/view-all-questions-in-bank" element={<AllQuestionsInBank />} />
+          <Route path="/single-admin-quiz/:id" element={<SingleAdminQuiz />} />
+          <Route path="/view-admin-questions-in-quiz/:id" element={<AdminQuestionsInQuiz />} />
+
         </Route>
 
         <Route element={<RequireAuth allowedRoles={[ROLES.SuperAdmin]} />}>

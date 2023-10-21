@@ -1,45 +1,48 @@
 import { useParams } from "react-router";
 import axios from "../../axios/axios";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
-import "./ParticipantQuiz.css"
+import "./Quiz.css"
 
-
-const SingleQuiz = () => {
+const SingleAdminQuiz = () => {
     let params = useParams();
     const id = params.id;
     const navigate = useNavigate();
 
     const goBack = () => navigate(-1);
 
+    const user = JSON.parse(localStorage.getItem("userDetails"));
 
     const [loading, setLoading] = useState();
+    const [publishloading, setPublishLoading] = useState();
     const [quiz, setQuiz] = useState({});
     const [category, setCategory] = useState([]);
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
-    useEffect(() => {
-        async function getQuiz() {
-            try {
-                setLoading(true);
+    async function getQuiz(id) {
+        try {
+            setLoading(true);
 
-                const response = await axios.get(`Quiz/get-quiz/${id}`, {
-                });
+            const response = await axios.get(`Quiz/get-quiz/${id}`, {
+            });
 
-                const { data } = response;
-                if (data) {
-                    setLoading(false);
-                    setQuiz(data);
-                }
-
-            } catch (error) {
-
+            const { data } = response;
+            if (data) {
+                setLoading(false);
+                setQuiz(data);
             }
+
+        } catch (error) {
+
         }
-        getQuiz()
+    }
+
+    useEffect(() => {
+        
+        getQuiz(id)
     }, [id]);
 
 
@@ -48,6 +51,7 @@ const SingleQuiz = () => {
             try {
 
                 const response = await axios.get(`Quiz/get-quiz-categories/${id}`, {
+
                 });
 
                 const { data } = response;
@@ -62,6 +66,52 @@ const SingleQuiz = () => {
         getCategory()
     }, [id]);
 
+    async function PublishQuiz() {
+        try {
+            setPublishLoading(true);
+            const response = await axios.post(`Quiz/publish-quiz?quizId=${id}`, {}, {
+                headers: {
+                    Authorization: `Bearer ${user.accessToken}`
+                }
+            });
+
+            console.log(response);
+            if (response.status === 200) {
+                setPublishLoading(false);   
+                setSuccess(response.data); 
+            }
+
+        } catch (error) {
+            console.log(error);
+            setPublishLoading(false);                
+
+            setError(error.response.data);
+        }
+    }
+
+    async function UnPublishQuiz() {
+        try {
+            setPublishLoading(true);
+            const response = await axios.post(`Quiz/unpublish-quiz?quizId=${id}`, {}, {
+                headers: {
+                    Authorization: `Bearer ${user.accessToken}`
+                }
+            });
+
+            console.log(response);
+            if (response.status === 200) {
+                setPublishLoading(false);   
+                setSuccess(response.data); 
+            }
+
+        } catch (error) {
+            console.log(error);
+            setPublishLoading(false);                
+
+            setError(error.response.data);
+        }
+    }
+
 
     useEffect(() => {
         let errorTimeoutId;
@@ -70,12 +120,13 @@ const SingleQuiz = () => {
         if (error) {
             errorTimeoutId = setTimeout(() => {
                 setError(null);
-            }, 2000);
+            }, 4000);
         }
 
         if (success) {
             successTimeoutId = setTimeout(() => {
                 setSuccess(null);
+                getQuiz(id);            
             }, 2000);
         }
 
@@ -85,7 +136,6 @@ const SingleQuiz = () => {
         };
 
     }, [error, success]);
-
     return <>
         <section className="vh-110 background-radial-gradient overflow-hidden">
 
@@ -104,7 +154,7 @@ const SingleQuiz = () => {
                                 {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :
 
 
-                                    <div style={{ height: '730px', overflowY: 'auto' }}>                                        
+                                    <div style={{ height: '730px', overflowY: 'auto' }}>
 
                                         <div class="vh-110 container px-1 text-center">
 
@@ -112,9 +162,23 @@ const SingleQuiz = () => {
 
                                                 <div className="d-flex details justify-content-between">
                                                     <div className="col-md-7 ms-0">
+
+                                                        {publishloading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
+                                                        {error && <div className="alert alert-danger text-center">{error}</div>}
+                                                        {success && <div className="alert alert-success text-center">{success}</div>}
+
                                                         <div className="d-flex justify-content-between">
                                                             <button className="btn btn-danger mb-3" onClick={goBack}>Go Back</button>
-                                                            <button className="btn btn-success mb-3" onClick={goBack}>Take Quiz</button>
+                                                            {quiz.isPublished ?
+                                                                <button onClick={UnPublishQuiz} className="btn btn-danger mb-3">
+                                                                    Unpublish
+                                                                </button>
+                                                                :
+                                                                <button onClick={PublishQuiz} className="btn btn-success mb-3">
+                                                                    Publish
+                                                                </button>
+                                                            }
+                                                            <Link to={`/view-admin-questions-in-quiz/${id}`}><button className="btn btn-dark mb-3">Questions</button></Link>
                                                         </div>
                                                         <div className="quiz-picture">
                                                             <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="quiz-picture" alt="Default Quiz" />
@@ -164,4 +228,4 @@ const SingleQuiz = () => {
     </>
 }
 
-export default SingleQuiz;
+export default SingleAdminQuiz;

@@ -20,7 +20,7 @@ const HomePage = () => {
             try {
                 setLoading(true);
 
-                const response = await axios.get(`Quiz/get-all-unpublished-quizzes`, {
+                const response = await axios.get(`Quiz/get-all-published-quizzes`, {
                     params: {
                         PageNumber: pagination.currentPage,
                         PageSize: pagination.itemsPerPage

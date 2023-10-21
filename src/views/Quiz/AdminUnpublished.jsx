@@ -157,12 +157,16 @@ const AdminUnpublished = () => {
                                                                 <>
                                                                     <div className="col-md-3 d-flex justify-content-evenly ms-auto me-auto" key={quiz.id}>
                                                                         <div className="card mt-4 home-card">
-                                                                            <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="home-card-image card-img-top p-3" alt="Default Quiz" />
-                                                                            <div className="card-body text-center fs-5">
-                                                                                <h3 className="card-title">{quiz.quizName}</h3>
-                                                                                <hr />
-                                                                                <p className="card-description">{quiz.quizDescription}</p>
-                                                                            </div>
+
+                                                                            <Link to={`/single-admin-quiz/${quiz.quizId}`}>
+                                                                                <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="home-card-image card-img-top p-3" alt="Default Quiz" />
+                                                                                <div className="card-body text-center fs-5">
+                                                                                    <h3 className="card-title">{quiz.quizName}</h3>
+                                                                                    <hr />
+                                                                                    <p className="card-description">{quiz.quizDescription}</p>
+                                                                                </div>
+                                                                            </Link>
+                                                                            
                                                                         </div>
                                                                     </div>
                                                                 </>
