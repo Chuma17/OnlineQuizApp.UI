@@ -75,7 +75,7 @@ const AllQuestionsInBank = () => {
 
     function handleLastPage() {
         setPagination(prev => ({ ...prev, currentPage: pagination.totalPages }));
-    }    
+    }
 
     return <>
         <section className="vh-110 background-radial-gradient overflow-hidden">
@@ -116,7 +116,7 @@ const AllQuestionsInBank = () => {
                                                         {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :
                                                             <div className="card mb-4">
                                                                 <div className="card-header py-3 d-flex justify-content-between">
-                                                                    <h5 className="mb-0 fs-4">Questions - { questionCount } {questions.length === 1 ? 'question' : 'questions'}
+                                                                    <h5 className="mb-0 fs-4">Questions - {questionCount} {questions.length === 1 ? 'question' : 'questions'}
                                                                     </h5>
                                                                     <Link to="/add-questions-to-bank"><button className="btn btn-dark">Add Question</button></Link>
                                                                 </div>
@@ -132,11 +132,16 @@ const AllQuestionsInBank = () => {
                                                                                     <div className="col-lg-3 col-md-12 mb- mb-lg-0 d-flex flex-column justify-content-between">
                                                                                         <div className="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
                                                                                             <img src={question.imageUrl || require('./question.png')}
-                                                                                                className="w-100 h-100" alt="Question Item" />
+                                                                                                className="w-100 quest-picture" alt="Question Item" />
                                                                                             <Link to="/">
                                                                                                 <div className="mask" style={{ backgroundColor: 'rgba(251, 251, 251, 0.2)' }}></div>
                                                                                             </Link>
                                                                                         </div>
+
+                                                                                    </div>
+
+                                                                                    <div className="col-lg- col-md-9 mb-4 mb-lg-0">
+                                                                                        <p className="fs-5"><strong>{question.questionText}</strong></p>
                                                                                         <div className="mt-2">
                                                                                             {question.questionTypeName}
                                                                                         </div>
@@ -144,10 +149,6 @@ const AllQuestionsInBank = () => {
                                                                                         <div>
                                                                                             {question.categoryName}
                                                                                         </div>
-                                                                                    </div>
-
-                                                                                    <div className="col-lg- col-md-9 mb-4 mb-lg-0">
-                                                                                        <p className="fs-5"><strong>{question.questionText}</strong></p>
                                                                                     </div>
 
                                                                                     <div>
@@ -190,7 +191,7 @@ const AllQuestionsInBank = () => {
                     </div>
                 </div>
             </div>
-        </section>        
+        </section>
     </>
 }
 

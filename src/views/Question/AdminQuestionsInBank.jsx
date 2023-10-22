@@ -138,7 +138,7 @@ const AdminQuestionsInBank = () => {
                                                         {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :
                                                             <div className="card mb-4">
                                                                 <div className="card-header py-3 d-flex justify-content-between">
-                                                                    <h5 className="mb-0 fs-4">Questions - { questionCount } {questions.length === 1 ? 'question' : 'questions'}
+                                                                    <h5 className="mb-0 fs-4">Questions - {questionCount} {questions.length === 1 ? 'question' : 'questions'}
                                                                     </h5>
                                                                     <Link to="/add-questions-to-bank"><button className="btn btn-dark">Add Question</button></Link>
                                                                 </div>
@@ -154,11 +154,18 @@ const AdminQuestionsInBank = () => {
                                                                                     <div className="col-lg-3 col-md-12 mb- mb-lg-0 d-flex flex-column justify-content-between">
                                                                                         <div className="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
                                                                                             <img src={question.imageUrl || require('./question.png')}
-                                                                                                className="w-100 h-100" alt="Question Item" />
+                                                                                                className="w-100 quest-picture" alt="Question Item" />
                                                                                             <Link to="/">
                                                                                                 <div className="mask" style={{ backgroundColor: 'rgba(251, 251, 251, 0.2)' }}></div>
                                                                                             </Link>
                                                                                         </div>
+
+                                                                                    </div>
+
+                                                                                    <div className="col-lg- col-md-9 mb-4 mb-lg-0">
+                                                                                        <p className="fs-5"><strong>{question.questionText}</strong></p>
+                                                                                        <p><strong>Answer: {question.correctAnswer} </strong></p>
+
                                                                                         <div className="mt-2">
                                                                                             {question.questionTypeName}
                                                                                         </div>
@@ -166,23 +173,6 @@ const AdminQuestionsInBank = () => {
                                                                                         <div>
                                                                                             {question.categoryName}
                                                                                         </div>
-                                                                                    </div>
-
-                                                                                    <div className="col-lg- col-md-9 mb-4 mb-lg-0">
-                                                                                        <p className="fs-5"><strong>{question.questionText}</strong></p>
-                                                                                        <p><strong>Answer: {question.correctAnswer} </strong></p>
-                                                                                        <button
-                                                                                            type="button"
-                                                                                            className="btn btn-danger btn-sm mt-2 me-1"
-                                                                                            data-bs-toggle="modal"
-                                                                                            data-bs-target="#deleteQuestionModal"
-                                                                                            data-mdb-toggle="tooltip"
-                                                                                            title="Remove item"
-                                                                                            onClick={() => setSelectedQuestionId(question.questionId)}
-                                                                                        >
-                                                                                            <i className="fas fa-trash text-light"></i>
-                                                                                        </button>
-
                                                                                     </div>
 
                                                                                     <div>
@@ -225,32 +215,7 @@ const AdminQuestionsInBank = () => {
                     </div>
                 </div>
             </div>
-        </section>
-
-        <div className="modal fade" id="deleteQuestionModal" tabindex="-1" aria-labelledby="deleteQuestionModalLabel" aria-hidden="true">
-            <div className="modal-dialog text-light">
-                <div className="modal-content bg-dark">
-                    <div className="modal-header">
-                        <h1 className="modal-title fs-5 text-light" id="deleteQuestionModalLabel">Delete Question</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div className="modal-body text-light">
-                        Are you sure you want to delete this Question?
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button
-                            className="btn btn-danger text-light"
-                            data-bs-dismiss="modal"
-                            onClick={() => DeleteQuestion(selectedQuestionId)}
-                        >
-                            Confirm
-                        </button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
+        </section>        
     </>
 }
 

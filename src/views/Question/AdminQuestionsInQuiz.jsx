@@ -156,11 +156,18 @@ const AdminQuestionsInQuiz = () => {
                                                                                     <div className="col-lg-3 col-md-12 mb- mb-lg-0 d-flex flex-column justify-content-between">
                                                                                         <div className="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
                                                                                             <img src={question.imageUrl || require('./question.png')}
-                                                                                                className="w-100 h-100" alt="Question Item" />
+                                                                                                className="w-100 quest-picture" alt="Question Item" />
                                                                                             <Link to="/">
                                                                                                 <div className="mask" style={{ backgroundColor: 'rgba(251, 251, 251, 0.2)' }}></div>
                                                                                             </Link>
                                                                                         </div>
+
+                                                                                    </div>
+
+                                                                                    <div className="col-lg- col-md-9 mb-4 mb-lg-0">
+                                                                                        <p className="fs-5"><strong>{question.questionText}</strong></p>
+                                                                                        <p><strong>Answer: {question.correctAnswer} </strong></p>
+
                                                                                         <div className="mt-2">
                                                                                             {question.questionTypeName}
                                                                                         </div>
@@ -168,23 +175,6 @@ const AdminQuestionsInQuiz = () => {
                                                                                         <div>
                                                                                             {question.categoryName}
                                                                                         </div>
-                                                                                    </div>
-
-                                                                                    <div className="col-lg- col-md-9 mb-4 mb-lg-0">
-                                                                                        <p className="fs-5"><strong>{question.questionText}</strong></p>
-                                                                                        <p><strong>Answer: {question.correctAnswer} </strong></p>
-                                                                                        <button
-                                                                                            type="button"
-                                                                                            className="btn btn-danger btn-sm mt-2 me-1"
-                                                                                            data-bs-toggle="modal"
-                                                                                            data-bs-target="#deleteQuestionModal"
-                                                                                            data-mdb-toggle="tooltip"
-                                                                                            title="Remove item"
-                                                                                            onClick={() => setSelectedQuestionId(question.questionId)}
-                                                                                        >
-                                                                                            <i className="fas fa-trash text-light"></i>
-                                                                                        </button>
-
                                                                                     </div>
 
                                                                                     <div>

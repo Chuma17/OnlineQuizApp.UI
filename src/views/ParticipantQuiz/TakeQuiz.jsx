@@ -206,31 +206,17 @@ const TakeQuiz = () => {
                 <div className="container px-4 py-4 px-md-5 text-lg-start my-">
                     <div className="row gx-lg-5 align-items-center mb-4">
 
-                        <div className="col-lg-12 ms-auto me-auto mb-lg-0 position-relative">
+                        <div className="col-lg-10 ms-auto me-auto mb-lg-0 position-relative">
                             <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong"></div>
                             <div id="radius-shape-2" className="position-absolute shadow-5-strong"></div>
 
                             <div className="bg-glass">
                                 <div className="px-4 py-5 px-md-5">
 
-                                    <div className="d-flex justify-content-around mb-3">                                        
+                                    <div className="d-flex justify-content-around mb-3">
 
                                         <div className="text-center col-md-5 fs-5 d-flex flex-column justify-content-around">
                                             <h3 className="">{quiz.quizName}</h3>
-                                            <hr />
-                                            <div>
-                                                <div>
-                                                    <p className="fs-4 mb-2">Categories:</p>
-                                                    {category.length > 0 ? (
-                                                        category.map((item, index) => (
-                                                            <div key={index}>{item}</div>
-                                                        ))
-                                                    ) : (
-                                                        <div>No categories</div>
-                                                    )}
-                                                </div>
-                                            </div>
-
                                         </div>
                                     </div>
 
@@ -250,9 +236,10 @@ const TakeQuiz = () => {
                                                                         </div>
                                                                         <ul>
                                                                             {question.answers.map((answer) => (
-                                                                                <div key={answer.answerId}>
+                                                                                <div className="fs-5" key={answer.answerId}>
                                                                                     <label>
                                                                                         <input
+                                                                                            
                                                                                             type="radio"
                                                                                             name={question.questionID}
                                                                                             value={answer.answerId}
@@ -279,7 +266,7 @@ const TakeQuiz = () => {
 
                                                                 <button
                                                                     type="button"
-                                                                    className="btn btn-success"
+                                                                    className="btn btn-success mt-3"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#submitQuizModal"
                                                                     data-mdb-toggle="tooltip"

@@ -24,7 +24,7 @@ const AddQuestionToBank = () => {
     const [categories, setCategories] = useState([]);
     const [categoryId, setCategoryId] = useState("");
 
-    const [profileImage, setProfileImage] = useState(null);
+    const [profileImage, setProfileImage] = useState();
     const [preview, setPreview] = useState(null);
     const fileInput = useRef(null);
 
@@ -372,11 +372,8 @@ const AddQuestionToBank = () => {
             if (response.status === 200) {
                 console.log(response.data);
                 setSuccess(response.data);
-                // Add code to publish the question
-
+                // Add code to publish the question                
                 AddQuestionPicture(selectedQuestionId);
-                PublishQuestion(selectedQuestionId);
-
             }
 
         } catch (error) {
@@ -394,7 +391,7 @@ const AddQuestionToBank = () => {
                 setError("Error adding answers.");
             }
         }
-    };    
+    };
 
 
     const AddQuestionPicture = async (selectedQuestionId) => {
@@ -411,8 +408,10 @@ const AddQuestionToBank = () => {
 
                 if (questionPicResponse.status === 200) {
 
-                    console.log(questionPicResponse);
-                    setSuccess(questionPicResponse.data.message);
+                    console.log(questionPicResponse.data.message);
+                    PublishQuestion(selectedQuestionId);
+
+                    // setSuccess(questionPicResponse.data.message);
                     // setError('');
                 }
             }
@@ -420,7 +419,7 @@ const AddQuestionToBank = () => {
             catch (error) {
                 setIsMainLoading(false);
 
-                if (error.questionPicResponse.status === 401) {
+                if (error.response.status === 401) {
                     window.alert('Your session has expired. Login again!');
                     localStorage.removeItem('userDetails');
 
@@ -428,8 +427,8 @@ const AddQuestionToBank = () => {
                 } else {
                     setIsMainLoading(false);
 
-                    console.error(error.questionPicResponse);
-                    setError(error.questionPicResponse.data);
+                    console.error(error.response);
+                    setError(error.response.data);
                 }
             }
         }

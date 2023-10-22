@@ -6,6 +6,10 @@
     height: 300px !important;
     width: 100%;
 }
+.question-picture{
+    height: 200px !important;
+    width: 300px;
+}
 
 @media (max-width: 1182px) {
     .details{
