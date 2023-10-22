@@ -220,7 +220,7 @@ const TakeQuiz = () => {
                                         </div>
                                     </div>
 
-                                    <div style={{ height: questions.length > 0 ? '700px' : '500px' }} className="card ms-auto me-auto bg-glass">
+                                    <div style={{ height: questions.length > 0 ? 'fit-content' : '500px' }} className="card ms-auto me-auto bg-glass">
                                         <div className="card-body px-4 py-4 px-md-5">
 
                                             <section className="h-100 gradient-custom">
@@ -258,9 +258,9 @@ const TakeQuiz = () => {
 
                                                         {questions.length > 0 && (
                                                             <div className="text-center">
-                                                                <div className="ms-2 mb-1">
+                                                                <div className="">
                                                                     <button className="btn btn-sm btn-light p-1 m-1" onClick={handlePrevPage} disabled={pagination.currentPage === 1}>Previous</button>
-                                                                    <span className="text-dark"> Question: {pagination.currentPage} of {pagination.totalPages === 0 ? 1 : pagination.totalPages} </span>
+                                                                    <span className="text-dark"> {pagination.currentPage} of {pagination.totalPages === 0 ? 1 : pagination.totalPages} </span>
                                                                     <button className="btn btn-sm btn-light p-1 m-1" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}>Next</button>
                                                                 </div>
 
