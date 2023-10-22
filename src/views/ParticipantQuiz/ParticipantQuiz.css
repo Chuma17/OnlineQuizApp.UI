@@ -2,7 +2,10 @@
     height: 200px !important;
     width: 300px;
 }
-
+.quiz-picture{
+    height: 300px !important;
+    width: 100%;
+}
 
 @media (max-width: 1182px) {
     .details{

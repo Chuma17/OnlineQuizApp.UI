@@ -213,10 +213,7 @@ const TakeQuiz = () => {
                             <div className="bg-glass">
                                 <div className="px-4 py-5 px-md-5">
 
-                                    <div className="d-flex justify-content-around mb-3">
-                                        <div className="take-quiz-picture">
-                                            <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="take-quiz-picture" alt="Default Quiz" />
-                                        </div>
+                                    <div className="d-flex justify-content-around mb-3">                                        
 
                                         <div className="text-center col-md-5 fs-5 d-flex flex-column justify-content-around">
                                             <h3 className="">{quiz.quizName}</h3>
