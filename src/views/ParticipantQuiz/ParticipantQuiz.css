@@ -1,7 +1,8 @@
-.quiz-picture{
-    height: 350px !important;
-    width: 100%;
+.take-quiz-picture{
+    height: 200px !important;
+    width: 300px;
 }
+
 
 @media (max-width: 1182px) {
     .details{

@@ -40,6 +40,7 @@ import AdminQuestionsInQuiz from './views/Question/AdminQuestionsInQuiz';
 
 //Participant Quiz
 import SingleQuiz from './views/ParticipantQuiz/SingleQuiz';
+import TakeQuiz from './views/ParticipantQuiz/TakeQuiz';
 
 //Views
 import HomePage from './views/HomePage';
@@ -92,6 +93,7 @@ const App = () => {
         <Route path="/resend-confirmation-link" element={<ResendLink />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/single-participant-quiz/:id" element={<SingleQuiz />} />
+        <Route path="/ongoing-quiz/:id" element={<TakeQuiz />} />
 
         {/* protected routes */}
 

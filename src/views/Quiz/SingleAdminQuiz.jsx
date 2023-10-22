@@ -178,7 +178,7 @@ const SingleAdminQuiz = () => {
                                                                     Publish
                                                                 </button>
                                                             }
-                                                            <Link to={`/view-admin-questions-in-quiz/${id}`}><button className="btn btn-dark mb-3">Questions</button></Link>
+                                                            <Link to={`/view-admin-questions-in-quiz/${id}`}><button className="btn btn-dark mb-3">Settings</button></Link>
                                                         </div>
                                                         <div className="quiz-picture">
                                                             <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="quiz-picture" alt="Default Quiz" />

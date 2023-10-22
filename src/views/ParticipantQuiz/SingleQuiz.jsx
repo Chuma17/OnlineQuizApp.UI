@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import axios from "../../axios/axios";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 import "./ParticipantQuiz.css"
 
@@ -13,8 +13,10 @@ const SingleQuiz = () => {
 
     const goBack = () => navigate(-1);
 
+    const user = JSON.parse(localStorage.getItem("userDetails"));
 
     const [loading, setLoading] = useState();
+    const [takeQuizloading, setTakeQuizLoading] = useState();
     const [quiz, setQuiz] = useState({});
     const [category, setCategory] = useState([]);
 
@@ -62,6 +64,30 @@ const SingleQuiz = () => {
         getCategory()
     }, [id]);
 
+    async function startQuiz(params) {
+        try {
+            setTakeQuizLoading(true);
+
+            const response = await axios.post(`Quiz/start-quiz?quizId=${id}`, {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`
+                    }
+                });
+
+            if (response.status === 200) {
+                setTakeQuizLoading(false);
+                navigate(`/ongoing-quiz/${id}`);
+            }
+        } catch (error) {
+            setTakeQuizLoading(false);
+            console.error(error);
+            if (error.response.data === "You are already in this quiz") {
+                navigate(`/ongoing-quiz/${id}`);                
+            }
+            // setError(error.response.data);
+        }
+    }
 
     useEffect(() => {
         let errorTimeoutId;
@@ -103,8 +129,7 @@ const SingleQuiz = () => {
 
                                 {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :
 
-
-                                    <div style={{ height: '730px', overflowY: 'auto' }}>                                        
+                                    <div style={{ height: '730px', overflowY: 'auto' }}>
 
                                         <div class="vh-110 container px-1 text-center">
 
@@ -112,9 +137,12 @@ const SingleQuiz = () => {
 
                                                 <div className="d-flex details justify-content-between">
                                                     <div className="col-md-7 ms-0">
+                                                        {takeQuizloading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
+                                                        {error && <div className="me-4 ms-4 alert alert-danger text-center">{error}</div>}
+
                                                         <div className="d-flex justify-content-between">
                                                             <button className="btn btn-danger mb-3" onClick={goBack}>Go Back</button>
-                                                            <button className="btn btn-success mb-3" onClick={goBack}>Take Quiz</button>
+                                                            <button onClick={startQuiz} className="btn btn-success mb-3">Take Quiz</button>
                                                         </div>
                                                         <div className="quiz-picture">
                                                             <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="quiz-picture" alt="Default Quiz" />
