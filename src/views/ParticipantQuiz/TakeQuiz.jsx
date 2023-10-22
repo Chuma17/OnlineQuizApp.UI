@@ -82,6 +82,8 @@ const TakeQuiz = () => {
 
         localStorage.setItem('selectedAnswers', JSON.stringify(updatedSelectedAnswers));
         localStorage.setItem('submitSelectedAnswers', JSON.stringify(updatedStoredAnswers));
+
+        setsubmitStoredAnswers(JSON.parse(localStorage.getItem('submitSelectedAnswers')))
     };
 
     async function getQuestions() {
@@ -118,6 +120,7 @@ const TakeQuiz = () => {
         if (storedAnswers) {
             setSelectedAnswers(storedAnswers);
         }
+
     }, []);
 
     function handleNextPage() {
@@ -144,14 +147,13 @@ const TakeQuiz = () => {
     }
 
     const submitQuiz = async () => {
-        setsubmitStoredAnswers(JSON.parse(localStorage.getItem('submitSelectedAnswers')))
 
         // if (submitStoredAnswers.length === 0) {
         //     alert("Please select answers before submitting the quiz.");
         //     return;
         // }
 
-        // console.log('Stored Answers:', submitStoredAnswers);
+        console.log('Stored Answers:', submitStoredAnswers);
 
         try {
             setSubmitLoading(true);
@@ -238,8 +240,7 @@ const TakeQuiz = () => {
                                                                             {question.answers.map((answer) => (
                                                                                 <div className="fs-5" key={answer.answerId}>
                                                                                     <label>
-                                                                                        <input
-                                                                                            
+                                                                                        <input                                                                                            
                                                                                             type="radio"
                                                                                             name={question.questionID}
                                                                                             value={answer.answerId}
