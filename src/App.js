@@ -42,6 +42,9 @@ import AdminQuestionsInQuiz from './views/Question/AdminQuestionsInQuiz';
 import SingleQuiz from './views/ParticipantQuiz/SingleQuiz';
 import TakeQuiz from './views/ParticipantQuiz/TakeQuiz';
 
+//Participant Result
+import ParticipantResult from './views/Result/ParticipantResult';
+
 //Views
 import HomePage from './views/HomePage';
 
@@ -104,6 +107,7 @@ const App = () => {
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/two-factor-authentication" element={<TwoFactorAuthentication />} />
           <Route path="/profile-picture" element={<ProfilePicture />} />
+          <Route path="/participant-result" element={<ParticipantResult />} />
         </Route>
 
         <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>

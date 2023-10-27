@@ -409,11 +409,12 @@ const AddQuestionToBank = () => {
                 if (questionPicResponse.status === 200) {
 
                     console.log(questionPicResponse.data.message);
-                    PublishQuestion(selectedQuestionId);
 
                     // setSuccess(questionPicResponse.data.message);
                     // setError('');
                 }
+                PublishQuestion(selectedQuestionId);
+
             }
 
             catch (error) {
@@ -452,6 +453,7 @@ const AddQuestionToBank = () => {
                 console.log(response.data);
                 clearQuestionDetails();
                 window.location.reload();
+
                 // Add code to handle successful question publishing
             }
 
@@ -509,6 +511,7 @@ const AddQuestionToBank = () => {
                 console.log(deleteResponse);
                 getQuestions();
                 getQuizQuestions();
+                clearQuestionDetails();
                 // setError('');
             }
         } catch (error) {

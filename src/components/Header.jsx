@@ -61,7 +61,7 @@ const Header = () => {
                                         }
                                         <Link to="/create-quiz" className="text-light nav-link">Quiz</Link>
                                         <Link to="/add-questions-to-bank" className="text-light nav-link">Question</Link>
-                                        <Link to="/" className="text-light nav-link">Result</Link>
+                                        <Link to="/participant-result" className="text-light nav-link">Result</Link>
                                     </div>
                                 </>
 
@@ -72,7 +72,7 @@ const Header = () => {
                             <div className="d-flex text-center fs-6">
                                 <hr className="text-light hr-mobile-only" />
 
-                                <Link to="/" className="text-light nav-link">Results</Link>
+                                <Link to="/participant-result" className="text-light nav-link">Results</Link>
                             </div>
                         }
 
