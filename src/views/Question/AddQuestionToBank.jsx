@@ -372,8 +372,12 @@ const AddQuestionToBank = () => {
             if (response.status === 200) {
                 console.log(response.data);
                 setSuccess(response.data);
-                // Add code to publish the question                
-                AddQuestionPicture(selectedQuestionId);
+                // Add code to publish the question  
+                if (profileImage) {
+                    AddQuestionPicture(selectedQuestionId);
+                }
+                PublishQuestion(selectedQuestionId);
+
             }
 
         } catch (error) {
@@ -413,7 +417,6 @@ const AddQuestionToBank = () => {
                     // setSuccess(questionPicResponse.data.message);
                     // setError('');
                 }
-                PublishQuestion(selectedQuestionId);
 
             }
 
