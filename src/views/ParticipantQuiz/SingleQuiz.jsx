@@ -65,6 +65,10 @@ const SingleQuiz = () => {
     }, [id]);
 
     async function startQuiz(params) {
+        if (user == null) {
+            setError("You have to be logged in");
+            return
+        }
         try {
             setTakeQuizLoading(true);
 
@@ -138,7 +142,7 @@ const SingleQuiz = () => {
                                                 <div className="d-flex details justify-content-between">
                                                     <div className="col-md-7 ms-0">
                                                         {takeQuizloading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
-                                                        {error && <div className="me-4 ms-4 alert alert-danger text-center">{error}</div>}
+                                                        {error && <div className="alert alert-danger text-center">{error}</div>}
 
                                                         <div className="d-flex justify-content-between">
                                                             <button className="btn btn-danger mb-3" onClick={goBack}>Go Back</button>

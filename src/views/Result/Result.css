@@ -4,9 +4,7 @@
     margin: 0 auto;
     grid-template-areas: 
     "header header header header header header header header header header header header"
-    "aside aside main main main main main main main main section section"
-    "aside aside main main main main main main main main section section"
-    "aside aside main main main main main main main main section section"    
+    "aside aside aside main main main main main main main section section"    
 }
 
 #result-page-content > *{
@@ -20,7 +18,8 @@
 }
 #result-main{
     grid-area: main;
-    height: 100%;    
+    max-height: 600px !important;
+    
 }
 #result-aside{
     grid-area: aside;
@@ -30,5 +29,25 @@
 }
 #result-section{
     grid-area: section;
-    height: 100%;
+    max-height: 600px !important;
+
+}
+.selected-result {
+    background-color: #6C757D !important;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: white !important;
+    border-radius: 5px;
+}
+.wrong-answer{
+    background-color: #d9534f  !important;
+    padding: 5px;
+    color: white !important;
+    border-radius: 5px;    
+}
+.correct-answer{
+    background-color: #5cb85c !important;
+    padding: 5px;
+    color: white !important;
+    border-radius: 5px;
 }
