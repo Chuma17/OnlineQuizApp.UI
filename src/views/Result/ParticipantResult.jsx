@@ -13,13 +13,9 @@ const ParticipantResult = () => {
     const [quizzes, setQuizzes] = useState([]);
     const [quizId, setQuizId] = useState([]);
 
-    const [resultQuestions, setResultQuestions] = useState([]);
     const [selectedResultId, setSelectedResultId] = useState("");
     const [resultDetails, setResultDetails] = useState([]);
-    const [submittedAnswers, setSubmittedAnswers] = useState([]);
     const navigate = useNavigate();
-    const savedResultDetails = JSON.parse(localStorage.getItem('resultDetails'));
-    const savedSelectedResultId = localStorage.getItem('selectedResultId');
 
     async function getResults(quizId) {
         try {
@@ -45,15 +41,10 @@ const ParticipantResult = () => {
     }
 
     useEffect(() => {
-        
+
 
         getResults();
     }, [user.accessToken]);
-
-    function clearQuestionDetails() {
-        localStorage.removeItem('resultDetails');
-        localStorage.removeItem('selectedResultId');
-    }
 
     useEffect(() => {
         async function getQuizzes() {
@@ -80,22 +71,6 @@ const ParticipantResult = () => {
         getQuizzes()
     }, []);
 
-    useEffect(() => {
-
-        if (savedResultDetails) {
-            setResultDetails(savedResultDetails);
-        }
-
-        if (savedSelectedResultId === resultDetails.submissionId) {
-            // Apply background color
-            setSelectedResultId(resultDetails.submissionId);
-        }
-
-        // if (selectedResultId != null) {
-        //     ShowDetails(selectedResultId);
-        // }
-    }, [resultDetails.resultId]);
-
 
 
     async function ShowDetails(submissionId) {
@@ -116,8 +91,16 @@ const ParticipantResult = () => {
                     }
                 });
 
+            const resultResponse = await axios.get(`Result/get-single-result?submissionId=${submissionId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`
+                    }
+                });
+
             const resultQuestions = resultQuestionsResponse.data;
             const submittedAnswers = submittedAnswersResponse.data;
+            const resultDetails = resultResponse.data;
 
             const updatedCombinedData = resultQuestions.map((resultQuestion) => {
                 const submittedAnswer = submittedAnswers.find(answer => answer.questionId === resultQuestion.questionID);
@@ -132,24 +115,8 @@ const ParticipantResult = () => {
             console.log(updatedCombinedData);
             setLoading(false);
 
-
-            // if (response.status === 200) {
-            //     setLoading(false);
-
-            //     clearQuestionDetails();
-            //     console.log(data);
-            //     setResultQuestions(data);
-
-
-            //     setResultDetails(data[0]);
-            //     setSelectedResultId(submissionId);
-            //     // Save details to local storage
-            //     localStorage.setItem('resultDetails', JSON.stringify(data[0]));
-
-            //     // Set the selected question ID
-            //     localStorage.setItem('selectedResultId', submissionId);
-            // }
-
+            setSelectedResultId(submissionId);
+            setResultDetails(resultDetails);
         } catch (error) {
 
             if (error.response.status === 401) {
@@ -210,11 +177,19 @@ const ParticipantResult = () => {
 
                     {results.length > 0 ? (
                         results.map((result, i) => {
-                            const truncatedText = result.quizName.length > 35 ? result.quizName.slice(0, 35) + '...' : result.quizName;
+                            const truncatedText = new Date(result.submissionTime).toLocaleString('en-US', {
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                hour12: true,
+                                timeZone: 'UTC'
+                            });
 
                             return (
                                 <div onClick={() => ShowDetails(result.submissionId)} className={`unpublished-questions p-2 d-flex justify-content-between ${selectedResultId === result.submissionId ? 'selected-result' : ''}`} key={result.submissionId}>
-                                    <div  className="question-text me-0">
+                                    <div className="question-text me-0">
                                         <button disabled className="btn btn-dark">{i + 1}</button> <span className={`mt-auto mb-auto question-text ${selectedResultId === result.submissionId ? 'text-light' : ''}`}>{truncatedText}</span>
                                     </div>
 
@@ -286,7 +261,13 @@ const ParticipantResult = () => {
             </main>
 
             <section id="result-section" style={{ overflowY: 'auto' }}>
-                Section
+                <div>
+                    Score : {resultDetails.score}
+                </div>
+                <hr />
+                <div>
+                    Overall score : {resultDetails.overallScore}
+                </div>
             </section>
 
         </div>
