@@ -239,12 +239,12 @@ const ParticipantResult = () => {
                                                     </label>
                                                     {isCheckedAnswer && (
                                                         <span className={`${isAnswerCorrect ? 'correct-answer' : 'wrong-answer'} ms-2`}>
-                                                            {isAnswerCorrect ? 'Correct' : 'Wrong'}
+                                                            {isAnswerCorrect ? <i class="fa-solid fa-check text-light p-1"></i> : <i class="fa-solid fa-x text-light p-1"></i>}
                                                         </span>
                                                     )}
                                                     {isAnswerCorrect && !isCheckedAnswer && (
                                                         <span className="correct-answer ms-2">
-                                                            Correct
+                                                            <i class="fa-solid fa-check text-light p-1"></i>
                                                         </span>
                                                     )}
                                                 </div>
