@@ -134,10 +134,105 @@ const ParticipantResult = () => {
 
 
     return <>
+
         <div id="result-page-content">
 
-            <header id="result-header">
-                Header
+            <header className="d-flex justify-content-center" id="result-header">
+                <div className="d-flex mt-auto mb-auto">
+                    <div className="me-3">
+                        Score : {resultDetails.score}
+                    </div>
+                    <div>
+                        Overall score : {resultDetails.overallScore}
+                    </div>
+                </div>                
+
+                <button type="button" className="btn btn-dark result-button" data-bs-toggle="modal" data-bs-target="#quizResultModal">
+                    <i className="fa-solid fa-bars text-light"></i>
+
+                </button>
+
+                <div class="modal fade" id="quizResultModal" tabindex="-1" aria-labelledby="quizResultModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="quizResultModalLabel">Quiz</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+                                <div className="mb-4">
+                                    <label className="form-label" htmlfor="halls">Quiz</label>
+                                    <div className="select-container">
+                                        <select
+                                            value={quizId}
+                                            onChange={e => {
+                                                setQuizId(e.target.value);
+                                                getResults(e.target.value);
+                                            }}
+                                            required
+                                            className="form-control form-select"
+                                        >
+                                            <option hidden value="">
+                                                --- Select Quiz ---
+                                            </option>
+
+                                            {quizzes.length > 0 &&
+                                                quizzes.map(quiz => {
+                                                    return (
+                                                        <option key={quiz.quizId} value={quiz.quizId}>
+                                                            {quiz.quizName}
+                                                        </option>
+                                                    );
+                                                })}
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                {isAsideLoading && <div className="" style={{ textAlign: 'center' }}><Loading /> </div>}
+
+                                <div>
+
+                                    {results.length > 0 ? (
+                                        results.map((result, i) => {
+                                            const submissionTime = new Date(result.submissionTime);
+                                            const userTimeOptions = {
+                                                year: 'numeric',
+                                                month: '2-digit',
+                                                day: '2-digit',
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                                hour12: true
+                                            };
+
+                                            const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                                            const truncatedText = submissionTime.toLocaleString('en-US', { ...userTimeOptions, timeZone: userTimeZone });
+
+
+                                            return (
+                                                <div onClick={() => ShowDetails(result.submissionId)} className={`unpublished-questions p-2 d-flex justify-content-between ${selectedResultId === result.submissionId ? 'selected-result' : ''}`} key={result.submissionId}>
+                                                    <div className="question-text me-0">
+                                                        <button disabled className="btn btn-dark">{i + 1}</button> <span className={`mt-auto mb-auto question-text ${selectedResultId === result.submissionId ? 'text-light' : ''}`}>{truncatedText}</span>
+                                                    </div>
+
+                                                </div>
+                                            );
+                                        })
+                                    ) : (
+                                        <div className="text-center mt-3">No Results</div>
+                                    )}
+
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </header>
 
             <aside id="result-aside" style={{ overflowY: 'auto' }}>
@@ -177,15 +272,19 @@ const ParticipantResult = () => {
 
                     {results.length > 0 ? (
                         results.map((result, i) => {
-                            const truncatedText = new Date(result.submissionTime).toLocaleString('en-US', {
+                            const submissionTime = new Date(result.submissionTime);
+                            const userTimeOptions = {
                                 year: 'numeric',
                                 month: '2-digit',
                                 day: '2-digit',
                                 hour: '2-digit',
                                 minute: '2-digit',
-                                hour12: true,
-                                // timeZone: 'UTC'
-                            });
+                                hour12: true
+                            };
+
+                            const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                            const truncatedText = submissionTime.toLocaleString('en-US', { ...userTimeOptions, timeZone: userTimeZone });
+
 
                             return (
                                 <div onClick={() => ShowDetails(result.submissionId)} className={`unpublished-questions p-2 d-flex justify-content-between ${selectedResultId === result.submissionId ? 'selected-result' : ''}`} key={result.submissionId}>
@@ -239,12 +338,12 @@ const ParticipantResult = () => {
                                                     </label>
                                                     {isCheckedAnswer && (
                                                         <span className={`${isAnswerCorrect ? 'correct-answer' : 'wrong-answer'} ms-2`}>
-                                                            {isAnswerCorrect ? <i class="fa-solid fa-check text-light p-1"></i> : <i class="fa-solid fa-x text-light p-1"></i>}
+                                                            {isAnswerCorrect ? <i className="fa-solid fa-check text-light p-1"></i> : <i className="fa-solid fa-x text-light p-1"></i>}
                                                         </span>
                                                     )}
                                                     {isAnswerCorrect && !isCheckedAnswer && (
                                                         <span className="correct-answer ms-2">
-                                                            <i class="fa-solid fa-check text-light p-1"></i>
+                                                            <i className="fa-solid fa-check text-light p-1"></i>
                                                         </span>
                                                     )}
                                                 </div>
@@ -259,16 +358,6 @@ const ParticipantResult = () => {
                 </div>
 
             </main>
-
-            <section id="result-section" style={{ overflowY: 'auto' }}>
-                <div>
-                    Score : {resultDetails.score}
-                </div>
-                <hr />
-                <div>
-                    Overall score : {resultDetails.overallScore}
-                </div>
-            </section>
 
         </div>
 

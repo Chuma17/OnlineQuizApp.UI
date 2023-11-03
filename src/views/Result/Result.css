@@ -1,37 +1,35 @@
-#result-page-content{
+#result-page-content {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);     
+    grid-template-columns: repeat(12, 1fr);
     margin: 0 auto;
-    grid-template-areas: 
-    "header header header header header header header header header header header header"
-    "aside aside aside main main main main main main main section section"    
+    grid-template-areas:
+        "header header header header header header header header header header header header"
+        "aside aside aside main main main main main main main main main"
 }
 
-#result-page-content > *{
+#result-page-content>* {
     border: 1px rgb(194, 190, 190) solid;
-    padding: 20px;    
+    padding: 20px;
 }
 
-#result-header{
+#result-header {
     grid-area: header;
     padding: 15px !important;
 }
-#result-main{
+
+#result-main {
     grid-area: main;
-    max-height: 600px !important;
-    
+    max-height: 900px !important;
+
 }
-#result-aside{
+
+#result-aside {
     grid-area: aside;
-    max-height: 600px !important;
+    max-height: 900px !important;
     min-height: 600px !important;
     /* height: 100%; */
 }
-#result-section{
-    grid-area: section;
-    max-height: 600px !important;
 
-}
 .selected-result {
     background-color: #6C757D !important;
     padding-top: 15px;
@@ -39,15 +37,51 @@
     color: white !important;
     border-radius: 5px;
 }
-.wrong-answer{
-    background-color: #d9534f  !important;
+
+.wrong-answer {
+    background-color: #d9534f !important;
     padding: 5px;
     color: white !important;
-    border-radius: 5px;    
+    border-radius: 5px;
 }
-.correct-answer{
+
+.correct-answer {
     background-color: #5cb85c !important;
     padding: 5px;
     color: white !important;
     border-radius: 5px;
+}
+
+
+@media (max-width: 768px) {
+    #result-page-content {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        margin: 0 auto;
+        grid-template-areas:
+            "header header header header header header header header header header header header"
+            "main main main main main main main main main main main main"
+    }
+
+    #result-aside {
+        display: none;
+    }
+
+    #result-main {
+        grid-area: main;
+        max-height: 900px !important;
+        min-height: 900px;
+    }
+
+    #result-header {
+        display: flex;
+        justify-content: space-between !important;
+    }
+
+}
+
+@media (min-width: 1182px) {
+    .result-button {
+        display: none;
+    }
 }

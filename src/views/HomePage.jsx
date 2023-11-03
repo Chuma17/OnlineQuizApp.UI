@@ -105,6 +105,8 @@ const HomePage = () => {
                         <button className="btn btn-sm btn-light p-1 m-1" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}>Next</button>
                         <button className="btn btn-sm btn-light p-1 m-1" onClick={handleLastPage} disabled={pagination.currentPage === pagination.totalPages}>Last</button>
                     </div>
+
+
                 </div>
 
 
@@ -122,7 +124,7 @@ const HomePage = () => {
                     </div> */}
 
             </div>
-        }
+        }        
     </>
 
 }
