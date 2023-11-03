@@ -148,10 +148,10 @@ const TakeQuiz = () => {
 
     const submitQuiz = async () => {
 
-        // if (submitStoredAnswers.length === 0) {
-        //     alert("Please select answers before submitting the quiz.");
-        //     return;
-        // }
+        if (submitStoredAnswers.length === 0) {
+            alert("Please select answers before submitting the quiz.");
+            return;
+        }
 
         console.log('Stored Answers:', submitStoredAnswers);
 
