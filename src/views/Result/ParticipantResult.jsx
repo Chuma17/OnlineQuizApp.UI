@@ -76,6 +76,7 @@ const ParticipantResult = () => {
     async function ShowDetails(submissionId) {
         try {
             setLoading(true);
+            setSelectedResultId(submissionId);
 
             const resultQuestionsResponse = await axios.get(`Result/get-questions-and-answers-of-submitted-answers?submissionId=${submissionId}`,
                 {
@@ -115,7 +116,6 @@ const ParticipantResult = () => {
             console.log(updatedCombinedData);
             setLoading(false);
 
-            setSelectedResultId(submissionId);
             setResultDetails(resultDetails);
         } catch (error) {
 
