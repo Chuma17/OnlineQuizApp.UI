@@ -33,9 +33,7 @@ import AdminUnpublished from './views/Quiz/AdminUnpublished';
 import SingleAdminQuiz from './views/Quiz/SingleAdminQuiz';
 
 //Admin Question
-import AddQuestionToBank from './views/Question/AddQuestionToBank';
-import AdminQuestionsInBank from './views/Question/AdminQuestionsInBank';
-import AllQuestionsInBank from './views/Question/AllQuestionsInBank';
+import AddQuestion from './views/Question/AddQuestion';
 import AdminQuestionsInQuiz from './views/Question/AdminQuestionsInQuiz';
 
 //Participant Quiz
@@ -47,6 +45,7 @@ import ParticipantResult from './views/Result/ParticipantResult';
 
 //Views
 import HomePage from './views/HomePage';
+import LandingPage from './views/LandingPage';
 
 const ROLES = {
   'Admin': "Admin",
@@ -89,6 +88,7 @@ const App = () => {
         {/* public routes */}
 
         <Route path="/" exact element={<HomePage />} />
+        <Route path="/landing-page" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/user-registration" element={<UserRegistration />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -115,9 +115,7 @@ const App = () => {
           <Route path="/admin-quizzes" element={<AdminQuizzes />} />
           <Route path="/admin-published-quizzes" element={<AdminPublished />} />
           <Route path="/admin-unpublished-quizzes" element={<AdminUnpublished />} />
-          <Route path="/add-questions-to-bank" element={<AddQuestionToBank />} />
-          <Route path="/view-admin-questions-in-bank" element={<AdminQuestionsInBank />} />
-          <Route path="/view-all-questions-in-bank" element={<AllQuestionsInBank />} />
+          <Route path="/add-questions-to-bank" element={<AddQuestion />} />
           <Route path="/single-admin-quiz/:id" element={<SingleAdminQuiz />} />
           <Route path="/view-admin-questions-in-quiz/:id" element={<AdminQuestionsInQuiz />} />
 

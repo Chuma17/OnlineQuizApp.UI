@@ -4,13 +4,12 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 
-const AddQuestionToBank = () => {
+const AddQuestion = () => {
     const navigate = useNavigate();
 
     // New state to store answers for each question
     const [questionAnswers, setQuestionAnswers] = useState({});
 
-    const [questions, setQuestions] = useState([]);
     const [quizquestions, setQuizQuestions] = useState([]);
     const [quizzes, setQuizzes] = useState([]);
     const [quizId, setQuizId] = useState([]);
@@ -30,7 +29,6 @@ const AddQuestionToBank = () => {
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-    const [isAsideLoading, setIsAsideLoading] = useState(false);
     const [isMainLoading, setIsMainLoading] = useState(false);
     const [isArticleLoading, setIsArticleLoading] = useState(false);
 
@@ -41,37 +39,7 @@ const AddQuestionToBank = () => {
         formData.append("profileImage", profileImage);
     }
     const savedAnswers = JSON.parse(localStorage.getItem('questionAnswers'));
-
-
-    async function getQuestions() {
-        try {
-            setIsAsideLoading(true);
-
-            const response = await axios.get(`Question/get-unpublished-questions-in-bank`, {
-                headers: {
-                    Authorization: `Bearer ${user.accessToken}`
-                }
-            });
-
-            const { data } = response;
-            if (response.status === 200) {
-                setIsAsideLoading(false);
-                setQuestions(data);
-            }
-
-        } catch (error) {
-            if (error.response.status === 401) {
-                window.alert('Your session has expired. Login again!');
-                localStorage.removeItem('userDetails');
-
-                navigate('/login');
-            } else {
-                setIsAsideLoading(false);
-
-                console.error(error.response);
-            }
-        }
-    }
+    
 
     async function getQuizQuestions() {
         try {
@@ -105,7 +73,6 @@ const AddQuestionToBank = () => {
 
     useEffect(() => {
 
-        getQuestions();
         getQuizQuestions();
     }, [user.accessToken, navigate]);
 
@@ -174,48 +141,11 @@ const AddQuestionToBank = () => {
         }
 
     }
-
-
-    async function AddQuestionToBank() {
-
-        try {
-            setIsAsideLoading(true);
-
-            const response = await axios.post(`Question/add-question-to-bank`,
-                { questionText, questionTypeId, categoryId },
-                {
-                    headers: {
-                        Authorization: `Bearer ${user.accessToken}`
-                    }
-                });
-
-            if (response.status === 200) {
-                setIsAsideLoading(false);
-                console.log(response.data);
-                setSuccess(response.data);
-                getQuestions();
-            }
-        } catch (error) {
-            setIsAsideLoading(false);
-
-            if (error.response.status === 401) {
-                window.alert('Your session has expired. Login again!');
-                localStorage.removeItem('userDetails');
-
-                navigate('/login');
-            } else {
-                setIsAsideLoading(false);
-
-                console.error(error.response);
-                setError("Fill out all the fields");
-            }
-        }
-
-    };
+    
 
     async function AddQuestionsToQuiz() {
         try {
-            setIsAsideLoading(true);
+            setIsArticleLoading(true);
 
             const response = await axios.post(`Question/add-questions-to-quiz`,
                 { questionText, questionTypeId, categoryId, quizId },
@@ -226,13 +156,13 @@ const AddQuestionToBank = () => {
                 });
 
             if (response.status === 200) {
-                setIsAsideLoading(false);
+                setIsArticleLoading(false);
                 console.log(response.data);
                 setSuccess(response.data);
                 getQuizQuestions();
             }
         } catch (error) {
-            setIsAsideLoading(false);
+            setIsArticleLoading(false);
 
             if (error.response.status === 401) {
                 window.alert('Your session has expired. Login again!');
@@ -240,7 +170,7 @@ const AddQuestionToBank = () => {
 
                 navigate('/login');
             } else {
-                setIsAsideLoading(false);
+                setIsArticleLoading(false);
 
                 console.error(error.response);
                 setError("Fill out all the fields");
@@ -512,7 +442,6 @@ const AddQuestionToBank = () => {
             if (deleteResponse.status === 200) {
 
                 console.log(deleteResponse);
-                getQuestions();
                 getQuizQuestions();
                 clearQuestionDetails();
                 // setError('');
@@ -539,11 +468,7 @@ const AddQuestionToBank = () => {
             <header className="d-flex justify-content-between">
                 <div className="mt-auto mb-auto nav-brand">
                     Question Bank
-                </div>
-                <div className="d-flex nav-item">
-                    <Link to="/add-questions-to-bank" className="mt-auto mb-auto nav-link text-dark">Create</Link>
-                    <Link to="/view-admin-questions-in-bank" className="mt-auto mb-auto nav-link text-dark">View</Link>
-                </div>
+                </div>                
                 <div>
                     <button className="btn btn-dark">
                         Publish
@@ -557,7 +482,7 @@ const AddQuestionToBank = () => {
                     <div className="d-flex justify-content-center align-items-center h-100">
                         <div className="col col-xl-11">
                             <div className="card" style={{ borderRadius: '1rem' }}>
-                                <div className="d-flex justify-content-between col-lg-12">
+                                <div className="d-flex justify-content-between col-lg-12 main-question-details">
 
                                     <div className="col-md-6 col-lg-7 d-flex align-items-center">
                                         <div className="card-body p-4 p-lg-5 text-black">
@@ -636,104 +561,7 @@ const AddQuestionToBank = () => {
                     </div>
                 </div>
             </main>
-
-            <aside style={{ overflowY: 'auto' }}>
-                <div className="d-flex justify-content-between">
-                    <div className="mt-auto mb-auto">
-                        Questions in Bank
-                    </div>
-                    <div>
-                        <button onClick={GetQuestCats} type="button" className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#QuestionBankModal" title="Add Question">
-                            <i class="fa-solid fa-plus text-light"></i>
-                        </button>
-
-                        <div class="modal fade" id="QuestionBankModal" tabindex="-1" aria-labelledby="QuestionBankModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="QuestionBankModalLabel">Add Question to Bank</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-
-                                        {isAsideLoading && <div className="" style={{ textAlign: 'center' }}><Loading /> </div>}
-                                        {error && <div className=" me-4 ms-4 alert alert-danger text-center">{error}</div>}
-                                        {success && <div className=" me-4 ms-4 alert alert-success text-center">{success}</div>}
-
-                                        <form>
-                                            <div class="mb-3 me-4 ms-4">
-                                                <label for="recipient-name" class="col-form-label">Question Text:</label>
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    id="recipient-name"
-                                                    value={questionText}
-                                                    onChange={e => setQuestionText(e.target.value)}
-                                                    required
-                                                />
-                                            </div>
-
-                                            <div className="mb-4 me-4 ms-4">
-                                                <label className="form-label" htmlfor="halls">Question Type</label>
-                                                <select value={questionTypeId} onChange={e => setQuestionTypeId(e.target.value)} required className="form-control form-select">
-                                                    <option hidden value="">--- Select Question Type ---</option>
-
-                                                    {questionTypes.length > 0 && questionTypes.map(questionType => {
-                                                        return <option key={questionType.questionTypeId} value={questionType.questionTypeId}> {questionType.typeName} </option>
-                                                    })}
-                                                </select>
-                                            </div>
-
-                                            <div className="mb-4 me-4 ms-4">
-                                                <label className="form-label" htmlfor="halls">Category</label>
-                                                <select value={categoryId} onChange={e => setCategoryId(e.target.value)} required className="form-control form-select">
-                                                    <option hidden value="">--- Select Category ---</option>
-
-                                                    {categories.length > 0 && categories.map(category => {
-                                                        return <option key={category.categoryId} value={category.categoryId}> {category.categoryName} </option>
-                                                    })}
-                                                </select>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                        <button onClick={AddQuestionToBank} type="button" class="btn btn-success">Add</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <hr />
-
-                {isAsideLoading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
-
-                <div>
-                    {questions.length > 0 ? (
-                        questions.map((question, i) => {
-                            const truncatedText = question.questionText.length > 15 ? question.questionText.slice(0, 15) + '...' : question.questionText;
-
-                            return (
-                                <div className={`unpublished-questions p-2 d-flex justify-content-between ${selectedQuestionId === question.questionId ? 'selected-question' : ''}`} key={question.questionId}>
-                                    <div onClick={() => ShowDetails(question.questionId)} className="question-text me-0">
-                                        <button disabled className="btn btn-dark">Q{i + 1}</button> <span className={`mt-auto mb-auto question-text ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}>{truncatedText}</span>
-                                    </div>
-                                    <div className="mt-auto mb-auto">
-                                        <i onClick={() => DeleteQuestion(question.questionId)} className={`fa-solid fa-trash ms-0 me-2 ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}></i>
-                                    </div>
-                                </div>
-                            );
-                        })
-                    ) : (
-                        <div className="text-center mt-3">No questions</div>
-                    )}
-
-                </div>
-            </aside>
-
-
+            
 
             <article style={{ overflowY: 'auto' }}>
                 <div className="d-flex justify-content-between">
@@ -880,4 +708,4 @@ const AddQuestionToBank = () => {
     </>
 }
 
-export default AddQuestionToBank;
+export default AddQuestion;

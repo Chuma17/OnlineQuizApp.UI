@@ -168,7 +168,7 @@ const SingleAdminQuiz = () => {
                                                         {success && <div className="alert alert-success text-center">{success}</div>}
 
                                                         <div className="d-flex justify-content-between">
-                                                            <button className="btn btn-danger mb-3" onClick={goBack}>Go Back</button>
+                                                            <button className="btn btn-danger mb-3" onClick={goBack}><i class="fa-solid fa-arrow-left text-light"></i></button>
                                                             {quiz.isPublished ?
                                                                 <button onClick={UnPublishQuiz} className="btn btn-danger mb-3">
                                                                     Unpublish
@@ -178,7 +178,7 @@ const SingleAdminQuiz = () => {
                                                                     Publish
                                                                 </button>
                                                             }
-                                                            <Link to={`/view-admin-questions-in-quiz/${id}`}><button className="btn btn-dark mb-3">Settings</button></Link>
+                                                            <Link to={`/view-admin-questions-in-quiz/${id}`}><button className="btn btn-dark mb-3"><i className="fa-solid fa-gear text-light"></i></button></Link>
                                                         </div>
                                                         <div className="quiz-picture">
                                                             <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="quiz-picture" alt="Default Quiz" />

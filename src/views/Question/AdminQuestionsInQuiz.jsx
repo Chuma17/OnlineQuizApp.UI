@@ -125,19 +125,7 @@ const AdminQuestionsInQuiz = () => {
                                         <li className="nav-item" role="presentation">
                                             <p className="nav-link active" id="names-tab" data-bs-toggle="tab" data-bs-target="#names-tab-pane" type="button" role="tab" aria-controls="names-tab-pane" aria-selected="true"> Questions </p>
                                         </li>
-                                    </Link>
-
-                                    <Link to="/change-username">
-                                        <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="username-tab" data-bs-toggle="tab" data-bs-target="#username-tab-pane" type="button" role="tab" aria-controls="username-tab-pane" aria-selected="false"> Admin </p>
-                                        </li>
-                                    </Link>
-
-                                    <Link to="/change-email">
-                                        <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="email-tab" data-bs-toggle="tab" data-bs-target="#email-tab-pane" type="button" role="tab" aria-controls="email-tab-pane" aria-selected="false"> Bank </p>
-                                        </li>
-                                    </Link>
+                                    </Link>                                    
 
                                     <Link to="/change-password">
                                         <li className="nav-item" role="presentation">
@@ -161,18 +149,18 @@ const AdminQuestionsInQuiz = () => {
                                                 {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :
                                                     <div className="card mb-4">
                                                         <div className="card-header py-3 d-flex justify-content-between">
-                                                            <button className="btn btn-danger" onClick={goBack}>Go Back</button>
+                                                            <button className="btn btn-danger" onClick={goBack}>Back</button>
 
                                                             <h5 className="mb-0 fs-4">
-                                                                Questions - {questionCount}{' '}
+                                                                {questionCount}{''}
                                                                 {questions.length === 1
-                                                                    ? 'Question'
+                                                                    ? 'Q'
                                                                     : questions.length > 1
-                                                                        ? 'Questions'
-                                                                        : 'No Questions'}
+                                                                        ? 'Q'
+                                                                        : 'Empty'}
                                                             </h5>
 
-                                                            <Link to="/add-questions-to-bank"><button className="btn btn-success">Add Question</button></Link>
+                                                            <Link to="/add-questions-to-bank"><button className="btn btn-success">Add</button></Link>
                                                         </div>
 
                                                         {questions.length === 0 ? <div className="d-flex justify-content-between alert alert-primary mb-4 mt-4 p-4 fs-5">No Questions<Link to="/add-questions-to-bank">Add From Here</Link></div>

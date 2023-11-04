@@ -62,6 +62,7 @@ const Header = () => {
                                         <Link to="/create-quiz" className="text-light nav-link">Quiz</Link>
                                         <Link to="/add-questions-to-bank" className="text-light nav-link">Question</Link>
                                         <Link to="/participant-result" className="text-light nav-link">Result</Link>
+                                        <Link to="/landing-page" className="text-light nav-link">Landing</Link>
                                     </div>
                                 </>
 

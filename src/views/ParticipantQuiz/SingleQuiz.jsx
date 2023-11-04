@@ -145,7 +145,7 @@ const SingleQuiz = () => {
                                                         {error && <div className="alert alert-danger text-center">{error}</div>}
 
                                                         <div className="d-flex justify-content-between">
-                                                            <button className="btn btn-danger mb-3" onClick={goBack}>Go Back</button>
+                                                            <button className="btn btn-danger mb-3" onClick={goBack}><i class="fa-solid fa-arrow-left text-light"></i></button>
                                                             <button onClick={startQuiz} className="btn btn-success mb-3">Take Quiz</button>
                                                         </div>
                                                         <div className="quiz-picture">
