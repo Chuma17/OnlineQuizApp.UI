@@ -81,6 +81,7 @@ const SingleQuiz = () => {
 
             if (response.status === 200) {
                 setTakeQuizLoading(false);
+                localStorage.setItem('quizId', JSON.stringify(id));
                 navigate(`/ongoing-quiz/${id}`);
             }
         } catch (error) {
@@ -89,7 +90,7 @@ const SingleQuiz = () => {
             if (error.response.data === "You are already in this quiz") {
                 navigate(`/ongoing-quiz/${id}`);                
             }
-            // setError(error.response.data);
+            setError(error.response.data);
         }
     }
 

@@ -10,6 +10,9 @@
     height: 200px !important;
     width: 300px;
 }
+.answer-option:hover{
+    cursor: pointer;
+}
 
 @media (max-width: 1182px) {
     .details{

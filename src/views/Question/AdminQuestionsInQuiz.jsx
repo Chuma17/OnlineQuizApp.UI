@@ -149,7 +149,7 @@ const AdminQuestionsInQuiz = () => {
                                                 {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :
                                                     <div className="card mb-4">
                                                         <div className="card-header py-3 d-flex justify-content-between">
-                                                            <button className="btn btn-danger" onClick={goBack}>Back</button>
+                                                            <button className="btn btn-danger" onClick={goBack}><i class="fa-solid fa-arrow-left text-light"></i></button>
 
                                                             <h5 className="mb-0 fs-4">
                                                                 {questionCount}{''}
@@ -160,7 +160,7 @@ const AdminQuestionsInQuiz = () => {
                                                                         : 'Empty'}
                                                             </h5>
 
-                                                            <Link to="/add-questions-to-bank"><button className="btn btn-success">Add</button></Link>
+                                                            <Link to="/add-questions-to-bank"><button className="btn btn-success"><i class="fa-solid fa-plus text-light"></i></button></Link>
                                                         </div>
 
                                                         {questions.length === 0 ? <div className="d-flex justify-content-between alert alert-primary mb-4 mt-4 p-4 fs-5">No Questions<Link to="/add-questions-to-bank">Add From Here</Link></div>

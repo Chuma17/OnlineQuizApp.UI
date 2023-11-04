@@ -11,6 +11,7 @@ const Header = () => {
 
     const navigate = useNavigate();
     const userInfo = JSON.parse(localStorage.getItem("userDetails"));
+    const quiz = JSON.parse(localStorage.getItem("quizId"));
 
     const Logout = async e => {
         e.preventDefault()
@@ -42,7 +43,7 @@ const Header = () => {
                             <div className="nav-item">
                                 <hr className="text-light hr-mobile-only" />
 
-                                <div className="d-flex nav-details">                                    
+                                <div className="d-flex nav-details">
                                     <Link to="/login" className="nav-login text-light nav-link mb-2"> <i className="nav-login fa-solid fa-arrow-right-to-bracket text-light"></i> Sign In</Link>
                                     <Link to="/user-registration" className="nav-login text-light nav-link mb-2"> <i className="nav-login fas fa-pen text-light"></i> Sign Up</Link>
                                 </div>
@@ -55,17 +56,22 @@ const Header = () => {
                                 <>
                                     <hr className="text-light hr-mobile-only" />
 
-                                    <div className="admin-links d-flex justify-content-between fs-6 nav-item mb-2">
+                                    <div className="admin-links d-flex justify-content-between fs-6 nav-item mt-auto mb-auto">
                                         {userInfo && userInfo.roles.includes(ROLES.SuperAdmin) &&
-                                            <Link to="/admin-registration" className="text-light nav-link">S. Admin</Link>
+                                            <Link to="/admin-registration" className="text-light nav-link mt-auto mb-auto">S. Admin</Link>
                                         }
-                                        <Link to="/create-quiz" className="text-light nav-link">Quiz</Link>
-                                        <Link to="/add-questions-to-bank" className="text-light nav-link">Question</Link>
-                                        <Link to="/participant-result" className="text-light nav-link">Result</Link>
+                                        <Link to="/create-quiz" className="text-light nav-link mt-auto mb-auto">Quiz</Link>
+                                        <Link to="/add-questions-to-bank" className="text-light nav-link mt-auto mb-auto">Question</Link>
+                                        <Link to="/participant-result" className="text-light nav-link mt-auto mb-auto">Result</Link>
+                                        {quiz &&
+                                            <Link to={`/ongoing-quiz/${quiz}`} className="text-light nav-link">
+                                                <button className="btn btn-success">Ongoing Quiz</button>
+                                            </Link>
+                                        }
                                     </div>
                                 </>
-
                             }
+
                         </div>
 
                         {userInfo && userInfo.roles.includes(ROLES.Participant) &&
@@ -73,8 +79,15 @@ const Header = () => {
                                 <hr className="text-light hr-mobile-only" />
 
                                 <Link to="/participant-result" className="text-light nav-link">Results</Link>
+                                {quiz &&
+                                    <Link to={`/ongoing-quiz/${quiz}`} className="text-light nav-link">
+                                        <button className="btn btn-success">Ongoing Quiz</button>
+                                    </Link>
+                                }
                             </div>
                         }
+
+
 
                     </div>
 
@@ -91,10 +104,10 @@ const Header = () => {
                                         />
                                     </Link>
 
-                                ) : (                                    
+                                ) : (
                                     <i className="fas fa-user mt-auto mb-auto fs-5 me- nav-username text-light"></i>
                                 )}
-                                
+
 
                             </div>
 

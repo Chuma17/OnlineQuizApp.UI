@@ -4,9 +4,9 @@
     margin: 0 auto;
     grid-template-areas:
         "header header header header header header header header header header header header"
-        "article article main main main main main main main main question-section question-section"
-        "article article main main main main main main main main question-section question-section"
-        "article article main main main main main main main main question-section question-section";
+        "article article article main main main main main main main main main"
+        "article article article main main main main main main main main main"
+        "article article article main main main main main main main main main";
 }
 
 
@@ -14,11 +14,6 @@ article {
     grid-area: article;
     max-height: 700px !important;
     min-height: 700px !important;
-}
-
-#question-section {
-    grid-area: question-section;
-    height: 100%;
 }
 
 #question-header {
@@ -83,8 +78,5 @@ main {
         display: flex;
         flex-direction: column;
     }    
-
-    #question-section {
-        display: none;
-    }
+    
 }

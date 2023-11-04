@@ -652,7 +652,7 @@ const AddQuestion = () => {
                 <div>
                     {quizquestions.length > 0 ? (
                         quizquestions.map((question, i) => {
-                            const truncatedText = question.questionText.length > 15 ? question.questionText.slice(0, 15) + '...' : question.questionText;
+                            const truncatedText = question.questionText.length > 30 ? question.questionText.slice(0, 30) + '...' : question.questionText;
 
                             return (
                                 <div className={`unpublished-questions p-2 d-flex justify-content-between ${selectedQuestionId === question.questionId ? 'selected-question' : ''}`} key={question.questionId}>
@@ -670,41 +670,7 @@ const AddQuestion = () => {
                     )}
 
                 </div>
-            </article>
-
-            <section id="question-section">
-
-                <div>
-                    Details
-                </div>
-                <hr />
-
-                <div className="mb-2">
-                    Question Type :
-                </div>
-                <div className="text-center">
-                    {questionDetails.questionTypeName}
-                </div>
-
-                <hr />
-
-                <div className="mb-2">
-                    Category :
-                </div>
-                <div className="text-center">
-                    {questionDetails.categoryName}
-                </div>
-
-                <hr />
-
-                <div className="mb-2">
-                    Quiz :
-                </div>
-                <div className="text-center">
-                    {questionDetails.quizName == null ? 'NIL' : questionDetails.quizName}
-                </div>
-
-            </section>
+            </article>            
 
         </div>
     </>

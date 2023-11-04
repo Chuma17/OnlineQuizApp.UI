@@ -166,6 +166,7 @@ const TakeQuiz = () => {
 
             if (response.status === 200) {
                 setSubmitLoading(false);
+                localStorage.removeItem("quizId");
                 setSuccess(response.data);
                 clearAnswerDetails();
                 navigate("/");
@@ -212,7 +213,7 @@ const TakeQuiz = () => {
                             <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong"></div>
                             <div id="radius-shape-2" className="position-absolute shadow-5-strong"></div>
 
-                            <div className="bg-glass">
+                            <div style={{ height: !loading ? 'fit-content' : '700px' }} className="bg-glass">
                                 <div className="px-4 py-5 px-md-5">
 
                                     <div className="d-flex justify-content-around mb-3">
@@ -222,7 +223,7 @@ const TakeQuiz = () => {
                                         </div>
                                     </div>
 
-                                    <div style={{ height: questions.length > 0 ? 'fit-content' : '500px' }} className="card ms-auto me-auto bg-glass">
+                                    <div style={{ height: !loading ? 'fit-content' : '500px' }} className="card ms-auto me-auto bg-glass">
                                         <div className="card-body px-4 py-4 px-md-5">
 
                                             <section className="h-100 gradient-custom">
@@ -239,8 +240,8 @@ const TakeQuiz = () => {
                                                                         <ul>
                                                                             {question.answers.map((answer) => (
                                                                                 <div className="fs-5" key={answer.answerId}>
-                                                                                    <label>
-                                                                                        <input                                                                                            
+                                                                                    <label className="answer-option">
+                                                                                        <input className="answer-option"
                                                                                             type="radio"
                                                                                             name={question.questionID}
                                                                                             value={answer.answerId}
