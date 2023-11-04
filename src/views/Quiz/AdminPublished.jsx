@@ -121,7 +121,6 @@ const AdminPublished = () => {
                                             <p className="nav-link" id="names-tab" data-bs-toggle="tab" data-bs-target="#names-tab-pane" type="button" role="tab" aria-controls="names-tab-pane" aria-selected="true"> Create </p>
                                         </li>
                                     </Link>
-
                                     <Link to="/admin-quizzes">
                                         <li className="nav-item" role="presentation">
                                             <p className="nav-link" id="email-tab" data-bs-toggle="tab" data-bs-target="#email-tab-pane" type="button" role="tab" aria-controls="email-tab-pane" aria-selected="false"> Admin Quizzes </p>

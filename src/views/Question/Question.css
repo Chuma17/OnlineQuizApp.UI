@@ -1,37 +1,29 @@
-@media (min-width: 1182px) {
-    #page-content {
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        margin: 0 auto;
-        grid-template-areas:
-            "header header header header header header header header header header header header"
-            "article article main main main main main main main main section section"
-            "article article main main main main main main main main section section"
-            "article article main main main main main main main main section section";
-    }
-
-
-
-    article {
-        max-height: 700px !important;
-        min-height: 700px !important;
-
-    }
-
-    section {
-        grid-area: section;
-        height: 100%;
-    }
+#page-content {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    margin: 0 auto;
+    grid-template-areas:
+        "header header header header header header header header header header header header"
+        "article article main main main main main main main main question-section question-section"
+        "article article main main main main main main main main question-section question-section"
+        "article article main main main main main main main main question-section question-section";
 }
 
-header {
-    grid-area: header;
-    padding: 15px !important;
-}
 
 article {
     grid-area: article;
+    max-height: 700px !important;
+    min-height: 700px !important;
+}
 
+#question-section {
+    grid-area: question-section;
+    height: 100%;
+}
+
+#question-header {
+    grid-area: header;
+    padding: 15px !important;
 }
 
 main {
@@ -49,15 +41,10 @@ main {
     cursor: pointer;
 }
 
-
-
 .question-text {
     white-space: nowrap;
-    /* Prevent text wrapping */
     overflow: hidden;
-    /* Hide any text that overflows */
     text-overflow: ellipsis;
-    /* Show an ellipsis (...) for truncated text */
 }
 
 .selected-question {
@@ -82,8 +69,9 @@ main {
         grid-template-columns: repeat(6, 1fr);
         margin: 0 auto;
         grid-template-areas:
+            "header header header header header header"
             "article article article article article article "
-            "main main main main main main"
+            "main main main main main main";
     }
 
     article {
@@ -94,13 +82,9 @@ main {
     .main-question-details {
         display: flex;
         flex-direction: column;
-    }
+    }    
 
-    header {
-        display: none;
-    }
-
-    section {
+    #question-section {
         display: none;
     }
 }

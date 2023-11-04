@@ -39,7 +39,7 @@ const AddQuestion = () => {
         formData.append("profileImage", profileImage);
     }
     const savedAnswers = JSON.parse(localStorage.getItem('questionAnswers'));
-    
+
 
     async function getQuizQuestions() {
         try {
@@ -141,7 +141,7 @@ const AddQuestion = () => {
         }
 
     }
-    
+
 
     async function AddQuestionsToQuiz() {
         try {
@@ -465,15 +465,17 @@ const AddQuestion = () => {
     return <>
         <div id="page-content">
 
-            <header className="d-flex justify-content-between">
-                <div className="mt-auto mb-auto nav-brand">
-                    Question Bank
-                </div>                
-                <div>
-                    <button className="btn btn-dark">
-                        Publish
-                    </button>
+            <header id="question-header" className="d-flex justify-content-between">                
+
+                <div className="">
+                    Quiz : {questionDetails.quizName == null ? 'NIL' : questionDetails.quizName}
                 </div>
+
+                <div className="">
+                    Category : {questionDetails.categoryName == null ? 'NIL' : questionDetails.categoryName}
+                </div>
+
+
             </header>
 
             <main>
@@ -561,7 +563,7 @@ const AddQuestion = () => {
                     </div>
                 </div>
             </main>
-            
+
 
             <article style={{ overflowY: 'auto' }}>
                 <div className="d-flex justify-content-between">
@@ -670,7 +672,7 @@ const AddQuestion = () => {
                 </div>
             </article>
 
-            <section>
+            <section id="question-section">
 
                 <div>
                     Details

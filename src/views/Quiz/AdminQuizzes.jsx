@@ -122,7 +122,7 @@ const AdminQuizzes = () => {
 
                                 <div style={{ height: quizzes.length > 0 ? '800px' : '500px' }} className="card ms-auto me-auto bg-glass">
                                     <div className="card-body px-4 py-5 px-md-5">
-
+                                    
                                         {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :
 
                                             <div style={{ height: '730px', overflowY: 'auto' }}>

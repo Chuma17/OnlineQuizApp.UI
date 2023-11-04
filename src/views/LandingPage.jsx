@@ -1,7 +1,7 @@
 const LandingPage = () => {
     return <>
 
-        <header class="header">
+        {/* <header class="header">
             <div class="container">
                 <nav class="navbar navbar-expand-lg">
 
@@ -571,7 +571,7 @@ const LandingPage = () => {
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer> */}
 
     </>
 }

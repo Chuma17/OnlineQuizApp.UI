@@ -49,7 +49,7 @@ const AdminUnpublished = () => {
             }
 
         }
-
+        
         getQuizzes()
     }, [pagination.itemsPerPage, pagination.currentPage, user.accessToken]);
 

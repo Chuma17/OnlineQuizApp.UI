@@ -12,7 +12,6 @@
 }
 
 
-
 .home-card {
     height: 300px !important; /* Set a fixed height */
     width: 100%;
@@ -45,7 +44,7 @@
 @media (max-width: 500px) {
 
     .col-md-3 {
-        flex: 0 0 48%; /* Set the flex basis to 48% to fit two cards in a row */
+        flex: 0 0 48%; 
         /* margin-bottom: 1rem;         */
     }    
 

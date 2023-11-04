@@ -206,7 +206,7 @@ const CreateQuiz = () => {
 
                                     <Link to="/admin-unpublished-quizzes">
                                         <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="2fa-tab" data-bs-toggle="tab" data-bs-target="#2fa-tab-pane" type="button" role="tab" aria-controls="2fa-tab-pane" aria-selected="false">Unpublished</p>
+                                            <p className="nav-link" id="unpublished-tab" data-bs-toggle="tab" data-bs-target="#unpublished-tab-pane" type="button" role="tab" aria-controls="unpublished-tab-pane" aria-selected="false">Unpublished</p>
                                         </li>
                                     </Link>
 
@@ -318,7 +318,7 @@ const CreateQuiz = () => {
                                                         <div className="text-center">
                                                             <button type="button" className="btn btn-dark w-" onClick={() => fileInput.current.click()}>
                                                                 Choose a picture
-                                                            </button>
+                                                            </button>                                                            
                                                         </div>
                                                     </div>
                                                 </div>
