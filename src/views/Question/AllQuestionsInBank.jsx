@@ -77,6 +77,27 @@ const AllQuestionsInBank = () => {
         setPagination(prev => ({ ...prev, currentPage: pagination.totalPages }));
     }
 
+    async function DeleteQuestion(questionId) {
+        try {
+            const deleteResponse = await axios.delete(`Question/delete-question?questionId=${questionId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`
+                    },
+                },
+            );
+
+            if (deleteResponse.status === 200) {
+
+                console.log(deleteResponse);
+                getQuestions();
+                // setError('');
+            }
+        } catch (error) {
+
+        }
+    }
+
     return <>
         <section className="vh-110 background-radial-gradient overflow-hidden">
 
@@ -148,6 +169,10 @@ const AllQuestionsInBank = () => {
 
                                                                                         <div>
                                                                                             {question.categoryName}
+                                                                                        </div>
+
+                                                                                        <div className="mt-auto mb-auto">
+                                                                                            <i onClick={() => DeleteQuestion(question.questionId)} className={`fa-solid fa-trash ms-0 me-2 `}></i>
                                                                                         </div>
                                                                                     </div>
 

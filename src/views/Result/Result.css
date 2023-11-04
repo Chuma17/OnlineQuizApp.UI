@@ -19,13 +19,13 @@
 
 #result-main {
     grid-area: main;
-    max-height: 900px !important;
+    max-height: 600px !important;
 
 }
 
 #result-aside {
     grid-area: aside;
-    max-height: 900px !important;
+    max-height: 600px !important;
     min-height: 600px !important;
     /* height: 100%; */
 }
@@ -69,8 +69,8 @@
 
     #result-main {
         grid-area: main;
-        max-height: 900px !important;
-        min-height: 900px;
+        max-height: 800px !important;
+        min-height: 800px;
     }
 
     #result-header {
