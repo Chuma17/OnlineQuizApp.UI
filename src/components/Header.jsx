@@ -65,7 +65,7 @@ const Header = () => {
                                         <Link to="/participant-result" className="text-light nav-link mt-auto mb-auto">Result</Link>
                                         {quiz &&
                                             <Link to={`/ongoing-quiz/${quiz}`} className="text-light nav-link">
-                                                <button className="btn btn-success">Ongoing Quiz</button>
+                                                <button className="btn btn-success">OQ</button>
                                             </Link>
                                         }
                                     </div>
