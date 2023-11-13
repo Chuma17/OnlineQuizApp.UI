@@ -64,7 +64,7 @@ const AdminRegistration = () => {
         if (success) {
             successTimeoutId = setTimeout(() => {
                 setSuccess(null);
-            }, 2000);
+            }, 10000);
         }
 
         return () => {

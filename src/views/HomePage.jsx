@@ -106,23 +106,8 @@ const HomePage = () => {
                         <button className="btn btn-sm btn-light p-1 m-1" onClick={handleLastPage} disabled={pagination.currentPage === pagination.totalPages}>Last</button>
                     </div>
 
-
                 </div>
-
-
-
-                {/* Input field for dynamic page size */}
-                {/* <div className="ms-3 mb-3">
-                        <span>Page Size: </span>
-                        <input
-                            type="number"
-                            min="1"
-                            max="100"
-                            value={pagination.itemsPerPage}
-                            onChange={handlePageSizeChange}
-                        />
-                    </div> */}
-
+                
             </div>
         }        
     </>

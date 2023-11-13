@@ -145,7 +145,7 @@ const ParticipantResult = () => {
                     <div>
                         Overall score : {resultDetails.overallScore}
                     </div>
-                </div>                
+                </div>
 
                 <button type="button" className="btn btn-dark result-button" data-bs-toggle="modal" data-bs-target="#quizResultModal">
                     <i className="fa-solid fa-bars text-light"></i>
@@ -196,19 +196,14 @@ const ParticipantResult = () => {
 
                                     {results.length > 0 ? (
                                         results.map((result, i) => {
+                                            
                                             const submissionTime = new Date(result.submissionTime);
-                                            const userTimeOptions = {
-                                                year: 'numeric',
-                                                month: '2-digit',
-                                                day: '2-digit',
-                                                hour: '2-digit',
-                                                minute: '2-digit',
-                                                hour12: true
-                                            };
-
                                             const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                                            const truncatedText = submissionTime.toLocaleString('en-US', { ...userTimeOptions, timeZone: userTimeZone });
 
+                                            const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: userTimeZone };
+                                            const formattedDate = new Intl.DateTimeFormat('en-US', options).format(submissionTime);
+
+                                            const truncatedText = `${formattedDate}`;
 
                                             return (
                                                 <div onClick={() => ShowDetails(result.submissionId)} className={`unpublished-questions p-2 d-flex justify-content-between ${selectedResultId === result.submissionId ? 'selected-result' : ''}`} key={result.submissionId}>
@@ -272,19 +267,14 @@ const ParticipantResult = () => {
 
                     {results.length > 0 ? (
                         results.map((result, i) => {
+                            
                             const submissionTime = new Date(result.submissionTime);
-                            const userTimeOptions = {
-                                year: 'numeric',
-                                month: '2-digit',
-                                day: '2-digit',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                                hour12: true
-                            };
-
                             const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                            const truncatedText = submissionTime.toLocaleString('en-US', { ...userTimeOptions, timeZone: userTimeZone });
 
+                            const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: userTimeZone };
+                            const formattedDate = new Intl.DateTimeFormat('en-US', options).format(submissionTime);
+
+                            const truncatedText = `${formattedDate}`;
 
                             return (
                                 <div onClick={() => ShowDetails(result.submissionId)} className={`unpublished-questions p-2 d-flex justify-content-between ${selectedResultId === result.submissionId ? 'selected-result' : ''}`} key={result.submissionId}>
