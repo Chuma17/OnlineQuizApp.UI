@@ -3,6 +3,7 @@ import axios from "../../axios/axios";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
+import CommentLoading from "../../components/CommentLoading";
 import "./ParticipantQuiz.css"
 
 
@@ -93,9 +94,15 @@ const SingleQuiz = () => {
 
 
     async function postComment(params) {
-        setPostCommentLoading(true);
+
+        if (user == null) {
+            setError("You have to be logged in");
+            return
+        }
 
         try {
+            setPostCommentLoading(true);
+
             const response = await axios.post(`Quiz/add-quiz-comment?quizId=${id}`, { comment },
                 {
                     headers: {
@@ -155,13 +162,13 @@ const SingleQuiz = () => {
         if (error) {
             errorTimeoutId = setTimeout(() => {
                 setError(null);
-            }, 2000);
+            }, 4000);
         }
 
         if (success) {
             successTimeoutId = setTimeout(() => {
                 setSuccess(null);
-            }, 2000);
+            }, 4000);
         }
 
         return () => {
@@ -231,12 +238,14 @@ const SingleQuiz = () => {
                                             </div>
 
                                             <div className="text-left ms-2">
+                                                <div className="mt-5 mb-0">
+                                                    {error && <div className="alert alert-danger text-center">{error}</div>}
+                                                    {success && <div className="alert alert-success text-center">{success}</div>}
+                                                    {postCommentLoading && <div className="mb-3" style={{ textAlign: 'center' }}><CommentLoading /> </div>}
+                                                </div>
+
                                                 <div className="d-flex justify-content-between mt-5 mb-3">
                                                     <h3 style={{ letterSpacing: '1px' }} className="">COMMENTS ({commentCount || '0'})</h3>
-
-                                                    {error && <div className="me-4 ms-4 alert alert-danger text-center">{error}</div>}
-                                                    {success && <div className="me-4 ms-4 alert alert-success text-center">{success}</div>}
-                                                    {postCommentLoading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
 
                                                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#commmentModal">
                                                         Add
