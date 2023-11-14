@@ -19,6 +19,7 @@ const SingleQuiz = () => {
     const [loading, setLoading] = useState();
     const [commentloading, setCommentLoading] = useState();
     const [postCommentLoading, setPostCommentLoading] = useState();
+
     const [comment, setComment] = useState();
     const [commentCount, setCommentCount] = useState();
     const [takeQuizloading, setTakeQuizLoading] = useState();
@@ -27,6 +28,7 @@ const SingleQuiz = () => {
     const [quizComments, setQuizComments] = useState([]);
 
     const [error, setError] = useState("");
+    const [postCommentError, setPostCommentError] = useState("");
     const [success, setSuccess] = useState("");
 
     useEffect(() => {
@@ -121,7 +123,7 @@ const SingleQuiz = () => {
             setPostCommentLoading(false);
 
             console.error(error);
-            setError(error.response.data);
+            setPostCommentError(error.response.data);
         }
     }
 
@@ -239,7 +241,7 @@ const SingleQuiz = () => {
 
                                             <div className="text-left ms-2">
                                                 <div className="mt-5 mb-0">
-                                                    {error && <div className="alert alert-danger text-center">{error}</div>}
+                                                    {postCommentError && <div className="alert alert-danger text-center">{postCommentError}</div>}
                                                     {success && <div className="alert alert-success text-center">{success}</div>}
                                                     {postCommentLoading && <div className="mb-3" style={{ textAlign: 'center' }}><CommentLoading /> </div>}
                                                 </div>
@@ -266,7 +268,7 @@ const SingleQuiz = () => {
                                                                 const submissionTime = new Date(comment.dateCreated);
                                                                 const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-                                                                const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: userTimeZone };
+                                                                const options = { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: userTimeZone };
                                                                 const formattedDate = new Intl.DateTimeFormat('en-US', options).format(submissionTime);
 
                                                                 const truncatedText = `${formattedDate}`;
@@ -287,10 +289,10 @@ const SingleQuiz = () => {
                                                                             {comment.comment}
                                                                         </div>
 
-                                                                        <div className="mb-5 d-flex">
+                                                                        {/* <div className="mb-5 d-flex">
                                                                             <button disabled className="btn btn-dark ">Reply</button>
                                                                             <div className="ms-1 mt-auto mb-auto">Coming soon...</div>
-                                                                        </div>
+                                                                        </div> */}
 
                                                                     </div>
 
