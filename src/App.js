@@ -31,6 +31,8 @@ import AdminQuizzes from './views/Quiz/AdminQuizzes';
 import AdminPublished from './views/Quiz/AdminPublished';
 import AdminUnpublished from './views/Quiz/AdminUnpublished';
 import SingleAdminQuiz from './views/Quiz/SingleAdminQuiz';
+import QuizRecords from './views/QuizSettings/QuizRecords';
+import QuizResult from './views/QuizSettings/QuizResults';
 
 //Admin Question
 import AddQuestion from './views/Question/AddQuestion';
@@ -42,6 +44,13 @@ import TakeQuiz from './views/ParticipantQuiz/TakeQuiz';
 
 //Participant Result
 import ParticipantResult from './views/Result/ParticipantResult';
+
+//Super Admin 
+import AddCategory from './views/SuperAdmin/AddCategory';
+import ViewCategories from './views/SuperAdmin/ViewCategories';
+import ViewAdmins from './views/SuperAdmin/ViewAdmins';
+import AddQuestionType from './views/SuperAdmin/AddQuestionType';
+import ViewQuestionTypes from './views/SuperAdmin/ViewQuestionTypes';
 
 //Views
 import HomePage from './views/HomePage';
@@ -118,11 +127,18 @@ const App = () => {
           <Route path="/add-questions-to-bank" element={<AddQuestion />} />
           <Route path="/single-admin-quiz/:id" element={<SingleAdminQuiz />} />
           <Route path="/view-admin-questions-in-quiz/:id" element={<AdminQuestionsInQuiz />} />
+          <Route path="/view-quiz-records/:id" element={<QuizRecords />} />
+          <Route path="/quiz-result/:id/*" element={<QuizResult />} />
 
         </Route>
 
         <Route element={<RequireAuth allowedRoles={[ROLES.SuperAdmin]} />}>
           <Route path="/admin-registration" element={<AdminRegistration />} />
+          <Route path="/add-category" element={<AddCategory />} />
+          <Route path="/view-categories" element={<ViewCategories />} />
+          <Route path="/view-admins" element={<ViewAdmins />} />
+          <Route path="/add-questionType" element={<AddQuestionType />} />
+          <Route path="/view-questionTypes" element={<ViewQuestionTypes />} />
         </Route>
 
         {/* catch all */}

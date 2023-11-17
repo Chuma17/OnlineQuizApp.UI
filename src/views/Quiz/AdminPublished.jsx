@@ -141,7 +141,7 @@ const AdminPublished = () => {
 
                                 </ul >
 
-                                <div style={{ height: quizzes.length > 0 ? '800px' : '430px' }} className="card ms-auto me-auto bg-glass">
+                                <div style={{ height: quizzes.length > 0 ? '800px' : '600px' }} className="card ms-auto me-auto bg-glass">
                                     <div className="card-body px-4 py-5 px-md-5">
 
                                         {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :
@@ -154,12 +154,14 @@ const AdminPublished = () => {
                                                             quizzes.map(quiz => (
                                                                 <div className="col-md-3 d-flex justify-content-evenly ms-auto me-auto" key={quiz.id}>
                                                                     <div className="card mt-4 home-card">
-                                                                        <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="home-card-image card-img-top p-3" alt="Default Quiz" />
-                                                                        <div className="card-body text-center fs-5">
-                                                                            <h3 className="card-title">{quiz.quizName}</h3>
-                                                                            <hr />
-                                                                            <p className="card-description">{quiz.quizDescription}</p>
-                                                                        </div>
+                                                                        <Link to={`/single-admin-quiz/${quiz.quizId}`}>
+                                                                            <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="home-card-image card-img-top p-3" alt="Default Quiz" />
+                                                                            <div className="card-body text-center fs-5">
+                                                                                <h3 className="card-title">{quiz.quizName}</h3>
+                                                                                <hr />
+                                                                                <p className="card-description">{quiz.quizDescription}</p>
+                                                                            </div>
+                                                                        </Link>
                                                                     </div>
                                                                 </div>
                                                             ))
@@ -174,12 +176,12 @@ const AdminPublished = () => {
 
                                                 {quizzes.length > 0 && (
                                                     <div className="mt-3">
-                                                        <div className="ms-2 mb-1">
-                                                            <button className="btn btn-sm btn-light p-1 m-1" onClick={handleFirstPage} disabled={pagination.currentPage === 1}>First</button>
-                                                            <button className="btn btn-sm btn-light p-1 m-1" onClick={handlePrevPage} disabled={pagination.currentPage === 1}>Previous</button>
+                                                        <div className="ms-2 mb-1 pagination-icons">
+                                                            <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleFirstPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-backward"></i></button>
+                                                            <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handlePrevPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-caret-left"></i></button>
                                                             <span className="text-dark"> Page: {pagination.currentPage} of {pagination.totalPages === 0 ? 1 : pagination.totalPages} </span>
-                                                            <button className="btn btn-sm btn-light p-1 m-1" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}>Next</button>
-                                                            <button className="btn btn-sm btn-light p-1 m-1" onClick={handleLastPage} disabled={pagination.currentPage === pagination.totalPages}>Last</button>
+                                                            <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}><i class="fa-solid fa-caret-right"></i></button>
+                                                            <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleLastPage} disabled={pagination.currentPage === pagination.totalPages}><i class="fa-solid fa-forward"></i></button>
                                                         </div>
                                                     </div>
                                                 )}

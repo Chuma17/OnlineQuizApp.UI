@@ -1,16 +1,17 @@
+import "./Settings.css"
 import axios from "../../axios/axios";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 
-const AdminRegistration = () => {
+const AddQuestionType = () => {
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem("userDetails"));
 
     const [isLoading, setIsLoading] = useState();
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
+    const [typeName, setTypeName] = useState("");
+    const [numberOfOptions, setNumberOfOptions] = useState("");
+    const [scoreWeight, setScoreWeight] = useState("");
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -21,7 +22,7 @@ const AdminRegistration = () => {
         try {
             setIsLoading(true);
 
-            const response = await axios.post(`Authentication/register-admin`, { email, firstName, lastName },
+            const response = await axios.post(`QuestionType/add-questionType`, { typeName, numberOfOptions, scoreWeight },
                 {
                     headers: {
                         Authorization: `Bearer ${user.accessToken}`
@@ -92,7 +93,7 @@ const AdminRegistration = () => {
 
                                     <Link to="/admin-registration">
                                         <li className="nav-item" role="presentation">
-                                            <p className="nav-link active" id="adminReg-tab" data-bs-toggle="tab" data-bs-target="#adminReg-tab-pane" type="button" role="tab" aria-controls="adminReg-tab-pane" aria-selected="true"> Add Admin </p>
+                                            <p className="nav-link" id="adminReg-tab" data-bs-toggle="tab" data-bs-target="#adminReg-tab-pane" type="button" role="tab" aria-controls="adminReg-tab-pane" aria-selected="true"> Add Admin </p>
                                         </li>
                                     </Link>
 
@@ -116,7 +117,7 @@ const AdminRegistration = () => {
 
                                     <Link to="/add-questionType">
                                         <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="addQuestionType-tab" data-bs-toggle="tab" data-bs-target="#addQuestionType-tab-pane" type="button" role="tab" aria-controls="addQuestionType-tab-pane" aria-selected="false">Add QT </p>
+                                            <p className="nav-link active" id="addQuestionType-tab" data-bs-toggle="tab" data-bs-target="#addQuestionType-tab-pane" type="button" role="tab" aria-controls="addQuestionType-tab-pane" aria-selected="false">Add QT </p>
                                         </li>
                                     </Link>
 
@@ -132,52 +133,52 @@ const AdminRegistration = () => {
                                     <div className="card-body px-4 py-5 px-md-5">
 
                                         <form className="form" onSubmit={submitHandler}>
-                                            <h4 className="fw-normal text-center mb-3 pb-3" style={{ letterSpacing: '1px' }}>Register Admin Account</h4>
+                                            <h4 className="fw-normal text-center mb-3 pb-3" style={{ letterSpacing: '1px' }}>Add Question Type</h4>
 
                                             {isLoading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
                                             {error && <div className="me-4 ms-4 alert alert-danger text-center">{error}</div>}
                                             {success && <div className="me-4 ms-4 alert alert-success text-center">{success}</div>}
 
-                                            <div className="d-flex">
-
-                                                <div className="mb-4 col-md-6 form-group">
-                                                    <label className="form-label">First Name</label>
-                                                    <input
-                                                        type="text"
-                                                        value={firstName}
-                                                        onChange={e => setFirstName(e.target.value)}
-                                                        required
-                                                        className="form-control"
-                                                    />
-                                                </div>
-
-                                                <div className="mb-4 col-md-6 form-group">
-                                                    <label className="form-label">Last Name</label>
-                                                    <input
-                                                        type="text"
-                                                        value={lastName}
-                                                        onChange={e => setLastName(e.target.value)}
-                                                        required
-                                                        className="form-control"
-                                                    />
-                                                </div>
-                                            </div>
 
                                             <div className="mb-4 col-md-12 form-group">
-                                                <label className="form-label">Email</label>
+                                                <label className="form-label">Question Type</label>
                                                 <input
-                                                    type="email"
-                                                    value={email}
-                                                    onChange={e => setEmail(e.target.value)}
+                                                    type="text"
+                                                    value={typeName}
+                                                    onChange={e => setTypeName(e.target.value)}
                                                     required
                                                     className="form-control"
                                                 />
+                                            </div>
+                                            <div className="d-flex category-form">
+
+                                                <div className="mb-4 col-md-6 form-group">
+                                                    <label className="form-label">Options</label>
+                                                    <input
+                                                        type="text"
+                                                        value={numberOfOptions}
+                                                        onChange={e => setNumberOfOptions(e.target.value)}
+                                                        required
+                                                        className="form-control"
+                                                    />
+                                                </div>
+
+                                                <div className="mb-4 col-md-6 form-group">
+                                                    <label className="form-label">Score</label>
+                                                    <input
+                                                        type="text"
+                                                        value={scoreWeight}
+                                                        onChange={e => setScoreWeight(e.target.value)}
+                                                        required
+                                                        className="form-control"
+                                                    />
+                                                </div>
                                             </div>
 
                                             <div className="text-center">
 
                                                 <button type="submit" className="btn btn-dark ms-auto me-auto">
-                                                    Register
+                                                    Add
                                                 </button>
                                             </div>
 
@@ -190,8 +191,9 @@ const AdminRegistration = () => {
                     </div>
                 </div>
             </div>
-        </section>        
+        </section>
+
     </>
 }
 
-export default AdminRegistration;
+export default AddQuestionType;

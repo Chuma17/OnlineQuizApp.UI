@@ -1,0 +1,10 @@
+@media (max-width: 768px) {
+    .mobile-description{
+        display: none;
+    }
+
+    .category-form{
+        flex-direction: column;
+    }
+
+}

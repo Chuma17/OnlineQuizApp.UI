@@ -260,10 +260,10 @@ const TakeQuiz = () => {
 
                                                         {questions.length > 0 && (
                                                             <div className="text-center">
-                                                                <div className="">
-                                                                    <button className="btn btn-sm btn-light p-1 m-1" onClick={handlePrevPage} disabled={pagination.currentPage === 1}>Previous</button>
-                                                                    <span className="text-dark"> {pagination.currentPage} of {pagination.totalPages === 0 ? 1 : pagination.totalPages} </span>
-                                                                    <button className="btn btn-sm btn-light p-1 m-1" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}>Next</button>
+                                                                <div className="pagination-icons">
+                                                                    <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handlePrevPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-caret-left"></i></button>
+                                                                    <span className="text-dark"> Page: {pagination.currentPage} of {pagination.totalPages === 0 ? 1 : pagination.totalPages} </span>
+                                                                    <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}><i class="fa-solid fa-caret-right"></i></button>
                                                                 </div>
 
                                                                 <button

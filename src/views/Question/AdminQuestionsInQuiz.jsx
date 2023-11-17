@@ -14,7 +14,6 @@ const AdminQuestionsInQuiz = () => {
 
     const [loading, setLoading] = useState();
     const [questionCount, setQuestionCount] = useState("");
-    const [selectedQuestionId, setSelectedQuestionId] = useState(null);
 
     const [questions, setQuestions] = useState([]);
     const user = JSON.parse(localStorage.getItem("userDetails"));
@@ -85,26 +84,6 @@ const AdminQuestionsInQuiz = () => {
         setPagination(prev => ({ ...prev, currentPage: pagination.totalPages }));
     }
 
-    async function DeleteQuestion(questionId) {
-        try {
-            const deleteResponse = await axios.delete(`Question/delete-question?questionId=${questionId}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${user.accessToken}`
-                    },
-                },
-            );
-
-            if (deleteResponse.status === 200) {
-                setSelectedQuestionId(null); // Reset selected question ID
-                console.log(deleteResponse);
-                getQuestions();
-                // setError('');
-            }
-        } catch (error) {
-
-        }
-    }
 
     return <>
         <section className="vh-110 background-radial-gradient overflow-hidden">
@@ -121,24 +100,30 @@ const AdminQuestionsInQuiz = () => {
 
                                 <ul className="nav nav-tabs d-flex justify-content-between p-3" id="myTab" role="tablist">
 
-                                    <Link to="/change-names">
+                                    <Link to={`/view-admin-questions-in-quiz/${id}`}>
                                         <li className="nav-item" role="presentation">
-                                            <p className="nav-link active" id="names-tab" data-bs-toggle="tab" data-bs-target="#names-tab-pane" type="button" role="tab" aria-controls="names-tab-pane" aria-selected="true"> Questions </p>
-                                        </li>
-                                    </Link>                                    
-
-                                    <Link to="/change-password">
-                                        <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password-tab-pane" type="button" role="tab" aria-controls="password-tab-pane" aria-selected="false">Edit </p>
+                                            <p className="nav-link active" id="adminQuestion-tab" data-bs-toggle="tab" data-bs-target="#adminQuestion-tab-pane" type="button" role="tab" aria-controls="adminQuestion-tab-pane" aria-selected="true"> Questions </p>
                                         </li>
                                     </Link>
 
-                                    <Link to="/two-factor-authentication">
+                                    <Link to="/edit-quiz-details">
                                         <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="2fa-tab" data-bs-toggle="tab" data-bs-target="#2fa-tab-pane" type="button" role="tab" aria-controls="2fa-tab-pane" aria-selected="false">Image</p>
+                                            <p className="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane" type="button" role="tab" aria-controls="edit-tab-pane" aria-selected="false">Edit </p>
                                         </li>
                                     </Link>
-                                    
+
+                                    <Link to="/edit-quiz-image">
+                                        <li className="nav-item" role="presentation">
+                                            <p className="nav-link" id="quizImage-tab" data-bs-toggle="tab" data-bs-target="#quizImage-tab-pane" type="button" role="tab" aria-controls="quizImage-tab-pane" aria-selected="false">Image</p>
+                                        </li>
+                                    </Link>
+
+                                    <Link to={`/view-quiz-records/${id}`}>
+                                        <li className="nav-item" role="presentation">
+                                            <p className="nav-link" id="quizRecord-tab" data-bs-toggle="tab" data-bs-target="#quizRecord-tab-pane" type="button" role="tab" aria-controls="quizRecord-tab-pane" aria-selected="false">Records</p>
+                                        </li>
+                                    </Link>
+
                                 </ul >
 
                                 <div style={{ height: questions.length > 0 ? '800px' : '500px' }} className="card ms-auto me-auto bg-glass">
@@ -201,7 +186,6 @@ const AdminQuestionsInQuiz = () => {
 
                                                                         </div>
 
-
                                                                     </>
 
                                                                 })}
@@ -211,12 +195,12 @@ const AdminQuestionsInQuiz = () => {
 
                                                         {questions.length > 0 && (
                                                             <div className="text-center">
-                                                                <div className="ms-2 mb-1">
-                                                                    <button className="btn btn-sm btn-light p-1 m-1" onClick={handleFirstPage} disabled={pagination.currentPage === 1}>First</button>
-                                                                    <button className="btn btn-sm btn-light p-1 m-1" onClick={handlePrevPage} disabled={pagination.currentPage === 1}>Previous</button>
+                                                                <div className="ms-2 mb-1 pagination-icons">
+                                                                    <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleFirstPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-backward"></i></button>
+                                                                    <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handlePrevPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-caret-left"></i></button>
                                                                     <span className="text-dark"> Page: {pagination.currentPage} of {pagination.totalPages === 0 ? 1 : pagination.totalPages} </span>
-                                                                    <button className="btn btn-sm btn-light p-1 m-1" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}>Next</button>
-                                                                    <button className="btn btn-sm btn-light p-1 m-1" onClick={handleLastPage} disabled={pagination.currentPage === pagination.totalPages}>Last</button>
+                                                                    <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}><i class="fa-solid fa-caret-right"></i></button>
+                                                                    <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleLastPage} disabled={pagination.currentPage === pagination.totalPages}><i class="fa-solid fa-forward"></i></button>
                                                                 </div>
                                                             </div>
                                                         )}
@@ -234,31 +218,6 @@ const AdminQuestionsInQuiz = () => {
                 </div>
             </div>
         </section>
-
-        <div className="modal fade" id="deleteQuestionModal" tabindex="-1" aria-labelledby="deleteQuestionModalLabel" aria-hidden="true">
-            <div className="modal-dialog text-light">
-                <div className="modal-content bg-dark">
-                    <div className="modal-header">
-                        <h1 className="modal-title fs-5 text-light" id="deleteQuestionModalLabel">Delete Question</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div className="modal-body text-light">
-                        Are you sure you want to delete this Question?
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button
-                            className="btn btn-danger text-light"
-                            data-bs-dismiss="modal"
-                            onClick={() => DeleteQuestion(selectedQuestionId)}
-                        >
-                            Confirm
-                        </button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
     </>
 }
 

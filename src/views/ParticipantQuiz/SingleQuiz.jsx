@@ -22,6 +22,7 @@ const SingleQuiz = () => {
 
     const [comment, setComment] = useState();
     const [commentCount, setCommentCount] = useState();
+    
     const [takeQuizloading, setTakeQuizLoading] = useState();
     const [quiz, setQuiz] = useState({});
     const [category, setCategory] = useState([]);
@@ -159,11 +160,18 @@ const SingleQuiz = () => {
 
     useEffect(() => {
         let errorTimeoutId;
+        let postCommentErrorTimeoutId;
         let successTimeoutId;
 
         if (error) {
             errorTimeoutId = setTimeout(() => {
                 setError(null);
+            }, 4000);
+        }
+
+        if (postCommentError) {
+            postCommentErrorTimeoutId = setTimeout(() => {
+                setPostCommentError(null);
             }, 4000);
         }
 
@@ -175,10 +183,11 @@ const SingleQuiz = () => {
 
         return () => {
             clearTimeout(errorTimeoutId);
+            clearTimeout(postCommentErrorTimeoutId);
             clearTimeout(successTimeoutId);
         };
 
-    }, [error, success]);
+    }, [error, success, postCommentError]);
 
     return <>
         <section className="vh-110 background-radial-gradient overflow-hidden">
@@ -204,7 +213,7 @@ const SingleQuiz = () => {
                                             <div className="row ">
 
                                                 <div className="d-flex details justify-content-between">
-                                                    <div className="col-md-7 ms-0">
+                                                    <div className="col-md-5 ms-0">
                                                         {takeQuizloading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
                                                         {error && <div className="alert alert-danger text-center">{error}</div>}
 
@@ -217,7 +226,7 @@ const SingleQuiz = () => {
                                                         </div>
                                                     </div>
 
-                                                    <div className="text-center col-md-5 fs-5">
+                                                    <div className="text-center col-md-7 fs-5">
                                                         <h3 className="">{quiz.quizName}</h3>
                                                         <hr />
                                                         <div>
@@ -250,10 +259,10 @@ const SingleQuiz = () => {
                                                     <h3 style={{ letterSpacing: '1px' }} className="">COMMENTS ({commentCount || '0'})</h3>
 
                                                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#commmentModal">
-                                                        Add
+                                                        <i class="fa-solid fa-plus text-light"></i>
+
                                                     </button>
                                                 </div>
-
 
 
                                                 <hr />
@@ -287,12 +296,7 @@ const SingleQuiz = () => {
 
                                                                         <div className="mt-3 mb-3 fs-5">
                                                                             {comment.comment}
-                                                                        </div>
-
-                                                                        {/* <div className="mb-5 d-flex">
-                                                                            <button disabled className="btn btn-dark ">Reply</button>
-                                                                            <div className="ms-1 mt-auto mb-auto">Coming soon...</div>
-                                                                        </div> */}
+                                                                        </div>                                                                    
 
                                                                     </div>
 
@@ -306,6 +310,7 @@ const SingleQuiz = () => {
 
                                                     </div>
                                                 }
+
                                             </div>
 
                                         </div>

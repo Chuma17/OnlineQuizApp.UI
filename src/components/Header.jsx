@@ -63,11 +63,7 @@ const Header = () => {
                                         <Link to="/create-quiz" className="text-light nav-link mt-auto mb-auto">Quiz</Link>
                                         <Link to="/add-questions-to-bank" className="text-light nav-link mt-auto mb-auto">Question</Link>
                                         <Link to="/participant-result" className="text-light nav-link mt-auto mb-auto">Result</Link>
-                                        {quiz &&
-                                            <Link to={`/ongoing-quiz/${quiz}`} className="text-light nav-link">
-                                                <button className="btn btn-success">OQ</button>
-                                            </Link>
-                                        }
+
                                     </div>
                                 </>
                             }
@@ -78,12 +74,7 @@ const Header = () => {
                             <div className="d-flex text-center fs-6">
                                 <hr className="text-light hr-mobile-only" />
 
-                                <Link to="/participant-result" className="text-light nav-link">Results</Link>
-                                {quiz &&
-                                    <Link to={`/ongoing-quiz/${quiz}`} className="text-light nav-link">
-                                        <button className="btn btn-success">Ongoing Quiz</button>
-                                    </Link>
-                                }
+                                <Link to="/participant-result" className="text-light nav-link">Results</Link>                                
                             </div>
                         }
 
@@ -115,16 +106,22 @@ const Header = () => {
 
                         <div className="d-flex superadmin-button">
 
+                            {quiz &&
+                                <Link to={`/ongoing-quiz/${quiz}`} className="text-light nav-link">
+                                    <button className="btn btn-success">OQ</button>
+                                </Link>
+                            }
+
                             {userInfo &&
                                 <button className="btn btn-light my-2 my-sm-0 btn-sm p-0 me-2">
-                                    <Link to="/change-names" className="text-dark nav-link"><i className="fa-solid fa-gear"></i> Account</Link>
+                                    <Link to="/change-names" className="text-dark nav-link"><i className="fa-solid fa-gear"></i> </Link>
                                 </button>
                             }
 
                             {userInfo &&
                                 <>
                                     <button type="button" className="btn btn-danger btn-sm my-2 ms-0 my-sm-0" data-bs-toggle="modal" data-bs-target="#signOutModal">
-                                        <i className="fa-solid fa-arrow-right-from-bracket me-1 text-light"></i> Sign Out
+                                        <i className="fa-solid fa-arrow-right-from-bracket text-light"></i>
                                     </button>
 
                                     <div className="modal fade" id="signOutModal" tabindex="-1" aria-labelledby="signOutModalLabel" aria-hidden="true">
