@@ -20,9 +20,7 @@ const AddQuestion = () => {
     const [questionText, setQuestionText] = useState("");
     const [questionTypes, setQuestionTypes] = useState([]);
     const [questionTypeId, setQuestionTypeId] = useState("");
-    const [categories, setCategories] = useState([]);
-    const [categoryId, setCategoryId] = useState("");
-
+    
     const [profileImage, setProfileImage] = useState();
     const [preview, setPreview] = useState(null);
     const fileInput = useRef(null);
@@ -102,23 +100,7 @@ const AddQuestion = () => {
                 console.error(error.response);
             }
         }
-    }
-
-    async function getCategories() {
-        try {
-            const response = await axios.get(`Category/get-all-categories`, {
-
-            });
-
-            const { data } = response;
-            if (data) {
-                setCategories(data);
-            }
-
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    }    
 
 
     async function getQuizzes() {
@@ -148,7 +130,7 @@ const AddQuestion = () => {
             setIsArticleLoading(true);
 
             const response = await axios.post(`Question/add-questions-to-quiz`,
-                { questionText, questionTypeId, categoryId, quizId },
+                { questionText, questionTypeId, quizId },
                 {
                     headers: {
                         Authorization: `Bearer ${user.accessToken}`
@@ -449,16 +431,10 @@ const AddQuestion = () => {
         } catch (error) {
 
         }
-    }
-
-    async function GetQuestCats(params) {
-        getQuestionTypes();
-        getCategories();
-    }
+    }    
 
     async function GetQuestCatsQuiz(params) {
         getQuestionTypes();
-        getCategories();
         getQuizzes();
     }
 
@@ -610,18 +586,7 @@ const AddQuestion = () => {
                                                         return <option key={questionType.questionTypeId} value={questionType.questionTypeId}> {questionType.typeName} </option>
                                                     })}
                                                 </select>
-                                            </div>
-
-                                            <div className="mb-4 me-4 ms-4">
-                                                <label className="form-label" htmlfor="halls">Category</label>
-                                                <select value={categoryId} onChange={e => setCategoryId(e.target.value)} required className="form-control form-select">
-                                                    <option hidden value="">--- Select Category ---</option>
-
-                                                    {categories.length > 0 && categories.map(category => {
-                                                        return <option key={category.categoryId} value={category.categoryId}> {category.categoryName} </option>
-                                                    })}
-                                                </select>
-                                            </div>
+                                            </div>                                            
 
                                             <div className="mb-4 me-4 ms-4">
                                                 <label className="form-label" htmlfor="halls">Quiz</label>

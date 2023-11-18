@@ -152,7 +152,7 @@ const QuizRecords = () => {
                                                                     <tr className="fs-5">
                                                                         <th scope="row">{i + 1}</th>
                                                                         <td>{participant?.firstName} {participant?.lastName}</td>
-                                                                        <td><Link to={`/quiz-result/${participant.id}?quizId=${id}`}><button className="btn btn-success"><i class="fa-solid fa-arrow-right text-light"></i></button></Link></td>
+                                                                        <td><Link to={`/quiz-result/${participant.id}?quizId=${id}`}><button className="btn btn-success go-to-result"><i class="fa-solid fa-arrow-right text-light"></i></button></Link></td>
                                                                     </tr>
 
                                                                 )) : (
