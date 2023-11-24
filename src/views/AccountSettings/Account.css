@@ -3,10 +3,6 @@
     color: #000 !important; /* Set the text color on hover */
 }
 
-.picture-preview:hover{
-    cursor: pointer;
-}
-
 .nav-tabs .nav-link.active{
     color: #000 !important; /* Set the text color on focus */
 }

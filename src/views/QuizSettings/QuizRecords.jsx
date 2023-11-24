@@ -1,15 +1,12 @@
 import { useParams } from "react-router";
 import axios from "../../axios/axios";
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Loading from "../../components/Loading";
 
 const QuizRecords = () => {
     let params = useParams();
     const id = params.id;
-    const navigate = useNavigate();
-
-    const goBack = () => navigate(-1);
 
     const [loading, setLoading] = useState();
     const [quizParticipants, setquizParticipants] = useState([]);
@@ -37,7 +34,7 @@ const QuizRecords = () => {
             if (data) {
                 setLoading(false);
                 setquizParticipants(data);
-
+                console.log(data)
                 const paginationHeader = JSON.parse(response.headers["pagination"]);
                 setPagination(paginationHeader);
             }
@@ -100,19 +97,19 @@ const QuizRecords = () => {
                                         </li>
                                     </Link>
 
-                                    <Link to="/edit-quiz-details">
+                                    <Link to={`/edit-quiz-details?quizId=${id}`}>
                                         <li className="nav-item" role="presentation">
                                             <p className="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane" type="button" role="tab" aria-controls="edit-tab-pane" aria-selected="false">Edit </p>
                                         </li>
                                     </Link>
 
-                                    <Link to="/edit-quiz-image">
+                                    <Link to={`/edit-quiz-image?quizId=${id}`}>
                                         <li className="nav-item" role="presentation">
                                             <p className="nav-link" id="quizImage-tab" data-bs-toggle="tab" data-bs-target="#quizImage-tab-pane" type="button" role="tab" aria-controls="quizImage-tab-pane" aria-selected="false">Image</p>
                                         </li>
                                     </Link>
 
-                                    <Link to="/view-quiz-records">
+                                    <Link to={`/view-quiz-records/${id}`}>
                                         <li className="nav-item" role="presentation">
                                             <p className="nav-link active" id="quizRecord-tab" data-bs-toggle="tab" data-bs-target="#quizRecord-tab-pane" type="button" role="tab" aria-controls="quizRecord-tab-pane" aria-selected="false">Records</p>
                                         </li>
@@ -127,7 +124,9 @@ const QuizRecords = () => {
                                         {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :
                                             <div className="card mb-4">
                                                 <div className="card-header py-3 d-flex">
-                                                    <button className="btn btn-danger" onClick={goBack}><i class="fa-solid fa-arrow-left text-light"></i></button>
+                                                    <Link to={`/single-admin-quiz/${id}`}>
+                                                        <button className="btn btn-danger"><i class="fa-solid fa-arrow-left text-light"></i></button>
+                                                    </Link>                                                    
                                                     <h5 className="text-center mt-auto mb-auto ms-auto me-auto">
                                                         Participants
                                                     </h5>
@@ -151,7 +150,7 @@ const QuizRecords = () => {
 
                                                                     <tr className="fs-5">
                                                                         <th scope="row">{i + 1}</th>
-                                                                        <td>{participant?.firstName} {participant?.lastName}</td>
+                                                                        <td>{participant?.firstName} {participant?.lastName} ({participant.count})</td>
                                                                         <td><Link to={`/quiz-result/${participant.id}?quizId=${id}`}><button className="btn btn-success go-to-result"><i class="fa-solid fa-arrow-right text-light"></i></button></Link></td>
                                                                     </tr>
 

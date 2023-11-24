@@ -33,6 +33,8 @@ import AdminUnpublished from './views/Quiz/AdminUnpublished';
 import SingleAdminQuiz from './views/Quiz/SingleAdminQuiz';
 import QuizRecords from './views/QuizSettings/QuizRecords';
 import QuizResult from './views/QuizSettings/QuizResults';
+import EditQuizDetails from './views/QuizSettings/EditQuizDetails';
+import EditQuizImage from './views/QuizSettings/EditQuizImage';
 
 //Admin Question
 import AddQuestion from './views/Question/AddQuestion';
@@ -129,6 +131,8 @@ const App = () => {
           <Route path="/view-admin-questions-in-quiz/:id" element={<AdminQuestionsInQuiz />} />
           <Route path="/view-quiz-records/:id" element={<QuizRecords />} />
           <Route path="/quiz-result/:id/*" element={<QuizResult />} />
+          <Route path="/edit-quiz-details/*" element={<EditQuizDetails />} />
+          <Route path="/edit-quiz-image/*" element={<EditQuizImage />} />
 
         </Route>
 

@@ -231,14 +231,16 @@ const SingleAdminQuiz = () => {
                                             <div className="row ">
 
                                                 <div className="d-flex details justify-content-between">
-                                                    <div className="col-md-7 ms-0">
+                                                    <div className="col-md-5 ms-0">
 
                                                         {publishloading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
                                                         {error && <div className="alert alert-danger text-center">{error}</div>}
                                                         {success && <div className="alert alert-success text-center">{success}</div>}
 
                                                         <div className="d-flex justify-content-between">
-                                                            <button className="btn btn-danger mb-3" onClick={goBack}><i class="fa-solid fa-arrow-left text-light"></i></button>
+                                                            <Link to={`/admin-quizzes`}>
+                                                                <button className="btn btn-danger"><i class="fa-solid fa-arrow-left text-light"></i></button>
+                                                            </Link>
                                                             {quiz.isPublished ?
                                                                 <button onClick={UnPublishQuiz} className="btn btn-danger mb-3">
                                                                     Unpublish
@@ -255,7 +257,7 @@ const SingleAdminQuiz = () => {
                                                         </div>
                                                     </div>
 
-                                                    <div className="text-center col-md-5 fs-5">
+                                                    <div className="text-center col-md-7 fs-5">
                                                         <h3 className="">{quiz.quizName}</h3>
                                                         <hr />
                                                         <div>

@@ -1,72 +1,81 @@
 import axios from "../../axios/axios";
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Loading from "../../components/Loading";
-import "./Account.css"
 
-const ProfilePicture = () => {
-    const navigate = useNavigate();
+const EditQuizImage = () => {
 
-    const user = JSON.parse(localStorage.getItem("userDetails"));
+    const location = useLocation();
+    const param = new URLSearchParams(location.search);
+    const quizId = param.get("quizId");
+
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+    const [loading, setLoading] = useState();
 
     const [profileImage, setProfileImage] = useState(null);
+    const [profileImageUpload, setProfileImageUpload] = useState(null);
     const [preview, setPreview] = useState(null);
     const fileInput = useRef(null);
 
-    const [isLoading, setIsLoading] = useState();
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
+    const user = JSON.parse(localStorage.getItem("userDetails"));
 
-    async function submitHandler(e) {
-        e.preventDefault();
-
-        const formData = new FormData();
-        if (profileImage) {
-            formData.append("profileImage", profileImage);
-        }
-
-        setError(false);
-        setSuccess(false);
+    async function getQuizDetails() {
         try {
-            setIsLoading(true);
+            setLoading(true);
 
-            const response = await axios.post(`User/upload-profile-picture`, formData, {
-                headers: {
-                    Authorization: `Bearer ${user.accessToken}`
-                }
+            const response = await axios.get(`Quiz/get-quiz-image?quizId=${quizId}`, {
+
             });
 
-            if (response.status === 200) {
-                setIsLoading(false);
+            const { data } = response;
+            if (data) {
+                setLoading(false);
+                // console.log(data)
+                setProfileImage(data.imageUrl)
+            }
 
-                user.profileUrl = response.data.imageUrl;
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
-                const updatedStudent = JSON.stringify(user);
-                localStorage.setItem('userDetails', updatedStudent);
 
-                // // console.log(response);
-                setSuccess(response.data.message);
+    async function UploadPicture(params) {
+        try {
+            setLoading(true);
+
+            const formData = new FormData();
+            if (profileImageUpload) {
+                formData.append("profileImage", profileImageUpload);
+            }
+
+            const quizPicResponse = await axios.post(`Quiz/upload-quiz-picture?quizId=${quizId}`, formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`
+                    },
+                },
+            );
+
+            if (quizPicResponse.status === 200) {
+                setLoading(false);
+                getQuizDetails();
+                console.log(quizPicResponse);
+                setSuccess(quizPicResponse.data.message);
                 // setError('');
             }
         }
 
         catch (error) {
-            setIsLoading(false);
-            // console.error(error.response);
+            setLoading(false);
 
-            if (error.response.status === 401) {
-                window.alert('Your session has expired. Login again!');
-                localStorage.removeItem('userDetails');
-
-                navigate('/login');
-            } else {
-                setIsLoading(false);
-
-                // console.error(error.response);
-                setError(error.response.data);
-            }
+            console.error(error.quizPicResponse);
+            setError(error.quizPicResponse);
         }
     }
+
+
 
     //Delete function
     async function DeletePicture() {
@@ -74,46 +83,38 @@ const ProfilePicture = () => {
         setSuccess(false);
 
         try {
-            setIsLoading(true);
+            setLoading(true);
 
-            const response = await axios.delete(`User/delete-profile-picture`, {
+            const response = await axios.delete(`Quiz/delete-quiz-picture`, {
                 headers: {
                     Authorization: `Bearer ${user.accessToken}`
                 },
+                params: {
+                    quizId: quizId
+                }
             });
 
             if (response.status === 200) {
-
-                setIsLoading(false);
-
-                user.profileUrl = null;
-
-                const updatedStudent = JSON.stringify(user);
-                localStorage.setItem('userDetails', updatedStudent);
-
-                // // console.log(response);
+                setLoading(false);
+                getQuizDetails();
                 setSuccess(response.data);
-                // setError('');
             }
         }
 
         catch (error) {
-            setIsLoading(false);
-            // console.error(error.response);
+            setLoading(false);
 
-            if (error.response.status === 401) {
-                window.alert('Your session has expired. Login again!');
-                localStorage.removeItem('userDetails');
+            console.error(error.response);
+            setError(error.response.data);
 
-                navigate('/login');
-            } else {
-                setIsLoading(false);
-
-                // console.error(error.response);
-                setError(error.response.data);
-            }
         }
     }
+
+
+    useEffect(() => {
+
+        getQuizDetails();
+    }, []);
 
     useEffect(() => {
         let errorTimeoutId;
@@ -122,14 +123,12 @@ const ProfilePicture = () => {
         if (error) {
             errorTimeoutId = setTimeout(() => {
                 setError(null);
-            }, 5000);
+            }, 2000);
         }
 
         if (success) {
             successTimeoutId = setTimeout(() => {
                 setSuccess(null);
-                window.location.reload();
-                // window.location.reload();
             }, 2000);
         }
 
@@ -140,10 +139,12 @@ const ProfilePicture = () => {
 
     }, [error, success]);
 
+
+
     return <>
         <section className="vh-110 background-radial-gradient overflow-hidden">
 
-            <div className="container px-4 py-4 px-md-5 text-lg-start my-5">
+            <div className="container px-4 py-4 px-md-5 text-lg-start my-">
                 <div className="row gx-lg-5 align-items-center mb-4">
 
                     <div className="col-lg-12 ms-auto me-auto mb-lg-0 position-relative">
@@ -155,50 +156,42 @@ const ProfilePicture = () => {
 
                                 <ul className="nav nav-tabs d-flex justify-content-between p-3" id="myTab" role="tablist">
 
-                                    <Link to="/change-names">
+                                    <Link to={`/view-admin-questions-in-quiz/${quizId}`}>
                                         <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="names-tab" data-bs-toggle="tab" data-bs-target="#names-tab-pane" type="button" role="tab" aria-controls="names-tab-pane" aria-selected="true"> Names </p>
+                                            <p className="nav-link" id="adminQuestion-tab" data-bs-toggle="tab" data-bs-target="#adminQuestion-tab-pane" type="button" role="tab" aria-controls="adminQuestion-tab-pane" aria-selected="true"> Questions </p>
                                         </li>
                                     </Link>
 
-                                    <Link to="/change-username">
+                                    <Link to={`/edit-quiz-details?quizId=${quizId}`}>
                                         <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="username-tab" data-bs-toggle="tab" data-bs-target="#username-tab-pane" type="button" role="tab" aria-controls="username-tab-pane" aria-selected="false"> Username </p>
+                                            <p className="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane" type="button" role="tab" aria-controls="edit-tab-pane" aria-selected="false">Edit </p>
                                         </li>
                                     </Link>
 
-                                    <Link to="/change-email">
+                                    <Link to={`/edit-quiz-image?quizId=${quizId}`}>
                                         <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="email-tab" data-bs-toggle="tab" data-bs-target="#email-tab-pane" type="button" role="tab" aria-controls="email-tab-pane" aria-selected="false"> Email </p>
+                                            <p className="nav-link active" id="quizImage-tab" data-bs-toggle="tab" data-bs-target="#quizImage-tab-pane" type="button" role="tab" aria-controls="quizImage-tab-pane" aria-selected="false">Image</p>
                                         </li>
                                     </Link>
 
-                                    <Link to="/change-password">
+                                    <Link to={`/view-quiz-records/${quizId}`}>
                                         <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password-tab-pane" type="button" role="tab" aria-controls="password-tab-pane" aria-selected="false">Password </p>
+                                            <p className="nav-link" id="quizRecord-tab" data-bs-toggle="tab" data-bs-target="#quizRecord-tab-pane" type="button" role="tab" aria-controls="quizRecord-tab-pane" aria-selected="false">Records</p>
                                         </li>
                                     </Link>
 
-                                    <Link to="/two-factor-authentication">
-                                        <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="2fa-tab" data-bs-toggle="tab" data-bs-target="#2fa-tab-pane" type="button" role="tab" aria-controls="2fa-tab-pane" aria-selected="false">Two Factor</p>
-                                        </li>
-                                    </Link>
-
-                                    <Link to="/profile-picture">
-                                        <li className="nav-item" role="presentation">
-                                            <p className="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</p>
-                                        </li>
-                                    </Link>
                                 </ul >
+
 
                                 <div className="card col-lg-6 ms-auto me-auto bg-glass">
                                     <div className="card-body px-4 py-5 px-md-5">
+                                        <Link to={`/single-admin-quiz/${quizId}`}>
+                                            <button className="btn btn-danger"><i class="fa-solid fa-arrow-left text-light"></i></button>
+                                        </Link>
+                                        <form className="form" onSubmit={UploadPicture}>
+                                            <h4 className="fw-normal text-center mb-3 pb-3" style={{ letterSpacing: '1px' }}>Update Quiz Picture</h4>
 
-                                        <form className="form" onSubmit={submitHandler}>
-                                            <h4 className="fw-normal text-center mb-3 pb-3" style={{ letterSpacing: '1px' }}>Update Profile Picture</h4>
-
-                                            {isLoading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
+                                            {loading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
                                             {error && (
                                                 <div className="alert alert-danger">
                                                     {typeof error === "object" ? (
@@ -221,30 +214,30 @@ const ProfilePicture = () => {
                                                 <input
                                                     type="file"
                                                     onChange={(e) => {
-                                                        setProfileImage(e.target.files[0]);
+                                                        setProfileImageUpload(e.target.files[0]);
                                                         setPreview(URL.createObjectURL(e.target.files[0]));
                                                     }}
                                                     style={{ display: "none" }}
                                                     ref={fileInput}
                                                 />
                                                 <div className="" style={{ display: "flex", flexDirection: "column", textAlign: "center" }}>
-                                                    {user.profileUrl ? (
+                                                    {profileImage ? (
                                                         <img
                                                             className="ms-auto me-auto mb-4 mt-2"
-                                                            src={preview || user.profileUrl}
+                                                            src={preview || profileImage}
                                                             alt="Profile"
                                                             style={{ width: "80%", height: "45%", borderRadius: "10px" }}
                                                         />
                                                     ) : (
                                                         <img
                                                             className="ms-auto me-auto mb-4 mt-2"
-                                                            src={preview || require("./images/user.png")}
+                                                            src={preview || require("./images/QuizDefault.jpg")}
                                                             alt="Preview"
                                                             style={{ width: "80%", height: "45%", borderRadius: "10px" }}
                                                         />
                                                     )}
                                                     <div className="text-center">
-                                                        <button type="button" className="edit-button btn btn-dark" disabled={user.profileUrl} onClick={() => fileInput.current.click()}>
+                                                        <button type="button" className="edit-button btn btn-dark" disabled={profileImage} onClick={() => fileInput.current.click()}>
                                                             <i class="fa-solid fa-image text-light"></i>
                                                         </button>
                                                     </div>
@@ -254,31 +247,32 @@ const ProfilePicture = () => {
 
                                             <div className="text-center">
 
-                                                <button type="submit" className="edit-button btn btn-success me-2" disabled={!preview}>
+                                                <button type="submit" className="edit-button btn btn-success me-2" disabled={profileImage || !profileImageUpload}>
                                                     <i class="fa-solid fa-upload text-light"></i>
                                                 </button>
 
-                                                <button type="button" className="edit-button btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProfilePictureModal" disabled={!user.profileUrl}>
+                                                <button type="button" className="edit-button btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteQuizPictureModal" disabled={!profileImage}>
                                                     <i class="fa-solid fa-trash text-light"></i>
                                                 </button>
                                             </div>
 
                                         </form>
 
-
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <div className="modal fade" id="deleteProfilePictureModal" tabindex="-1" aria-labelledby="deleteProfilePictureModalLabel" aria-hidden="true">
+
+        <div className="modal fade" id="deleteQuizPictureModal" tabindex="-1" aria-labelledby="deleteQuizPictureModalLabel" aria-hidden="true">
             <div className="modal-dialog text-light">
                 <div className="modal-content bg-dark">
                     <div className="modal-header">
-                        <h1 className="modal-title fs-5 text-light" id="deleteProfilePictureModalLabel">Delete Profile Picture</h1>
+                        <h1 className="modal-title fs-5 text-light" id="deleteQuizPictureModalLabel">Delete Quiz Picture</h1>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body text-light">
@@ -296,4 +290,4 @@ const ProfilePicture = () => {
     </>
 }
 
-export default ProfilePicture;
+export default EditQuizImage;

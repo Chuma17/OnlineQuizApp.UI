@@ -114,8 +114,7 @@ const ViewAdmins = () => {
                                             <thead>
                                                 <tr className="fs-5">
                                                     <th scope="col">#</th>
-                                                    <th scope="col">First Name</th>
-                                                    <th scope="col">Last Name</th>
+                                                    <th scope="col">Name</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -123,8 +122,7 @@ const ViewAdmins = () => {
                                                     admins.length > 0 ? admins.map((admin, i) => (
                                                         <tr className="fs-5">
                                                             <th scope="row">{i + 1}</th>
-                                                            <td>{admin?.firstName}</td>
-                                                            <td>{admin?.lastName}</td>
+                                                            <td>{admin?.firstName} {admin?.lastName}</td>
                                                         </tr>
                                                     )) : (
                                                         <>
