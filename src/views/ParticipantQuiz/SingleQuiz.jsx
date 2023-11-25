@@ -98,10 +98,15 @@ const SingleQuiz = () => {
 
     async function postComment(params) {
 
-        if (user == null) {
-            setError("You have to be logged in");
+        if (comment == "") {
+            setPostCommentError("Comment cannot be blank");
             return
         }
+        
+        if (user == null) {
+            setPostCommentError("You have to be logged in");
+            return
+        }        
 
         try {
             setPostCommentLoading(true);

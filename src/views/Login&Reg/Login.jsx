@@ -18,7 +18,7 @@ const Login = () => {
         setIsLoading(true);
 
         try {
-            const response = await axios.post("Authentication/login", { username, password });            
+            const response = await axios.post("Authentication/login", { username, password });
 
             if (response.status === 200) {
                 setIsLoading(false);
@@ -44,7 +44,7 @@ const Login = () => {
             errorTimeoutId = setTimeout(() => {
                 setError(null);
             }, 2000);
-        }        
+        }
 
         return () => {
             clearTimeout(errorTimeoutId);
@@ -109,10 +109,13 @@ const Login = () => {
                                                 Sign In
                                             </button>
                                             <p className="mb-0 pb-lg-2 text-center"><Link to="/forgot-password"
-                                                style={{ color: '#393f81' }}>Forgot Password?</Link></p>                                            
+                                                style={{ color: '#393f81' }}>Forgot Password?</Link></p>
 
                                             <p className="mb-0 pb-lg-2 text-center">Confirmation Link expired? <Link to="/resend-confirmation-link"
                                                 style={{ color: '#393f81' }}>Resend</Link></p>
+
+                                            <p className="mb-0 pb-lg-2 text-center">Don't have an account? <Link to="/user-registration"
+                                                style={{ color: '#393f81' }}>Register</Link></p>
 
                                         </form>
 

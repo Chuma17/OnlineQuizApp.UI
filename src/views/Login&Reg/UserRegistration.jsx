@@ -49,14 +49,14 @@ function UserRegistration(props) {
     }
 
     useEffect(() => {
-        let errorTimeoutId;
+        // let errorTimeoutId;
         let successTimeoutId;
 
-        if (error) {
-            errorTimeoutId = setTimeout(() => {
-                setError(null);
-            }, 7000);
-        }
+        // if (error) {
+        //     errorTimeoutId = setTimeout(() => {
+        //         setError(null);
+        //     }, 7000);
+        // }
 
         if (success) {
             successTimeoutId = setTimeout(() => {
@@ -65,11 +65,11 @@ function UserRegistration(props) {
         }
 
         return () => {
-            clearTimeout(errorTimeoutId);
+            // clearTimeout(errorTimeoutId);
             clearTimeout(successTimeoutId);
         };
 
-    }, [error, success]);
+    }, [success]);
 
 
     return <div><>
