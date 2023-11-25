@@ -22,7 +22,7 @@ const SingleQuiz = () => {
 
     const [comment, setComment] = useState();
     const [commentCount, setCommentCount] = useState();
-    
+
     const [takeQuizloading, setTakeQuizLoading] = useState();
     const [quiz, setQuiz] = useState({});
     const [category, setCategory] = useState([]);
@@ -87,7 +87,9 @@ const SingleQuiz = () => {
                 setCommentCount(data[0].commentCount);
             }
         } catch (error) {
+
             console.error(error);
+
         }
     }
 
@@ -98,15 +100,15 @@ const SingleQuiz = () => {
 
     async function postComment(params) {
 
-        if (comment == "") {
+        if (comment == null) {
             setPostCommentError("Comment cannot be blank");
             return
         }
-        
+
         if (user == null) {
             setPostCommentError("You have to be logged in");
             return
-        }        
+        }
 
         try {
             setPostCommentLoading(true);
@@ -129,7 +131,9 @@ const SingleQuiz = () => {
             setPostCommentLoading(false);
 
             console.error(error);
-            setPostCommentError(error.response.data);
+            if (comment !== null) {
+                setPostCommentError(error.response.data);
+            }
         }
     }
 
@@ -171,13 +175,13 @@ const SingleQuiz = () => {
         if (error) {
             errorTimeoutId = setTimeout(() => {
                 setError(null);
-            }, 4000);
+            }, 6000);
         }
 
         if (postCommentError) {
             postCommentErrorTimeoutId = setTimeout(() => {
                 setPostCommentError(null);
-            }, 4000);
+            }, 6000);
         }
 
         if (success) {
@@ -301,7 +305,7 @@ const SingleQuiz = () => {
 
                                                                         <div className="mt-3 mb-3 fs-5">
                                                                             {comment.comment}
-                                                                        </div>                                                                    
+                                                                        </div>
 
                                                                     </div>
 
