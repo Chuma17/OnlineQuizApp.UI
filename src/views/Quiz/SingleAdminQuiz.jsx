@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import axios from "../../axios/axios";
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Loading from "../../components/Loading";
 import CommentLoading from "../../components/CommentLoading";
 import "./Quiz.css"
@@ -9,9 +9,6 @@ import "./Quiz.css"
 const SingleAdminQuiz = () => {
     let params = useParams();
     const id = params.id;
-    const navigate = useNavigate();
-
-    const goBack = () => navigate(-1);
 
     const user = JSON.parse(localStorage.getItem("userDetails"));
 

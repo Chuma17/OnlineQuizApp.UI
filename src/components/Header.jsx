@@ -14,7 +14,7 @@ const Header = () => {
     const quiz = JSON.parse(localStorage.getItem("quizId"));
 
     const Logout = async e => {
-        e.preventDefault()
+        e.preventDefault();
         localStorage.removeItem("userDetails");
         navigate("/");
         // window.location.reload();
@@ -25,7 +25,7 @@ const Header = () => {
         <nav className="navbar navbar-expand-lg navbar-light background-radial-gradient overflow-hidden">
             <div className="container-fluid">
                 <Link to="/" className="navbar-brand text-light fs-5 p-2">
-                    <i className="fas fa-cubes fa-1x me-1" style={{ color: '#ff6219' }}></i> Quiz App
+                    <i className="fas fa-cubes fa-1x me-1" style={{ color: '#ff6219' }}></i> Ramen's Trivia
                 </Link>
 
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,7 +74,7 @@ const Header = () => {
                             <div className="d-flex text-center fs-6">
                                 <hr className="text-light hr-mobile-only" />
 
-                                <Link to="/participant-result" className="text-light nav-link">Results</Link>                                
+                                <Link to="/participant-result" className="text-light nav-link">Results</Link>
                             </div>
                         }
 

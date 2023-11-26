@@ -56,7 +56,7 @@ import ViewQuestionTypes from './views/SuperAdmin/ViewQuestionTypes';
 
 //Views
 import HomePage from './views/HomePage';
-import LandingPage from './views/LandingPage';
+import LandingPage from './views/Home/LandingPage';
 
 const ROLES = {
   'Admin': "Admin",
@@ -95,11 +95,11 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Layout />}>
 
-        <Route index element={<HomePage />} /> {/* Added index attribute */}
+        <Route index element={<LandingPage />} /> {/* Added index attribute */}
         {/* public routes */}
 
-        <Route path="/" exact element={<HomePage />} />
-        <Route path="/landing-page" element={<LandingPage />} />
+        <Route path="/" exact element={<LandingPage />} />
+        {/* <Route path="/landing-page" element={<LandingPage />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/user-registration" element={<UserRegistration />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
