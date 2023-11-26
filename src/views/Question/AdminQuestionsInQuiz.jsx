@@ -159,9 +159,9 @@ const AdminQuestionsInQuiz = () => {
                                                                                 <div className="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
                                                                                     <img src={question.imageUrl || require('./question.png')}
                                                                                         className="w-100 quest-picture" alt="Question Item" />
-                                                                                    <Link to="/">
-                                                                                        <div className="mask" style={{ backgroundColor: 'rgba(251, 251, 251, 0.2)' }}></div>
-                                                                                    </Link>
+
+                                                                                    <div className="mask" style={{ backgroundColor: 'rgba(251, 251, 251, 0.2)' }}></div>
+
                                                                                 </div>
 
                                                                             </div>

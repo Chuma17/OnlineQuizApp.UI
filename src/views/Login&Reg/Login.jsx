@@ -67,12 +67,12 @@ const Login = () => {
 
                             <div className="row g-0">
 
-                                <div className="col-md-6 col-lg-5 d-none d-md-block mt-auto mb-auto">
+                                <div className="col-md-6 col-lg-6 d-none d-md-block mt-auto mb-auto">
                                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
                                         alt="login form" className="img-fluid" style={{ borderRadius: '1rem 0 0 1rem' }} />
                                 </div>
 
-                                <div className="col-md-6 col-lg-7 d-flex align-items-center">
+                                <div className="col-md-6 col-lg-6 d-flex align-items-center">
                                     <div className="card-body px-4 py-5 px-md-5 p-4 p-lg-5 text-black">
                                         <form className="form" onSubmit={submitHandler}>
 
@@ -105,13 +105,13 @@ const Login = () => {
                                                 />
                                             </div>
 
-                                            <button type="submit" className="login-button text-light btn btn-dark btn-block w-25 mb-4 mt-4">
-                                                Sign In
+                                            <button type="submit" className="login-button text-light btn btn-dark mb-4">
+                                                <i className="fa-solid fa-arrow-right-to-bracket text-light"></i>
                                             </button>
-                                            <p className="mb-0 pb-lg-2 text-center"><Link to="/forgot-password"
+                                            <p className="mb-0 pb-lg-2 text-center mb-2"><Link to="/forgot-password"
                                                 style={{ color: '#393f81' }}>Forgot Password?</Link></p>
 
-                                            <p className="mb-0 pb-lg-2 text-center">Confirmation Link expired? <Link to="/resend-confirmation-link"
+                                            <p className="mb-0 pb-lg-2 text-center mb-2">Confirmation Link expired? <Link to="/resend-confirmation-link"
                                                 style={{ color: '#393f81' }}>Resend</Link></p>
 
                                             <p className="mb-0 pb-lg-2 text-center">Don't have an account? <Link to="/user-registration"

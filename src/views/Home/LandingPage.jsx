@@ -113,15 +113,17 @@ const LandingPage = () => {
     }
 
 
-    return <>        
-    
+    return <>
+
         <section id="hero-banner">
             <div className="container">
                 <div className="row">
-                    <div className="col-md-4 my-auto mr-auto">
-                        <h1 className="h1 h1-responsive">Welcome To <i class="fa-brands fa-teamspeak"></i> Ramen's Trivia</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto
-                            libero minus maiores? Pariatur dolor consectetur nemo animi.
+                    <div className="col-md-4 my-auto mr-auto px-4">
+                        <h1 className="h1 h1-responsive">Welcome To <i class="fa-brands fa-teamspeak"></i> Ramen's Trivia,</h1>
+                        <p className="fs-5 justified-text">
+                            where the excitement of knowledge meets the thrill of competition. Immerse yourself in a world
+                            of intriguing questions and engaging quizzes that cater to your curiosity.
+                            Let the quest for knowledge begin at Ramen's Trivia!
                         </p>
 
                     </div>
@@ -276,43 +278,46 @@ const LandingPage = () => {
                     <div className="col-lg-5 col-md-6 pl-lg-5 px-4 mt-md-0 mt-5">
                         <h6 className="h6 color-primary m-0">About Us</h6>
                         <h1 className="h1 h1-responsive mb-4">We Provide The Best Quizzes For You</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, esse facere! A, obcaecati? Iste
-                            exercitationem velit veniam nisi voluptatum.</p>
-                        <p>Quo corrupti vitae est modi nobis nulla eum minima recusandae eos.</p>
-                        <p>Quo corrupti vitae est modi nobis nulla eum minima recusandae eos.</p>
-
+                        <p className="fs-5 justified-text">
+                            At Ramen's Trivia, we pride ourselves on providing the best quizzes for your enjoyment.
+                            With a commitment to quality and diversity, we offer a wide range of quizzes that
+                            cater to various interests and knowledge levels. Join us on a journey of discovery,
+                            where every quiz is crafted with care to provide you with a unique and enjoyable experience.
+                        </p>
 
                     </div>
                 </div>
             </div>
-        </section>        
+        </section>
 
 
         <section id="work-section">
             <div className="container">
                 <h1 className="h1 h1-responsive mb-4">How it Works</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet necessitatibus ut corporis rem <br />
-                    doloribus? Aliquid illum assumenda voluptatum hic quis.</p>
+                <p className="fs-5 px-4 justified-text">Explore our seamless quiz-taking process: Take a quiz, uncover fascinating insights,
+                    and view your results instantly. <p className="text-center">At Ramen's Trivia, it's that easy to engage, learn,
+                    and enjoy the rewarding experience of our quizzes.</p> 
+                </p>
 
                 <div className="work-items d-flex justify-content-between my-5">
                     <div className="service-show">
-                        <i className="fas fa-search"></i>
+                        <i class="fa-brands fa-quinscape"></i>
                         <h4 className="h5 mb-4">Take Quizzes</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sit amet consectetur adipisicing elit.
+                        <p className="fs-6">Take quizzes on diverse topics to challenge your knowledge and <br /> curiosity.
                         </p>
                     </div>
 
                     <div className="service-show">
-                        <i className="fas fa-people-carry"></i>
+                        <i class="fa-solid fa-square-poll-vertical"></i>
                         <h4 className="h5 mb-4">See Results</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sit amet consectetur adipisicing elit.
+                        <p className="fs-6">Instantly view detailed results, track your progress, and gain valuable <br /> insights.
                         </p>
                     </div>
 
                     <div className="service-show">
-                        <i className="fas fa-shield-alt"></i>
+                        <i class="fa-solid fa-comment-dots"></i>
                         <h4 className="h5 mb-4">Leave a Comment</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sit amet consectetur adipisicing elit.
+                        <p className="fs-6">Engage with our community by leaving comments and sharing <br /> thoughts.
                         </p>
                     </div>
 
@@ -325,12 +330,14 @@ const LandingPage = () => {
             <div className="container">
                 <h6 className="h6 color-primary m-0">Testimonial</h6>
                 <h1 className="h1 h1-responsive mb-4">What People are Saying</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet <br /> necessitatibus ut corporis rem
-                    doloribus?Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+                <p className="fs-5">
+                    Discover what our community is saying about Ramen's Trivia. From enthusiastic testimonials
+                    to shared experiences,<br /> our users highlight the engaging and enjoyable nature of our quizzes.
+                </p>
                 <br /><br />
                 <div id="testimonial-slider">
 
-                    <div className="container">                        
+                    <div className="container">
 
                         <div id="testimonial-slider">
                             <div className="swiper">
@@ -340,18 +347,20 @@ const LandingPage = () => {
                                             <div className="row">
                                                 <div className="col-lg-4 col-md-4 col-4 text-center mx-auto">
                                                     <div className="image">
-                                                        <img src={require(`./img/QuizDefault.jpg`)} alt="" />
+                                                        <img src={require(`./img/code-galaxy.jpg`)} alt="" />
                                                     </div>
                                                 </div>
                                                 <div className="offset-lg-1 col-lg-6 col-md-8 text-left">
                                                     <i className="fas fa-quote-left fa-2x"></i>
-                                                    <p className="mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                                        Repellendus cupiditate obcaecati dolorum, facilis temporibus quam
-                                                        nemo nihil, a voluptatibus eveniet dolorem perspiciatis? Numquam
-                                                        beatae repellat perspiciatis non omnis molestiae reprehenderit?</p>
+                                                    <p className="mt-3 fs-5">
+                                                        Ramen's Trivia has revolutionized my quiz-taking experience with its
+                                                        diverse and thought-provoking questions. The platform's user-friendly
+                                                        interface and instant results make it a go-to for both casual learners
+                                                        and avid quiz enthusiasts.
+                                                    </p>
                                                     <br />
                                                     <h4 className="h4">Youtuber</h4>
-                                                    <p>Code Galaxy</p>
+                                                    <p className="fs-5">Code Galaxy</p>
                                                 </div>
                                             </div>
 
@@ -374,7 +383,7 @@ const LandingPage = () => {
                 <div className="col-lg-8 col-md-11 mx-auto form shadow mt-3">
                     <div className="row">
                         <h4>Coming Soon...</h4>
-                        
+
                     </div>
                 </div>
             </div>

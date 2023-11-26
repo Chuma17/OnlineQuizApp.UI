@@ -45,7 +45,7 @@ const Header = () => {
 
                                 <div className="d-flex nav-details">
                                     <Link to="/login" className="nav-login text-light nav-link mb-2"> <i className="nav-login fa-solid fa-arrow-right-to-bracket text-light"></i> Sign In</Link>
-                                    <Link to="/user-registration" className="nav-login text-light nav-link mb-2"> <i className="nav-login fas fa-pen text-light"></i> Sign Up</Link>
+                                    <Link to="/user-registration" className="nav-login text-light nav-link mb-2"> <i class="nav-login fa-solid fa-user-plus text-light"></i> Sign Up</Link>
                                 </div>
                             </div>
                         }

@@ -1,8 +1,4 @@
-@media (max-width: 1182px) {
-    .login-button {
-        width: 30% !important;
-    }
-}
+
 
 .forgot-password:hover{
     cursor: pointer;
