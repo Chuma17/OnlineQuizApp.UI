@@ -567,8 +567,9 @@ const AddQuestion = () => {
                                         <form>
                                             <div class="mb-3 me-4 ms-4">
                                                 <label for="recipient-name" class="col-form-label">Question Text:</label>
-                                                <input
+                                                <textarea
                                                     type="text"
+                                                    rows={4}
                                                     class="form-control"
                                                     id="recipient-name"
                                                     value={questionText}
