@@ -5,27 +5,19 @@ import { Link, useNavigate } from "react-router-dom";
 import CommentLoading from "../../components/CommentLoading";
 import Loading from "../../components/Loading";
 
-const ViewAdmins = () => {
+const ViewUsers = () => {
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem("userDetails"));
 
     const [isLoading, setIsLoading] = useState();
-    const [isAdminLoading, setIsAdminLoading] = useState();
-    const [admins, setAdmins] = useState([]);
+    const [users, setUsers] = useState([]);    
 
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
-
-    async function getAdmins() {
+    async function getUsers() {
 
         try {
             setIsLoading(true);
 
-            const response = await axios.get(`User/get-all-admins`,
+            const response = await axios.get(`User/get-all-users`,
                 {
                     headers: {
                         Authorization: `Bearer ${user.accessToken}`
@@ -35,9 +27,8 @@ const ViewAdmins = () => {
 
             if (response.status === 200) {
                 setIsLoading(false);
-                setAdmins(response.data)
-                console.log(response);
-                // setError('');
+                setUsers(response.data);
+                // console.log(response);
             }
         } catch (error) {
             setIsLoading(false);
@@ -55,49 +46,8 @@ const ViewAdmins = () => {
 
     useEffect(() => {
 
-        getAdmins();
-    }, []);
-
-    async function submitHandler(e) {
-        e.preventDefault();
-
-        if (firstName == "" || lastName == "" || email == "") {
-            setError("Fill in all the fields");
-            return;
-        }
-
-        try {
-            setIsAdminLoading(true);
-
-            const response = await axios.post(`Authentication/register-admin`, { email, firstName, lastName },
-                {
-                    headers: {
-                        Authorization: `Bearer ${user.accessToken}`
-                    },
-                },
-            );
-
-            if (response.status === 200) {
-                setIsAdminLoading(false);
-                getAdmins();
-                console.log(response);
-                setSuccess(response.data);
-                // setError('');
-            }
-        } catch (error) {
-            setIsAdminLoading(false);
-
-            if (error.response.status === 401) {
-                window.alert('Your session has expired. Login again!');
-                localStorage.removeItem('userDetails');
-
-                navigate('/login');
-            } else {
-                console.error(error.response);
-                setError(error.response.data);
-            }
-        }
-    }
+        getUsers();
+    }, []);    
 
     return <>
 
@@ -117,13 +67,13 @@ const ViewAdmins = () => {
 
                                     <Link to="/view-admins">
                                         <li className="nav-item" role="presentation">
-                                            <p className="nav-link active" id="adminView-tab" data-bs-toggle="tab" data-bs-target="#adminView-tab-pane" type="button" role="tab" aria-controls="adminView-tab-pane" aria-selected="false"> Admins </p>
+                                            <p className="nav-link" id="adminView-tab" data-bs-toggle="tab" data-bs-target="#adminView-tab-pane" type="button" role="tab" aria-controls="adminView-tab-pane" aria-selected="false"> Admins </p>
                                         </li>
                                     </Link>
 
                                     <Link to="/view-users">
                                         <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="userView-tab" data-bs-toggle="tab" data-bs-target="#userView-tab-pane" type="button" role="tab" aria-controls="userView-tab-pane" aria-selected="false"> Users </p>
+                                            <p className="nav-link active" id="userView-tab" data-bs-toggle="tab" data-bs-target="#userView-tab-pane" type="button" role="tab" aria-controls="userView-tab-pane" aria-selected="false"> Users </p>
                                         </li>
                                     </Link>
 
@@ -156,12 +106,8 @@ const ViewAdmins = () => {
                                 <div className="card col-lg-12 ms-auto me-auto bg-glass">
                                     <div className="card-body px-4 py-5 px-md-5">
 
-                                        <div className="d-flex justify-content-around pb-3">
-                                            <h4 className="fw-normal text-center" style={{ letterSpacing: '1px' }}>Admins</h4>
-
-                                            <button type="button" className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#AddCategoryModal" title="Add Category">
-                                                <i class="fa-solid fa-plus text-light"></i>
-                                            </button>
+                                        <div className="pb-3">
+                                            <h4 className="fw-normal text-center" style={{ letterSpacing: '1px' }}>Users</h4>                                            
                                         </div>
 
                                         {isLoading && <div className="mb-3" style={{ textAlign: 'center' }}><CommentLoading /> </div>}
@@ -177,7 +123,7 @@ const ViewAdmins = () => {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        admins.length > 0 ? admins.map((admin, i) => (
+                                                        users.length > 0 ? users.map((admin, i) => (
                                                             <tr className="fs-5">
                                                                 <th scope="row">{i + 1}</th>
                                                                 <td>{admin?.firstName} {admin?.lastName}</td>
@@ -185,7 +131,7 @@ const ViewAdmins = () => {
                                                         )) : (
                                                             <>
                                                                 <div className="text-center mt-3">
-                                                                    <h2>No Admins</h2>
+                                                                    <h2>No Users</h2>
                                                                 </div>
                                                             </>
                                                         )
@@ -201,68 +147,9 @@ const ViewAdmins = () => {
                     </div>
                 </div>
             </div>
-        </section>
-
-        <div class="modal fade" id="AddCategoryModal" tabindex="-1" aria-labelledby="AddCategoryModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="AddCategoryModalLabel">Add Category</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        {isAdminLoading && <div className="" style={{ textAlign: 'center' }}><Loading /> </div>}
-                        {error && <div className="alert alert-danger text-center">{error}</div>}
-                        {success && <div className="alert alert-success text-center">{success}</div>}
-
-                        <form>
-                            <div className="d-flex">
-
-                                <div className="mb-4 col-md-6 form-group">
-                                    <label className="form-label">First Name</label>
-                                    <input
-                                        type="text"
-                                        value={firstName}
-                                        onChange={e => setFirstName(e.target.value)}
-                                        required
-                                        className="form-control"
-                                    />
-                                </div>
-
-                                <div className="mb-4 col-md-6 form-group">
-                                    <label className="form-label">Last Name</label>
-                                    <input
-                                        type="text"
-                                        value={lastName}
-                                        onChange={e => setLastName(e.target.value)}
-                                        required
-                                        className="form-control"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="mb-4 col-md-12 form-group">
-                                <label className="form-label">Email</label>
-                                <input
-                                    type="email"
-                                    value={email}
-                                    onChange={e => setEmail(e.target.value)}
-                                    required
-                                    className="form-control"
-                                />
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <button onClick={submitHandler} type="button" class="btn btn-success">Add</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </section>        
 
     </>
 }
 
-export default ViewAdmins;
+export default ViewUsers;

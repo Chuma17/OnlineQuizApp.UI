@@ -50,7 +50,7 @@ const ViewCategories = () => {
         }
     }
 
-    useEffect(() => {        
+    useEffect(() => {
 
         getCategories();
     }, []);
@@ -137,35 +137,41 @@ const ViewCategories = () => {
                         <div className="bg-glass">
                             <div className="px-4 py-5 px-md-5">
 
-                                <ul className="nav nav-tabs d-flex justify-content-between p-3" id="myTab" role="tablist">
-
-                                    <Link to="/admin-registration">
-                                        <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="adminReg-tab" data-bs-toggle="tab" data-bs-target="#adminReg-tab-pane" type="button" role="tab" aria-controls="adminReg-tab-pane" aria-selected="true"> Add Admin </p>
-                                        </li>
-                                    </Link>
+                                <ul className="nav nav-tabs d-flex justify-content-between p-3" id="myTab" role="tablist">                                    
 
                                     <Link to="/view-admins">
                                         <li className="nav-item" role="presentation">
                                             <p className="nav-link" id="adminView-tab" data-bs-toggle="tab" data-bs-target="#adminView-tab-pane" type="button" role="tab" aria-controls="adminView-tab-pane" aria-selected="false"> Admins </p>
                                         </li>
-                                    </Link>                                    
+                                    </Link>
+
+                                    <Link to="/view-users">
+                                        <li className="nav-item" role="presentation">
+                                            <p className="nav-link" id="userView-tab" data-bs-toggle="tab" data-bs-target="#userView-tab-pane" type="button" role="tab" aria-controls="userView-tab-pane" aria-selected="false"> Users </p>
+                                        </li>
+                                    </Link>
 
                                     <Link to="/view-categories">
                                         <li className="nav-item" role="presentation">
                                             <p className="nav-link active" id="viewCategory-tab" data-bs-toggle="tab" data-bs-target="#viewCategory-tab-pane" type="button" role="tab" aria-controls="viewCategory-tab-pane" aria-selected="false">Categories</p>
                                         </li>
-                                    </Link>
-
-                                    <Link to="/add-questionType">
-                                        <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="addQuestionType-tab" data-bs-toggle="tab" data-bs-target="#addQuestionType-tab-pane" type="button" role="tab" aria-controls="addQuestionType-tab-pane" aria-selected="false">Add QT </p>
-                                        </li>
-                                    </Link>
+                                    </Link>                            
 
                                     <Link to="/view-questionTypes">
                                         <li className="nav-item" role="presentation">
                                             <p className="nav-link" id="viewQuestionTypes-tab" data-bs-toggle="tab" data-bs-target="#viewQuestionTypes-tab-pane" type="button" role="tab" aria-controls="viewQuestionTypes-tab-pane" aria-selected="false">View QT</p>
+                                        </li>
+                                    </Link>
+
+                                    <Link to="/view-all-published-quizzes">
+                                        <li className="nav-item" role="presentation">
+                                            <p className="nav-link" id="viewPublished-tab" data-bs-toggle="tab" data-bs-target="#viewPublished-tab-pane" type="button" role="tab" aria-controls="viewPublished-tab-pane" aria-selected="false">Published</p>
+                                        </li>
+                                    </Link>
+
+                                    <Link to="/view-all-unpublished-quizzes">
+                                        <li className="nav-item" role="presentation">
+                                            <p className="nav-link" id="viewUnpublished-tab" data-bs-toggle="tab" data-bs-target="#viewUnpublished-tab-pane" type="button" role="tab" aria-controls="viewUnpublished-tab-pane" aria-selected="false">Unpublished</p>
                                         </li>
                                     </Link>
 
@@ -175,7 +181,7 @@ const ViewCategories = () => {
                                     <div className="card-body px-4 py-5 px-md-5">
 
                                         <div className="d-flex justify-content-around pb-3">
-                                            <h4 className="fw-normal text-center " style={{ letterSpacing: '1px' }}>Categories</h4>
+                                            <h4 className="fw-normal text-center" style={{ letterSpacing: '1px' }}>Categories</h4>
 
                                             <button type="button" className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#AddCategoryModal" title="Add Category">
                                                 <i class="fa-solid fa-plus text-light"></i>
@@ -186,34 +192,38 @@ const ViewCategories = () => {
 
                                         {isLoading && <div className="mb-3" style={{ textAlign: 'center' }}><CommentLoading /> </div>}
 
-                                        <table class="table table-hover">
+                                        <div style={{ height: '600px', overflowY: 'auto' }}>
 
-                                            <thead>
-                                                <tr className="fs-5">
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Category</th>
-                                                    <th className="mobile-description" scope="col">Description</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr className="fs-5">
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Category</th>
+                                                        <th className="mobile-description" scope="col">Description</th>
+                                                    </tr>
+                                                </thead>
 
-                                                {
-                                                    categories.length > 0 ? categories.map((category, i) => (
-                                                        <tr className="fs-5">
-                                                            <th scope="row">{i + 1}</th>
-                                                            <td>{category?.categoryName}</td>
-                                                            <td className="mobile-description">{category?.categoryDescription}</td>
-                                                        </tr>
-                                                    )) : (
-                                                        <>
-                                                            <div className="text-center mt-3">
-                                                                <h2>No Categories</h2>
-                                                            </div>
-                                                        </>
-                                                    )
-                                                }
-                                            </tbody>
-                                        </table>
+                                                <tbody>
+
+                                                    {
+                                                        categories.length > 0 ? categories.map((category, i) => (
+                                                            <tr className="fs-5">
+                                                                <th scope="row">{i + 1}</th>
+                                                                <td>{category?.categoryName}</td>
+                                                                <td className="mobile-description">{category?.categoryDescription}</td>
+                                                            </tr>
+                                                        )) : (
+                                                            <>
+                                                                <div className="text-center mt-3">
+                                                                    <h2>No Categories</h2>
+                                                                </div>
+                                                            </>
+                                                        )
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                        </div>
 
                                     </div>
                                 </div>

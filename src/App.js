@@ -11,7 +11,6 @@ import Header from './components/Header';
 
 //Login & Registration
 import Login from './views/Login&Reg/Login';
-import AdminRegistration from './views/Login&Reg/AdminRegistration';
 import UserRegistration from './views/Login&Reg/UserRegistration';
 
 //Account
@@ -50,8 +49,8 @@ import ParticipantResult from './views/Result/ParticipantResult';
 //Super Admin 
 import ViewCategories from './views/SuperAdmin/ViewCategories';
 import ViewAdmins from './views/SuperAdmin/ViewAdmins';
-import AddQuestionType from './views/SuperAdmin/AddQuestionType';
 import ViewQuestionTypes from './views/SuperAdmin/ViewQuestionTypes';
+import ViewUsers from './views/SuperAdmin/ViewUsers';
 
 //Views
 import HomePage from './views/HomePage';
@@ -136,11 +135,10 @@ const App = () => {
         </Route>
 
         <Route element={<RequireAuth allowedRoles={[ROLES.SuperAdmin]} />}>
-          <Route path="/admin-registration" element={<AdminRegistration />} />
           <Route path="/view-categories" element={<ViewCategories />} />
           <Route path="/view-admins" element={<ViewAdmins />} />
-          <Route path="/add-questionType" element={<AddQuestionType />} />
           <Route path="/view-questionTypes" element={<ViewQuestionTypes />} />
+          <Route path="/view-users" element={<ViewUsers />} />
         </Route>
 
         {/* catch all */}
