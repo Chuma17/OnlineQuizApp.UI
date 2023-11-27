@@ -51,10 +51,11 @@ const Header = () => {
                         }
 
                         <div className="">
-
+                            {userInfo &&
+                                <hr className="text-light hr-mobile-only" />
+                            }
                             {userInfo && userInfo.roles.includes(ROLES.Admin) &&
                                 <>
-                                    <hr className="text-light hr-mobile-only" />
 
                                     <div className="admin-links d-flex justify-content-between fs-6 nav-item mt-auto mb-auto">
                                         {userInfo && userInfo.roles.includes(ROLES.SuperAdmin) &&
@@ -65,18 +66,26 @@ const Header = () => {
                                         <Link to="/participant-result" className="text-light nav-link mt-auto mb-auto">Result</Link>
 
                                     </div>
+
                                 </>
+                            }
+
+                            {userInfo && userInfo.roles.includes(ROLES.Participant) &&
+                                <div className="d-flex text-center fs-6 ms-auto me-auto">
+
+                                    <Link to="/participant-result" className="text-light nav-link ms-auto me-auto">Results</Link>
+                                </div>
                             }
 
                         </div>
 
-                        {userInfo && userInfo.roles.includes(ROLES.Participant) &&
-                            <div className="d-flex text-center fs-6">
+                        {/* {userInfo && userInfo.roles.includes(ROLES.Participant) &&
+                            <div className="d-flex text-center fs-6 ms-auto me-auto">
                                 <hr className="text-light hr-mobile-only" />
 
-                                <Link to="/participant-result" className="text-light nav-link">Results</Link>
+                                <Link to="/participant-result" className="text-light nav-link ms-auto me-auto">Results</Link>
                             </div>
-                        }
+                        } */}
 
 
 
@@ -85,7 +94,7 @@ const Header = () => {
                     <div className="d-flex justify-content-around second-line mb-2">
 
                         {userInfo && <>
-                            <div className="d-flex">
+                            <div className="d-flex mt-auto mb-auto">
                                 {userInfo.profileUrl ? (
                                     <Link to="/profile-picture">
                                         <img
@@ -96,7 +105,7 @@ const Header = () => {
                                     </Link>
 
                                 ) : (
-                                    <i className="fas fa-user mt-auto mb-auto fs-5 me- nav-username text-light"></i>
+                                    <i className="fas fa-user mt-auto mb-auto fs-5 me-4 nav-username text-light"></i>
                                 )}
 
 

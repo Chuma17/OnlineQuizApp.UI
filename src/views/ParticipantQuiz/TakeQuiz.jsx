@@ -169,7 +169,7 @@ const TakeQuiz = () => {
                 localStorage.removeItem("quizId");
                 setSuccess(response.data);
                 clearAnswerDetails();
-                navigate("/");
+                navigate(`/single-participant-quiz/${id}`);
             }
             // Handle successful submission
             console.log(response);

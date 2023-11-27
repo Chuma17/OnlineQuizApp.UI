@@ -352,7 +352,7 @@ const LandingPage = () => {
                                                 </div>
                                                 <div className="offset-lg-1 col-lg-6 col-md-8 text-left">
                                                     <i className="fas fa-quote-left fa-2x"></i>
-                                                    <p className="mt-3 fs-5">
+                                                    <p className="mt-3 justified-text fs-5">
                                                         Ramen's Trivia has revolutionized my quiz-taking experience with its
                                                         diverse and thought-provoking questions. The platform's user-friendly
                                                         interface and instant results make it a go-to for both casual learners
