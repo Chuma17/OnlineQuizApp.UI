@@ -1,40 +1,40 @@
 /* ------ Color Variables -------- */
 
-:root{
+:root {
     --color-primary: #161c2d;
     --color-secondary: #314862 !important;
     --color-acent: #193F6A;
-    --font-poppin: 'Poppins',serif;
+    --font-poppin: 'Poppins', serif;
 }
 
-.bg-primary{
+.bg-primary {
     background-color: var(--color-primary);
 }
 
-.color-primary{
+.color-primary {
     color: var(--color-primary);
 }
 
 
-.bg-secondary{
+.bg-secondary {
     background-color: var(--color-secondary);
 }
 
-.color-secondary{
+.color-secondary {
     color: var(--color-secondary);
 }
 
-.bg-acent{
+.bg-acent {
     background-color: var(--color-acent);
 }
 
-.color-acent{
+.color-acent {
     color: var(--color-acent);
 }
 
 /* -------- Button Style -------- */
 
-.btn-theme{
+.btn-theme {
     box-shadow: none;
     margin: 0;
     font-size: 16px;
@@ -47,31 +47,52 @@
     transition: 0.5s ease;
 }
 
-.btn-theme:hover{
+.btn-theme:hover {
     background-color: var(--color-acent);
     color: white;
     box-shadow: none;
 }
 
+.participant-accordion {
+    overflow-x: hidden;
+    padding: 30px !important;
+}
 
-.justified-text{
+.accordion-header .accordion-button {
+    font-size: 21px !important;
+}
+
+.accordion-body {
+    font-size: large;
+    padding: 35px;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #FF32A1;
+}
+
+.accordion-button:hover {
+    color: #FF32A1;
+}
+
+.justified-text {
     text-align: justify;
 }
 
 
 /* ------- Hero Banner Style -------- */
 
-#hero-banner{
+#hero-banner {
     width: 100%;
     padding: 80px 0px;
     color: var(--color-secondary);
 }
 
-#hero-banner p{
+#hero-banner p {
     font-weight: 400;
 }
 
-#hero-banner .image{
+#hero-banner .image {
     border-radius: 80px 80px 0px 80px;
     overflow: hidden;
 }
@@ -79,17 +100,17 @@
 
 /* ------- Search Section ------- */
 
-#search-section{
+#search-section {
     margin-top: 50px;
     margin-bottom: 100px;
 }
 
-#search-section .search-area{
+#search-section .search-area {
     border-radius: 80px;
     padding: 15px 50px;
 }
 
-#search-section .search-area button.btn-theme{
+#search-section .search-area button.btn-theme {
     border-radius: 30px;
     padding: 12px 40px;
 }
@@ -97,22 +118,22 @@
 
 /* ------- About Section ------- */
 
-#about-section{
+#about-section {
     width: 100%;
     padding: 120px 0;
     background-color: #eeeeee;
 }
 
-#about-section h1{
+#about-section h1 {
     color: var(--color-secondary);
 }
 
-#about-section .image{
+#about-section .image {
     border-radius: 80px 0px 80px 80px;
     overflow: hidden;
 }
 
-#about-section .image img{
+#about-section .image img {
     width: 100%;
     height: 400px;
     object-fit: cover;
@@ -121,22 +142,22 @@
 
 /* -------- Work Section ------- */
 
-#work-section{
+#work-section {
     width: 100%;
     padding: 100px 0px;
     background-color: white;
     text-align: center;
 }
 
-#work-section h1{
+#work-section h1 {
     color: var(--color-secondary);
 }
 
-#work-section p{
+#work-section p {
     font-weight: 400;
 }
 
-#work-section .service-show{
+#work-section .service-show {
     padding: 20px 30px;
     text-align: center;
     border-radius: 0px 30px 0px 30px;
@@ -145,7 +166,7 @@
     transition: ease;
 }
 
-#work-section .service-show i{
+#work-section .service-show i {
     padding: 20px;
     width: 62px;
     background-color: #eeeeee;
@@ -157,37 +178,37 @@
 }
 
 
-#work-section .service-show p{
+#work-section .service-show p {
     font-size: 13px;
     font-weight: 400;
 }
 
-#work-section .service-show:hover{
+#work-section .service-show:hover {
     background-color: white;
-    box-shadow: 0.5rem 1rem rgba(0,0,0,.15);
+    box-shadow: 0.5rem 1rem rgba(0, 0, 0, .15);
 }
 
 
 /* --------- Feature Section ---------  */
 
-#feature-section{
+#feature-section {
     width: 100%;
     text-align: center;
     color: var(--color-secondary);
 }
 
-#feature-section .property-list{
+#feature-section .property-list {
     padding: 10px;
     background-color: white;
     border-radius: 0px 30px 0px 30px;
     color: #000000;
 }
 
-#feature-section .property-list p{
+#feature-section .property-list p {
     font-weight: 500;
 }
 
-#feature-section .property-list .image{
+#feature-section .property-list .image {
     width: 100%;
     height: 200px;
     overflow: hidden;
@@ -195,32 +216,32 @@
     margin-bottom: 10px;
 }
 
-#feature-section .property-list .image img{
+#feature-section .property-list .image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-#feature-section .btn-theme{
+#feature-section .btn-theme {
     border-radius: 30px;
 }
 
 
 /* ------- Testimonial Section --------- */
 
-#testimonial-section{
+#testimonial-section {
     width: 100%;
     padding: 100px 0;
     text-align: center;
 }
 
-#testimonial-section .testimonial-list .image{
+#testimonial-section .testimonial-list .image {
     border-radius: 100% 100% 0 100%;
     overflow: hidden;
     height: 330px;
 }
 
-#testimonial-section .testimonial-list .image img{
+#testimonial-section .testimonial-list .image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -229,23 +250,23 @@
 
 /* ------- Mail Section --------- */
 
-#mail-section{
+#mail-section {
     width: 100%;
     padding: 100px 0;
     text-align: center;
 }
 
-#mail-section .form{
+#mail-section .form {
     padding: 10px 40px;
     border-radius: 30px;
 }
 
-#mail-section .form input{
+#mail-section .form input {
     border-radius: 30px;
     padding: 12px 40px;
 }
 
-#mail-section .form .btn-theme{
+#mail-section .form .btn-theme {
     border-radius: 30px;
     padding: 12px 40px;
 }
@@ -253,7 +274,7 @@
 
 /* ------ Footer ------- */
 
-footer{
+footer {
     width: 100%;
     padding: 50px 0;
     background-color: var(--color-primary);
@@ -261,13 +282,13 @@ footer{
     border-radius: 80px 0 0 0;
 }
 
-footer ul{
+footer ul {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-footer ul a{
+footer ul a {
     font-size: 13px;
     transition: 0.5 ease;
 }
@@ -278,79 +299,79 @@ footer ul a{
 @media only screen and (max-width: 991px) {
 
     /* Testimonial Section */
-    #testimonial-section .testimonial-list .image{
+    #testimonial-section .testimonial-list .image {
         border-radius: 100% 100% 100% 100%;
         height: 210px;
         border: 5px solid white;
-        box-shadow: 0.5rem 1rem rgba(0,0,0,.15);
+        box-shadow: 0.5rem 1rem rgba(0, 0, 0, .15);
     }
 
     /* Mail Section */
-    #mail-section{
+    #mail-section {
         padding: 50px 0 100px 0;
     }
 }
 
 @media only screen and (max-width: 580px) {
 
-    .header nav.navbar .nav-btn{
+    .header nav.navbar .nav-btn {
         margin-left: -28px;
     }
 
-    .search-items{
+    .search-items {
         flex-direction: column;
-    }    
+    }
 
-    #search-section{
+    #search-section {
         margin-top: 0px;
     }
-    
-    #search-section .search-area{
+
+    #search-section .search-area {
         border-radius: 0;
         padding: 30px;
     }
-    
-    #search-section .search-area input{
+
+    #search-section .search-area input {
         margin-bottom: 10px;
-    }    
-    
-    #search-section .search-area button.btn-theme{
+    }
+
+    #search-section .search-area button.btn-theme {
         margin-top: 20px;
         width: 100%;
     }
 
     /* Service Section */
-    .services-items{
+    .services-items {
         flex-direction: column;
     }
 
     /* Work Section */
-    .work-items{
+    .work-items {
         flex-direction: column;
     }
 
     /* Testimonial Section */
-    #testimonial-section{
+    #testimonial-section {
         padding: 50px 0;
     }
 
-    #testimonial-section .testimonial-list .image{
+    #testimonial-section .testimonial-list .image {
         height: 110px;
     }
 
     /* Mail Section */
 
-    #mail-section .form{
+    #mail-section .form {
         padding: 20px;
     }
 
-    #mail-section .btn-theme{
+    #mail-section .btn-theme {
         margin: 10px 0;
         width: 100%;
     }
 
     /* Footer */
-    footer h4{
+    footer h4 {
         text-align: center;
     }
 }

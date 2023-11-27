@@ -296,7 +296,7 @@ const LandingPage = () => {
                 <h1 className="h1 h1-responsive mb-4">How it Works</h1>
                 <p className="fs-5 px-4 justified-text">Explore our seamless quiz-taking process: Take a quiz, uncover fascinating insights,
                     and view your results instantly. <p className="text-center">At Ramen's Trivia, it's that easy to engage, learn,
-                    and enjoy the rewarding experience of our quizzes.</p> 
+                        and enjoy the rewarding experience of our quizzes.</p>
                 </p>
 
                 <div className="work-items d-flex justify-content-between my-5">
@@ -379,11 +379,168 @@ const LandingPage = () => {
 
         <section id="mail-section">
             <div className="container">
-                <h1 className="h1 h1-responsive mb-4">Frequently Asked Questions <br /> (FAQ)</h1>
-                <div className="col-lg-8 col-md-11 mx-auto form shadow mt-3">
+                <div className="col-lg- col-md- mx-auto form shadow mt-3">
                     <div className="row">
-                        <h4>Coming Soon...</h4>
+                        <div className="participant-accordion justified-text fs-6">
 
+                            <h3 className="faq-header text-center mb-3">Participant's FAQ</h3>
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            How can I find the available quizzes to take?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            Right below the welcome banner, there is a section with 3 items: Category, Filter by Name and a search button. By default, there will be no quizzes on display. You have to go through the list of categories and select one. Only then will the quizzes associated with that category, be listed.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            How does the search functionality work?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            After you have selected a category and had the associated quizzes listed, you can filter through the list by name. For quizzes that have more than one word, searching with the second or third word will still work. E.g., “Chemical bonds in Chemistry”, searching for “bonds” will work, as well as “chemistry”. You also don’t have to search for a complete word but be sure to get the spelling right. Lastly, the quizzes come in pages and the search filter only works on a page. Essentially, you could be searching for a quiz that definitely exists but you’d get no results because the quiz wouldn’t be on the current page being searching on. In hindsight, that’s a rather inefficient way to search but oh well, we’re working on it.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            Why do I need to have an account and log in just to take a quiz; it’s just a quiz app?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            You need to have an account in order to keep track of your interactions with the app. To be able to store and retrieve your results, to add comments. This is not a regular one-time quiz app.
+                                        </div>
+                                    </div>
+                                </div>                                
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingFour">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                            What do I do if I accidentally exit an ongoing quiz before submitting?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            Exiting an ongoing quiz before submission can cause panic, but you shouldn’t worry. First off, if you feel like going through the stress of looking for the quiz again and entering it, that’s fine. Also, you can’t start another quiz without finishing the ongoing quiz, so no need to try that. However, there is a shortcut. On the navigation bar, as soon as you start a quiz, a new button appears there, a green button labelled “OQ”, short for “Ongoing Quiz”. Wherever you are in the app, with a click/tap of that button, you would be directed back to the ongoing quiz. Once the quiz is submitted, the button vanishes.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingFive">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                            Why don’t I get redirected to the result page after I submit a quiz?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            That’s because Ramen’s Trivia is not a one-time quiz taker. One might want to post a comment or try out other quizzes. Some people have anxiety and might not want to see the result right after. Not everyone would want to see the result immediately, that’s why you were given a choice.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingSix">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                            How do I check my results?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            It’s quite simple. On the navigation bar, click/tap on the “Results” text and you will be redirected to the results page. From there, you can choose any quiz to check from. Once a quiz has been selected, a list of results will appear. Since you can take a quiz more than once, all the records are stored in order of submission date. Click/tap on the desired result and view the corrections.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingSeven">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                            Do the results provide explanations for the answers?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            No, they don’t. At least not yet. Our team is still working on that.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingEight">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                            Why can’t I see the corrections for all the questions in a quiz?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            The reason for that is to encourage all participants to attempt all questions. If the liberty is provided, some participants might be tempted to answer one question, submit and get the corrections for all the questions. That takes out the fun. Even if one doesn’t know the answers to a question, it’s best to try as hard as one can. For that reason, you only get the corrections to the questions attempted.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingNine">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                                            What are the uses of a profile picture in a quiz app?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            Not much, actually. It would only appear publicly on your comments. Even though it doesn’t have that many appearances, it would still be appreciated to have one.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTen">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                                            How do I add and change my profile picture?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            On the navigation bar, click/tap on the white button with a “settings” icon and navigate to the tab labelled “profile”. The mechanics is as such. If you have no picture uploaded, you can use the black button to select a picture. Once there is a preview, you can use the green button to upload the picture. If you have a picture uploaded and you want to change it, you can’t get right into it by using the black button. The picture has to be deleted first, only then would you be able to select and upload a new picture.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingEleven">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+                                            Why is there no peek button to see my password while typing?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseEleven" class="accordion-collapse collapse" aria-labelledby="headingEleven" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            Ahh yes, the infamous peek button that makes our lives easier. Well, easier isn’t always better. The peek button was not added so as to negate attacks via social engineering. I.e., to prevent situations like having a person close to you, PEEK at your device while you’re typing in the password. If you get the password wrong, then just type it again. I mean, there really is no rush.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwelve">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
+                                            What do I do if I forget my password?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwelve" class="accordion-collapse collapse" aria-labelledby="headingTwelve" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            This is bound to happen to everyone at least once in a life time, so rest assured, Ramen’s Trivia has you covered. From the login page, click/tap on the “forgot password” text and you’d be redirected to another page. Input your current Gmail address, hit ‘execute’ and you’d be redirected to another page. If you had already done this and for some reason, you left that page, there’s no need to do it again. Simply click/tap on the “Reset Password” text below. At this point, a token would’ve been sent to your Gmail. In the reset password page, type in the same, current Gmail address, your new password, and copy the token that was sent to your mail and paste it in the box meant for it. Hit execute and that’s all. Although, this time, be sure to write down your password somewhere, so as not to forget.
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
