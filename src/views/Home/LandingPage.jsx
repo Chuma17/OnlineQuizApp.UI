@@ -140,9 +140,9 @@ const LandingPage = () => {
         <section id="search-section">
             <div className="container">
                 <div className="col-lg-11 mx-auto search-area shadow">
-                    <div className="search-items  d-flex justify-content-around">
+                    <div className="search-items d-flex justify-content-around">
 
-                        <div className="">
+                        <div className="ms-auto me-auto">
 
                             <label className="form-label" htmlfor="halls">Category</label>
                             <select
@@ -170,7 +170,7 @@ const LandingPage = () => {
                             </select>
                         </div>
 
-                        <div className=" mb-4">
+                        <div className="mt-auto mb-auto ms-auto me-auto">
                             <label className="form-label">Filter by Name</label>
                             <input
                                 type="text"
@@ -181,12 +181,12 @@ const LandingPage = () => {
                             />
                         </div>
 
-                        <div className="mb-auto mt-auto">
+                        <div className="mb-auto mt-auto ms-auto me-auto">
                             <button
-                                className=" btn btn-theme"
+                                className="btn btn-dark"
                                 onClick={() => getCategoryQuizzes()}
                             >
-                                Search
+                                <i class="fa-solid fa-magnifying-glass text-light"></i>
                             </button>
                         </div>
 
@@ -422,7 +422,7 @@ const LandingPage = () => {
                                             You need to have an account in order to keep track of your interactions with the app. To be able to store and retrieve your results, to add comments. This is not a regular one-time quiz app.
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
 
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingFour">
@@ -537,7 +537,7 @@ const LandingPage = () => {
                                             This is bound to happen to everyone at least once in a life time, so rest assured, Ramen’s Trivia has you covered. From the login page, click/tap on the “forgot password” text and you’d be redirected to another page. Input your current Gmail address, hit ‘execute’ and you’d be redirected to another page. If you had already done this and for some reason, you left that page, there’s no need to do it again. Simply click/tap on the “Reset Password” text below. At this point, a token would’ve been sent to your Gmail. In the reset password page, type in the same, current Gmail address, your new password, and copy the token that was sent to your mail and paste it in the box meant for it. Hit execute and that’s all. Although, this time, be sure to write down your password somewhere, so as not to forget.
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
 
                         </div>
