@@ -3,17 +3,12 @@
   "name": "Ramen's Trivia",
   "icons": [
     {
-      "src": "narutomaki.png",
-      "sizes": "512x512",
+      "src": "narutomaki2.png",
+      "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
+      "src": "narutomaki.png",
       "type": "image/png",
       "sizes": "512x512"
     }
