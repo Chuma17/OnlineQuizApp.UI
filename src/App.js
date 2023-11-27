@@ -48,7 +48,6 @@ import TakeQuiz from './views/ParticipantQuiz/TakeQuiz';
 import ParticipantResult from './views/Result/ParticipantResult';
 
 //Super Admin 
-import AddCategory from './views/SuperAdmin/AddCategory';
 import ViewCategories from './views/SuperAdmin/ViewCategories';
 import ViewAdmins from './views/SuperAdmin/ViewAdmins';
 import AddQuestionType from './views/SuperAdmin/AddQuestionType';
@@ -138,7 +137,6 @@ const App = () => {
 
         <Route element={<RequireAuth allowedRoles={[ROLES.SuperAdmin]} />}>
           <Route path="/admin-registration" element={<AdminRegistration />} />
-          <Route path="/add-category" element={<AddCategory />} />
           <Route path="/view-categories" element={<ViewCategories />} />
           <Route path="/view-admins" element={<ViewAdmins />} />
           <Route path="/add-questionType" element={<AddQuestionType />} />

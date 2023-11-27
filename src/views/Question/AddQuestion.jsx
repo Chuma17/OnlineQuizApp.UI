@@ -12,7 +12,7 @@ const AddQuestion = () => {
 
     const [quizquestions, setQuizQuestions] = useState([]);
     const [quizzes, setQuizzes] = useState([]);
-    const [quizId, setQuizId] = useState([]);
+    const [quizId, setQuizId] = useState("");
 
     const [questionDetails, setQuestionDetails] = useState([]);
     const [selectedQuestionId, setSelectedQuestionId] = useState("");
@@ -127,6 +127,11 @@ const AddQuestion = () => {
 
     async function AddQuestionsToQuiz() {
         try {
+
+            if (questionText == "" || questionTypeId == "" || quizId == "") {
+                setError("Fill in all the fields");
+                return;
+            }
             setIsArticleLoading(true);
 
             const response = await axios.post(`Question/add-questions-to-quiz`,
@@ -154,8 +159,7 @@ const AddQuestion = () => {
             } else {
                 setIsArticleLoading(false);
 
-                console.error(error.response);
-                setError("Fill out all the fields");
+                console.error(error.response);        
             }
         }
     }

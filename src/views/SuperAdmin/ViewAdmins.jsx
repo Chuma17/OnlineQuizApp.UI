@@ -73,15 +73,9 @@ const ViewAdmins = () => {
 
                                     <Link to="/view-admins">
                                         <li className="nav-item" role="presentation">
-                                            <p className="nav-link active" id="adminView-tab" data-bs-toggle="tab" data-bs-target="#adminView-tab-pane" type="button" role="tab" aria-controls="adminView-tab-pane" aria-selected="false"> View Admins </p>
+                                            <p className="nav-link active" id="adminView-tab" data-bs-toggle="tab" data-bs-target="#adminView-tab-pane" type="button" role="tab" aria-controls="adminView-tab-pane" aria-selected="false"> Admins </p>
                                         </li>
-                                    </Link>
-
-                                    <Link to="/add-category">
-                                        <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="addCategory-tab" data-bs-toggle="tab" data-bs-target="#addCategory-tab-pane" type="button" role="tab" aria-controls="addCategory-tab-pane" aria-selected="false">Add Category </p>
-                                        </li>
-                                    </Link>
+                                    </Link>                                   
 
                                     <Link to="/view-categories">
                                         <li className="nav-item" role="presentation">

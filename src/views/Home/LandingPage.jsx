@@ -393,7 +393,10 @@ const LandingPage = () => {
                                     </h2>
                                     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            Right below the welcome banner, there is a section with 3 items: Category, Filter by Name and a search button. By default, there will be no quizzes on display. You have to go through the list of categories and select one. Only then will the quizzes associated with that category, be listed.
+                                            Right below the welcome banner, there is a section with 3 items: Category,
+                                            Filter by Name and a search button. By default, there will be no quizzes
+                                            on display. You have to go through the list of categories and select one.
+                                            Only then will the quizzes associated with that category, be listed.
                                         </div>
                                     </div>
                                 </div>
@@ -406,7 +409,16 @@ const LandingPage = () => {
                                     </h2>
                                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            After you have selected a category and had the associated quizzes listed, you can filter through the list by name. For quizzes that have more than one word, searching with the second or third word will still work. E.g., “Chemical bonds in Chemistry”, searching for “bonds” will work, as well as “chemistry”. You also don’t have to search for a complete word but be sure to get the spelling right. Lastly, the quizzes come in pages and the search filter only works on a page. Essentially, you could be searching for a quiz that definitely exists but you’d get no results because the quiz wouldn’t be on the current page being searching on. In hindsight, that’s a rather inefficient way to search but oh well, we’re working on it.
+                                            After you have selected a category and had the associated quizzes listed, you
+                                            can filter through the list by name. For quizzes that have more than one word,
+                                            searching with the second or third word will still work. E.g., “Chemical bonds
+                                            in Chemistry”, searching for “bonds” will work, as well as “chemistry”.
+                                            You also don’t have to search for a complete word but be sure to get the
+                                            spelling right. Lastly, the quizzes come in pages and the search filter
+                                            only works on a page. Essentially, you could be searching for a quiz that
+                                            definitely exists but you’d get no results because the quiz wouldn’t be on
+                                            the current page being searching on. In hindsight, that’s a rather inefficient
+                                            way to search but oh well, we’re working on it.
                                         </div>
                                     </div>
                                 </div>
@@ -419,7 +431,9 @@ const LandingPage = () => {
                                     </h2>
                                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            You need to have an account in order to keep track of your interactions with the app. To be able to store and retrieve your results, to add comments. This is not a regular one-time quiz app.
+                                            You need to have an account in order to keep track of your interactions with the
+                                            app. To be able to store and retrieve your results, to add comments. This is
+                                            not a regular one-time quiz app.
                                         </div>
                                     </div>
                                 </div>
@@ -432,7 +446,14 @@ const LandingPage = () => {
                                     </h2>
                                     <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            Exiting an ongoing quiz before submission can cause panic, but you shouldn’t worry. First off, if you feel like going through the stress of looking for the quiz again and entering it, that’s fine. Also, you can’t start another quiz without finishing the ongoing quiz, so no need to try that. However, there is a shortcut. On the navigation bar, as soon as you start a quiz, a new button appears there, a green button labelled “OQ”, short for “Ongoing Quiz”. Wherever you are in the app, with a click/tap of that button, you would be directed back to the ongoing quiz. Once the quiz is submitted, the button vanishes.
+                                            Exiting an ongoing quiz before submission can cause panic, but you shouldn’t worry.
+                                            First off, if you feel like going through the stress of looking for the quiz
+                                            again and entering it, that’s fine. Also, you can’t start another quiz without
+                                            finishing the ongoing quiz, so no need to try that. However, there is a shortcut.
+                                            On the navigation bar, as soon as you start a quiz, a new button appears there,
+                                            a green button labelled “OQ”, short for “Ongoing Quiz”. Wherever you are in the
+                                            app, with a click/tap of that button, you would be directed back to the ongoing
+                                            quiz. Once the quiz is submitted, the button vanishes.
                                         </div>
                                     </div>
                                 </div>
@@ -445,7 +466,10 @@ const LandingPage = () => {
                                     </h2>
                                     <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            That’s because Ramen’s Trivia is not a one-time quiz taker. One might want to post a comment or try out other quizzes. Some people have anxiety and might not want to see the result right after. Not everyone would want to see the result immediately, that’s why you were given a choice.
+                                            That’s because Ramen’s Trivia is not a one-time quiz taker. One might want to post
+                                            a comment or try out other quizzes. Some people have anxiety and might not want to
+                                            see the result right after. Not everyone would want to see the result immediately,
+                                            that’s why you were given a choice.
                                         </div>
                                     </div>
                                 </div>
@@ -458,7 +482,11 @@ const LandingPage = () => {
                                     </h2>
                                     <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            It’s quite simple. On the navigation bar, click/tap on the “Results” text and you will be redirected to the results page. From there, you can choose any quiz to check from. Once a quiz has been selected, a list of results will appear. Since you can take a quiz more than once, all the records are stored in order of submission date. Click/tap on the desired result and view the corrections.
+                                            It’s quite simple. On the navigation bar, click/tap on the “Results” text and you
+                                            will be redirected to the results page. From there, you can choose any quiz to
+                                            check from. Once a quiz has been selected, a list of results will appear. Since
+                                            you can take a quiz more than once, all the records are stored in order of
+                                            submission date. Click/tap on the desired result and view the corrections.
                                         </div>
                                     </div>
                                 </div>
@@ -484,7 +512,12 @@ const LandingPage = () => {
                                     </h2>
                                     <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            The reason for that is to encourage all participants to attempt all questions. If the liberty is provided, some participants might be tempted to answer one question, submit and get the corrections for all the questions. That takes out the fun. Even if one doesn’t know the answers to a question, it’s best to try as hard as one can. For that reason, you only get the corrections to the questions attempted.
+                                            The reason for that is to encourage all participants to attempt all questions.
+                                            If the liberty is provided, some participants might be tempted to answer ONE
+                                            question, submit and get the corrections for ALL the questions. A literal One
+                                            for All. That takes out the fun. Even if one doesn’t know the answers to a
+                                            question, it’s best to try as hard as one can. For that reason, you only get the
+                                            corrections to the questions attempted.
                                         </div>
                                     </div>
                                 </div>
@@ -497,7 +530,8 @@ const LandingPage = () => {
                                     </h2>
                                     <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            Not much, actually. It would only appear publicly on your comments. Even though it doesn’t have that many appearances, it would still be appreciated to have one.
+                                            Not much, actually. It would only appear publicly on your comments. Even though
+                                            it doesn’t have that many appearances, it would still be appreciated to have one.
                                         </div>
                                     </div>
                                 </div>
@@ -510,7 +544,13 @@ const LandingPage = () => {
                                     </h2>
                                     <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            On the navigation bar, click/tap on the white button with a “settings” icon and navigate to the tab labelled “profile”. The mechanics is as such. If you have no picture uploaded, you can use the black button to select a picture. Once there is a preview, you can use the green button to upload the picture. If you have a picture uploaded and you want to change it, you can’t get right into it by using the black button. The picture has to be deleted first, only then would you be able to select and upload a new picture.
+                                            On the navigation bar, click/tap on the white button with a “settings” icon and
+                                            navigate to the tab labelled “profile”. The mechanics is as such. If you have
+                                            no picture uploaded, you can use the black button to select a picture. Once
+                                            there is a preview, you can use the green button to upload the picture. If
+                                            you have a picture uploaded and you want to change it, you can’t get right
+                                            into it by using the black button. The picture has to be deleted first, only
+                                            then would you be able to select and upload a new picture.
                                         </div>
                                     </div>
                                 </div>
@@ -522,7 +562,12 @@ const LandingPage = () => {
                                     </h2>
                                     <div id="collapseEleven" class="accordion-collapse collapse" aria-labelledby="headingEleven" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            Ahh yes, the infamous peek button that makes our lives easier. Well, easier isn’t always better. The peek button was not added so as to negate attacks via social engineering. I.e., to prevent situations like having a person close to you, PEEK at your device while you’re typing in the password. If you get the password wrong, then just type it again. I mean, there really is no rush.
+                                            Ahh yes, the infamous peek button that makes our lives easier. Well, easier
+                                            isn’t always better. The peek button was not added so as to negate attacks
+                                            via social engineering. I.e., to prevent situations like having a person
+                                            close to you, PEEK at your device while you’re typing in the password. If
+                                            you get the password wrong, then just type it again. I mean, there really
+                                            is no rush.
                                         </div>
                                     </div>
                                 </div>
@@ -534,7 +579,17 @@ const LandingPage = () => {
                                     </h2>
                                     <div id="collapseTwelve" class="accordion-collapse collapse" aria-labelledby="headingTwelve" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            This is bound to happen to everyone at least once in a life time, so rest assured, Ramen’s Trivia has you covered. From the login page, click/tap on the “forgot password” text and you’d be redirected to another page. Input your current Gmail address, hit ‘execute’ and you’d be redirected to another page. If you had already done this and for some reason, you left that page, there’s no need to do it again. Simply click/tap on the “Reset Password” text below. At this point, a token would’ve been sent to your Gmail. In the reset password page, type in the same, current Gmail address, your new password, and copy the token that was sent to your mail and paste it in the box meant for it. Hit execute and that’s all. Although, this time, be sure to write down your password somewhere, so as not to forget.
+                                            This is bound to happen to everyone at least once in a life time, so rest assured,
+                                            Ramen’s Trivia has you covered. From the login page, click/tap on the “forgot
+                                            password” text and you’d be redirected to another page. Input your current
+                                            Gmail address, hit ‘execute’ and you’d be redirected to another page. If
+                                            you had already done this and for some reason, you left that page, there’s
+                                            no need to do it again. Simply click/tap on the “Reset Password” text below.
+                                            At this point, a token would’ve been sent to your Gmail. In the reset
+                                            password page, type in the same, current Gmail address, your new password,
+                                            and copy the token that was sent to your mail and paste it in the box meant
+                                            for it. Hit execute and that’s all. Although, this time, be sure to write
+                                            down your password somewhere, so as not to forget.
                                         </div>
                                     </div>
                                 </div>

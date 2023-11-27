@@ -73,15 +73,9 @@ const ViewQuestionTypes = () => {
 
                                     <Link to="/view-admins">
                                         <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="adminView-tab" data-bs-toggle="tab" data-bs-target="#adminView-tab-pane" type="button" role="tab" aria-controls="adminView-tab-pane" aria-selected="false"> View Admins </p>
+                                            <p className="nav-link" id="adminView-tab" data-bs-toggle="tab" data-bs-target="#adminView-tab-pane" type="button" role="tab" aria-controls="adminView-tab-pane" aria-selected="false"> Admins </p>
                                         </li>
-                                    </Link>
-
-                                    <Link to="/add-category">
-                                        <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="addCategory-tab" data-bs-toggle="tab" data-bs-target="#addCategory-tab-pane" type="button" role="tab" aria-controls="addCategory-tab-pane" aria-selected="false">Add Category </p>
-                                        </li>
-                                    </Link>
+                                    </Link>                                    
 
                                     <Link to="/view-categories">
                                         <li className="nav-item" role="presentation">
@@ -106,7 +100,7 @@ const ViewQuestionTypes = () => {
                                 <div className="card col-lg-12 ms-auto me-auto bg-glass">
                                     <div className="card-body px-4 py-5 px-md-5">
 
-                                        <h4 className="fw-normal text-center mb-3 pb-3" style={{ letterSpacing: '1px' }}>Categories</h4>
+                                        <h4 className="fw-normal text-center mb-3 pb-3" style={{ letterSpacing: '1px' }}>Question Types</h4>
 
                                         {isLoading && <div className="mb-3" style={{ textAlign: 'center' }}><CommentLoading /> </div>}
 
