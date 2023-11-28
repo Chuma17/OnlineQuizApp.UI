@@ -108,14 +108,14 @@ const SuperAdminUnpublished = () => {
 
                                 </ul >
 
-                                <div style={{ height: quizzes.length > 0 ? '800px' : '600px' }} className="card ms-auto me-auto bg-glass">
+                                <div style={{ height: quizzes.length > 0 ? '950px' : '600px' }} className="card ms-auto me-auto bg-glass">
                                     <div className="card-body px-4 py-5 px-md-5">
                                         <Link to={`/view-admins`}>
                                             <button className="btn btn-danger"><i class="fa-solid fa-arrow-left text-light"></i></button>
                                         </Link>
                                         {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :
 
-                                            <div style={{ height: '730px', overflowY: 'auto' }}>
+                                            <div style={{ height: '830px', overflowY: 'auto' }}>
                                                 <div class="vh-110 container px-1 text-center">
 
                                                     <div className="row">
@@ -126,9 +126,7 @@ const SuperAdminUnpublished = () => {
                                                                         <Link to={`/single-super-admin-quiz/${quiz.quizId}?adminId=${id}`}>
                                                                             <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="home-card-image card-img-top p-3" alt="Default Quiz" />
                                                                             <div className="card-body text-center fs-5">
-                                                                                <h3 className="card-title">{quiz.quizName}</h3>
-                                                                                <hr />
-                                                                                <p className="card-description">{quiz.quizDescription}</p>
+                                                                                <h3 className="card-title">{quiz.quizName}</h3>                                                                                
                                                                             </div>
                                                                         </Link>
                                                                     </div>
