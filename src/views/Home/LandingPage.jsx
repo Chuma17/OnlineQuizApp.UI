@@ -84,7 +84,7 @@ const LandingPage = () => {
         }
 
         getCategories()
-    });
+    }, []);
 
     function handleNextPage() {
         setPagination(prev => {
