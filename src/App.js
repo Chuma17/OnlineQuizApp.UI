@@ -38,6 +38,7 @@ import EditQuizImage from './views/QuizSettings/EditQuizImage';
 //Admin Question
 import AddQuestion from './views/Question/AddQuestion';
 import AdminQuestionsInQuiz from './views/Question/AdminQuestionsInQuiz';
+import SuperAdminQuestionsInQuiz from './views/Question/SuperAdminQuestionsInQuiz';
 
 //Participant Quiz
 import SingleQuiz from './views/ParticipantQuiz/SingleQuiz';
@@ -51,6 +52,11 @@ import ViewCategories from './views/SuperAdmin/ViewCategories';
 import ViewAdmins from './views/SuperAdmin/ViewAdmins';
 import ViewQuestionTypes from './views/SuperAdmin/ViewQuestionTypes';
 import ViewUsers from './views/SuperAdmin/ViewUsers';
+import SuperAdminPublished from './views/SuperAdmin/SuperAdminPublished';
+import SingleSuperAdminQuiz from './views/SuperAdmin/SingleSuperAdminQuiz';
+import SuperAdminQuizRecords from './views/QuizSettings/SuperAdminQuizRecords';
+import SuperAdminUnpublished from './views/SuperAdmin/SuperAdminUnpublished';
+import SuperAdminUserQuizzes from './views/SuperAdmin/SuperAdminUserQuizzes';
 
 //Views
 import HomePage from './views/HomePage';
@@ -139,6 +145,12 @@ const App = () => {
           <Route path="/view-admins" element={<ViewAdmins />} />
           <Route path="/view-questionTypes" element={<ViewQuestionTypes />} />
           <Route path="/view-users" element={<ViewUsers />} />
+          <Route path="/superAdmin-published-quizzes/:id/*" element={<SuperAdminPublished />} />
+          <Route path="/superAdmin-unpublished-quizzes/:id/*" element={<SuperAdminUnpublished />} />
+          <Route path="/superAdmin-user-quizzes/:id" element={<SuperAdminUserQuizzes />} />
+          <Route path="/single-super-admin-quiz/:id/*" element={<SingleSuperAdminQuiz />} />
+          <Route path="/view-superAdmin-questions-in-quiz/:id/*" element={<SuperAdminQuestionsInQuiz />} />
+          <Route path="/view-superAdmin-quiz-records/:id/*" element={<SuperAdminQuizRecords />} />
         </Route>
 
         {/* catch all */}

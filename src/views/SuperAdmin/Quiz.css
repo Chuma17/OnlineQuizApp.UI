@@ -21,7 +21,7 @@
 
 .home-card .card-img-top {
     object-fit: cover; /* Ensure the image covers the whole area */
-    height: 50%; /* Adjust as needed */
+    height: 160px !important; /* Adjust as needed */
 }
 
 .home-card .card-body {
@@ -36,9 +36,9 @@
 }
 
 .card-description {
-    white-space: nowrap; /* Prevent text wrapping */
-    overflow: hidden; /* Hide any text that overflows */
-    text-overflow: ellipsis; /* Show an ellipsis (...) for truncated text */
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis;
 }
 
 /* MOBILE SCREENS */
@@ -66,7 +66,7 @@
     
     .home-card .card-img-top {
         object-fit: cover; /* Ensure the image covers the whole area */
-        height: 150px; /* Adjust as needed */
+        height: 50%; /* Adjust as needed */
     }
     
     .home-card .card-body {

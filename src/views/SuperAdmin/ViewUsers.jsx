@@ -87,19 +87,7 @@ const ViewUsers = () => {
                                         <li className="nav-item" role="presentation">
                                             <p className="nav-link" id="viewQuestionTypes-tab" data-bs-toggle="tab" data-bs-target="#viewQuestionTypes-tab-pane" type="button" role="tab" aria-controls="viewQuestionTypes-tab-pane" aria-selected="false">View QT</p>
                                         </li>
-                                    </Link>
-
-                                    <Link to="/view-all-published-quizzes">
-                                        <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="viewPublished-tab" data-bs-toggle="tab" data-bs-target="#viewPublished-tab-pane" type="button" role="tab" aria-controls="viewPublished-tab-pane" aria-selected="false">Published</p>
-                                        </li>
-                                    </Link>
-
-                                    <Link to="/view-all-unpublished-quizzes">
-                                        <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="viewUnpublished-tab" data-bs-toggle="tab" data-bs-target="#viewUnpublished-tab-pane" type="button" role="tab" aria-controls="viewUnpublished-tab-pane" aria-selected="false">Unpublished</p>
-                                        </li>
-                                    </Link>
+                                    </Link>                                    
 
                                 </ul >
 
@@ -127,6 +115,7 @@ const ViewUsers = () => {
                                                             <tr className="fs-5">
                                                                 <th scope="row">{i + 1}</th>
                                                                 <td>{admin?.firstName} {admin?.lastName}</td>
+                                                                <td> <Link to={`/superAdmin-user-quizzes/${admin.id}`}> <button className="btn btn-success"><i class="fa-solid fa-arrow-right text-light"></i></button> </Link> </td>
                                                             </tr>
                                                         )) : (
                                                             <>

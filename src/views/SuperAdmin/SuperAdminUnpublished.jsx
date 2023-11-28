@@ -1,12 +1,14 @@
 import axios from "../../axios/axios";
+import { useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../../components/Loading";
 import "./Quiz.css"
 
-const AdminUnpublished = () => {
-
+const SuperAdminUnpublished = () => {
     const user = JSON.parse(localStorage.getItem("userDetails"));
+    let params = useParams();
+    const id = params.id;
 
     const [loading, setLoading] = useState();
     const [quizzes, setQuizzes] = useState([]);
@@ -17,15 +19,12 @@ const AdminUnpublished = () => {
         totalPages: 0
     });
 
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
-
     useEffect(() => {
         async function getQuizzes() {
             try {
                 setLoading(true);
 
-                const response = await axios.get(`Quiz/get-admin-unpublished-quizzes`, {
+                const response = await axios.get(`Quiz/superAdmin-get-admin-unpublished-quizzes?userId=${id}`, {
                     headers: {
                         Authorization: `Bearer ${user.accessToken}`
                     },
@@ -52,30 +51,7 @@ const AdminUnpublished = () => {
         }
 
         getQuizzes()
-    }, [pagination.itemsPerPage, pagination.currentPage, user.accessToken]);
-
-    useEffect(() => {
-        let errorTimeoutId;
-        let successTimeoutId;
-
-        if (error) {
-            errorTimeoutId = setTimeout(() => {
-                setError(null);
-            }, 2000);
-        }
-
-        if (success) {
-            successTimeoutId = setTimeout(() => {
-                setSuccess(null);
-            }, 2000);
-        }
-
-        return () => {
-            clearTimeout(errorTimeoutId);
-            clearTimeout(successTimeoutId);
-        };
-
-    }, [error, success]);
+    }, [pagination.itemsPerPage, pagination.currentPage, user.accessToken]);   
 
     function handleNextPage() {
         setPagination(prev => {
@@ -118,25 +94,13 @@ const AdminUnpublished = () => {
 
                                 <ul className="nav nav-tabs d-flex justify-content-between p-3" id="myTab" role="tablist">
 
-                                    <Link to="/create-quiz">
-                                        <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="names-tab" data-bs-toggle="tab" data-bs-target="#names-tab-pane" type="button" role="tab" aria-controls="names-tab-pane" aria-selected="true"> Create </p>
-                                        </li>
-                                    </Link>
-
-                                    <Link to="/admin-quizzes">
-                                        <li className="nav-item" role="presentation">
-                                            <p className="nav-link" id="email-tab" data-bs-toggle="tab" data-bs-target="#email-tab-pane" type="button" role="tab" aria-controls="email-tab-pane" aria-selected="false"> Admin Quizzes </p>
-                                        </li>
-                                    </Link>
-
-                                    <Link to="/admin-published-quizzes">
+                                    <Link to={`/superAdmin-published-quizzes/${id}`}>
                                         <li className="nav-item" role="presentation">
                                             <p className="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password-tab-pane" type="button" role="tab" aria-controls="password-tab-pane" aria-selected="false">Published </p>
                                         </li>
                                     </Link>
 
-                                    <Link to="/admin-unpublished-quizzes">
+                                    <Link to={`/superAdmin-unpublished-quizzes/${id}`}>
                                         <li className="nav-item" role="presentation">
                                             <p className="nav-link active" id="2fa-tab" data-bs-toggle="tab" data-bs-target="#2fa-tab-pane" type="button" role="tab" aria-controls="2fa-tab-pane" aria-selected="false">Unpublished</p>
                                         </li>
@@ -146,7 +110,9 @@ const AdminUnpublished = () => {
 
                                 <div style={{ height: quizzes.length > 0 ? '800px' : '600px' }} className="card ms-auto me-auto bg-glass">
                                     <div className="card-body px-4 py-5 px-md-5">
-
+                                        <Link to={`/view-admins`}>
+                                            <button className="btn btn-danger"><i class="fa-solid fa-arrow-left text-light"></i></button>
+                                        </Link>
                                         {loading ? <div className="mt-5" style={{ textAlign: 'center' }}><Loading /> </div> :
 
                                             <div style={{ height: '730px', overflowY: 'auto' }}>
@@ -155,24 +121,19 @@ const AdminUnpublished = () => {
                                                     <div className="row">
                                                         {quizzes.length > 0 ? (
                                                             quizzes.map(quiz => (
-                                                                <>
-                                                                    <div className="col-md-3 d-flex justify-content-evenly ms-auto me-auto" key={quiz.id}>
-                                                                        <div className="card mt-4 home-card">
-
-                                                                            <Link to={`/single-admin-quiz/${quiz.quizId}`}>
-                                                                                <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="home-card-image card-img-top p-3" alt="Default Quiz" />
-                                                                                <div className="card-body text-center fs-5">
-                                                                                    <h3 className="card-title">{quiz.quizName}</h3>
-                                                                                    <hr />
-                                                                                    <p className="card-description">{quiz.quizDescription}</p>
-                                                                                </div>
-                                                                            </Link>
-
-                                                                        </div>
+                                                                <div className="col-md-3 d-flex justify-content-evenly ms-auto me-auto" key={quiz.id}>
+                                                                    <div className="card mt-4 home-card">
+                                                                        <Link to={`/single-super-admin-quiz/${quiz.quizId}?adminId=${id}`}>
+                                                                            <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="home-card-image card-img-top p-3" alt="Default Quiz" />
+                                                                            <div className="card-body text-center fs-5">
+                                                                                <h3 className="card-title">{quiz.quizName}</h3>
+                                                                                <hr />
+                                                                                <p className="card-description">{quiz.quizDescription}</p>
+                                                                            </div>
+                                                                        </Link>
                                                                     </div>
-                                                                </>
+                                                                </div>
                                                             ))
-
                                                         ) : (
                                                             <div className="col-12 text-center">
                                                                 <h4>No quizzes</h4>
@@ -180,19 +141,19 @@ const AdminUnpublished = () => {
                                                         )}
                                                     </div>
 
-                                                    {quizzes.length > 0 && (
-                                                        <div className="mt-3">
-                                                            <div className="ms-2 mb-1 pagination-icons">
-                                                                <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleFirstPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-backward"></i></button>
-                                                                <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handlePrevPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-caret-left"></i></button>
-                                                                <span className="text-dark"> Page: {pagination.currentPage} of {pagination.totalPages === 0 ? 1 : pagination.totalPages} </span>
-                                                                <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}><i class="fa-solid fa-caret-right"></i></button>
-                                                                <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleLastPage} disabled={pagination.currentPage === pagination.totalPages}><i class="fa-solid fa-forward"></i></button>
-                                                            </div>
-                                                        </div>
-                                                    )}
-
                                                 </div>
+
+                                                {quizzes.length > 0 && (
+                                                    <div className="mt-3 text-center">
+                                                        <div className="ms-2 mb-1 pagination-icons">
+                                                            <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleFirstPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-backward"></i></button>
+                                                            <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handlePrevPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-caret-left"></i></button>
+                                                            <span className="text-dark"> Page: {pagination.currentPage} of {pagination.totalPages === 0 ? 1 : pagination.totalPages} </span>
+                                                            <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}><i class="fa-solid fa-caret-right"></i></button>
+                                                            <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleLastPage} disabled={pagination.currentPage === pagination.totalPages}><i class="fa-solid fa-forward"></i></button>
+                                                        </div>
+                                                    </div>
+                                                )}
 
                                             </div>
                                         }
@@ -203,9 +164,9 @@ const AdminUnpublished = () => {
                         </div>
                     </div>
                 </div>
-            </div >
-        </section >
+            </div>
+        </section>
     </>
 }
 
-export default AdminUnpublished;
+export default SuperAdminUnpublished;

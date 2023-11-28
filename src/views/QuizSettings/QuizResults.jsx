@@ -153,7 +153,7 @@ const QuizResult = () => {
                                             const submissionTime = new Date(result.submissionTime);
                                             const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-                                            const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: userTimeZone };
+                                            const options = { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: userTimeZone };
                                             const formattedDate = new Intl.DateTimeFormat('en-US', options).format(submissionTime);
 
                                             const truncatedText = `${formattedDate}`;
