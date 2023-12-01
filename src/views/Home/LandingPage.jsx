@@ -9,20 +9,22 @@ const LandingPage = () => {
     const [loading, setLoading] = useState();
 
     const [categories, setCategories] = useState([]);
-    const [categoryId, setCategoryId] = useState();
+    const [categoryId, setCategoryId] = useState(null);
     const [categoryquizzes, setCategoryQuizzes] = useState([]);
 
     const [searchTerm, setSearchTerm] = useState(null);
 
     const [pagination, setPagination] = useState({
         currentPage: 1,
-        itemsPerPage: 16,
+        itemsPerPage: 2,
         totalItems: 0,
         totalPages: 0
     });
+    
 
     async function getCategoryQuizzes() {
         try {
+            setCategoryQuizzes([]);
             setLoading(true);
 
             if (categoryId == null) {
@@ -43,13 +45,40 @@ const LandingPage = () => {
                 setCategoryQuizzes(data);
             }
 
-            if (searchTerm != null) {
-                // Filter quizzes based on the search term
-                const filteredQuizzes = data.filter((quiz) =>
-                    quiz.quizName.toLowerCase().includes(searchTerm.toLowerCase())
-                );
+            const paginationHeader = JSON.parse(response.headers["pagination"]);
+            setPagination(paginationHeader);
+        } catch (error) {
+            setLoading(false);
+        }
 
-                setCategoryQuizzes(filteredQuizzes);
+    }
+
+
+    async function getSearchedCategoryQuizzes() {
+        if (searchTerm == null) {
+            return
+        }
+
+        try {
+            setLoading(true);
+
+            if (categoryId == null) {
+                setLoading(false);
+                return
+            }
+
+            const response = await axios.get(`Quiz/get-search-quizzes-in-category?categoryId=${categoryId}`, {
+                params: {
+                    PageNumber: pagination.currentPage,
+                    PageSize: pagination.itemsPerPage,
+                    searchQuery: searchTerm
+                }
+            });
+
+            const { data } = response;
+            if (data) {
+                setLoading(false);
+                setCategoryQuizzes(data);
             }
 
             const paginationHeader = JSON.parse(response.headers["pagination"]);
@@ -62,8 +91,15 @@ const LandingPage = () => {
 
     useEffect(() => {
 
-        getCategoryQuizzes();
-    }, [pagination.itemsPerPage, pagination.currentPage, categoryId]);
+        if (categoryId && !searchTerm) {
+            getCategoryQuizzes();
+        }
+
+        if (searchTerm) {
+            getSearchedCategoryQuizzes();
+        }
+
+    }, [pagination.currentPage, categoryId, searchTerm]);
 
 
     useEffect(() => {
@@ -149,6 +185,7 @@ const LandingPage = () => {
                                 value={categoryId}
                                 onChange={e => {
                                     setCategoryId(e.target.value);
+                                    setSearchTerm(null);
                                     setSearchTerm("");
                                     getCategoryQuizzes(e.target.value);
                                 }}
@@ -184,7 +221,7 @@ const LandingPage = () => {
                         <div className="mb-auto mt-auto ms-auto me-auto">
                             <button
                                 className="btn btn-dark"
-                                onClick={() => getCategoryQuizzes()}
+                                onClick={() => getSearchedCategoryQuizzes()}
                             >
                                 <i class="fa-solid fa-magnifying-glass text-light"></i>
                             </button>
@@ -414,11 +451,7 @@ const LandingPage = () => {
                                             searching with the second or third word will still work. E.g., “Chemical bonds
                                             in Chemistry”, searching for “bonds” will work, as well as “chemistry”.
                                             You also don’t have to search for a complete word but be sure to get the
-                                            spelling right. Lastly, the quizzes come in pages and the search filter
-                                            only works on a page. Essentially, you could be searching for a quiz that
-                                            definitely exists but you’d get no results because the quiz wouldn’t be on
-                                            the current page being searching on. In hindsight, that’s a rather inefficient
-                                            way to search but oh well, we’re working on it.
+                                            spelling right.
                                         </div>
                                     </div>
                                 </div>
@@ -554,6 +587,7 @@ const LandingPage = () => {
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingEleven">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
@@ -571,6 +605,7 @@ const LandingPage = () => {
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingTwelve">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
@@ -593,6 +628,23 @@ const LandingPage = () => {
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThirteen">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThirteen" aria-expanded="false" aria-controls="collapseThirteen">
+                                            I didn't receive a confirmation link in my Gmail after registration, not even
+                                            after requesting for another. Why?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseThirteen" class="accordion-collapse collapse" aria-labelledby="headingThirteen" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            If you didn't receive a confirmation link, then it means your Gmail address is invalid.
+                                            Try registering again and this time, be sure that the Gmail address is valid.
+                                            Oh, one last thing. You won’t be able to register with the same username anymore.
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
 
                         </div>
