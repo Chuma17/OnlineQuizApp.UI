@@ -16,7 +16,7 @@ const LandingPage = () => {
 
     const [pagination, setPagination] = useState({
         currentPage: 1,
-        itemsPerPage: 2,
+        itemsPerPage: 8,
         totalItems: 0,
         totalPages: 0
     });
