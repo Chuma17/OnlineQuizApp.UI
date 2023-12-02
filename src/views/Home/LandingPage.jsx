@@ -20,7 +20,7 @@ const LandingPage = () => {
         totalItems: 0,
         totalPages: 0
     });
-    
+
 
     async function getCategoryQuizzes() {
         try {
@@ -69,8 +69,6 @@ const LandingPage = () => {
 
             const response = await axios.get(`Quiz/get-search-quizzes-in-category?categoryId=${categoryId}`, {
                 params: {
-                    PageNumber: pagination.currentPage,
-                    PageSize: pagination.itemsPerPage,
                     searchQuery: searchTerm
                 }
             });
@@ -81,8 +79,6 @@ const LandingPage = () => {
                 setCategoryQuizzes(data);
             }
 
-            const paginationHeader = JSON.parse(response.headers["pagination"]);
-            setPagination(paginationHeader);
         } catch (error) {
             setLoading(false);
         }
@@ -95,7 +91,7 @@ const LandingPage = () => {
             getCategoryQuizzes();
         }
 
-        if (searchTerm) {
+        if (categoryId && searchTerm) {
             getSearchedCategoryQuizzes();
         }
 
@@ -240,19 +236,22 @@ const LandingPage = () => {
                 <div >
                     <div className="container px-1 text-center">
 
-                        <div className="ms-2 mb-3 pagination-icons">
-                            <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleFirstPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-backward"></i></button>
-                            <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handlePrevPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-caret-left"></i></button>
-                            <span className="text-dark">
-                                Page:{" "}
-                                {categoryquizzes.length > 0
-                                    ? `${pagination.currentPage} of ${pagination.totalPages === 0 ? 1 : pagination.totalPages
-                                    }`
-                                    : 0}
-                            </span>
-                            <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}><i class="fa-solid fa-caret-right"></i></button>
-                            <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleLastPage} disabled={pagination.currentPage === pagination.totalPages || pagination.totalPages <= 1}><i class="fa-solid fa-forward"></i></button>
-                        </div>
+                        {searchTerm ? null : (
+                            <div className="ms-2 mb-3 pagination-icons">
+                                <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleFirstPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-backward"></i></button>
+                                <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handlePrevPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-caret-left"></i></button>
+                                <span className="text-dark">
+                                    Page:{" "}
+                                    {categoryquizzes.length > 0
+                                        ? `${pagination.currentPage} of ${pagination.totalPages === 0 ? 1 : pagination.totalPages
+                                        }`
+                                        : 0}
+                                </span>
+                                <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}><i class="fa-solid fa-caret-right"></i></button>
+                                <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleLastPage} disabled={pagination.currentPage === pagination.totalPages || pagination.totalPages <= 1}><i class="fa-solid fa-forward"></i></button>
+                            </div>
+                        )}
+
 
 
                         <div className="row">
@@ -265,7 +264,7 @@ const LandingPage = () => {
                                                 <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="home-card-image card-img-top p-3" alt="Default Quiz" />
 
                                                 <div className="card-body text-center fs-5">
-                                                    <h3 className="card-title">{quiz.quizName}</h3>                                                    
+                                                    <h3 className="card-title">{quiz.quizName}</h3>
                                                 </div>
                                             </div>
                                         </Link>
@@ -281,19 +280,22 @@ const LandingPage = () => {
 
                         </div>
 
-                        <div className="ms-2 mb-5 mt-3 pagination-icons">
-                            <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleFirstPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-backward"></i></button>
-                            <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handlePrevPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-caret-left"></i></button>
-                            <span className="text-dark">
-                                Page:{" "}
-                                {categoryquizzes.length > 0
-                                    ? `${pagination.currentPage} of ${pagination.totalPages === 0 ? 1 : pagination.totalPages
-                                    }`
-                                    : 0}
-                            </span>
-                            <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}><i class="fa-solid fa-caret-right"></i></button>
-                            <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleLastPage} disabled={pagination.currentPage === pagination.totalPages || pagination.totalPages <= 1}><i class="fa-solid fa-forward"></i></button>
-                        </div>
+                        {searchTerm ? null : (
+                            <div className="ms-2 mb-3 pagination-icons">
+                                <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleFirstPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-backward"></i></button>
+                                <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handlePrevPage} disabled={pagination.currentPage === 1}><i class="fa-solid fa-caret-left"></i></button>
+                                <span className="text-dark">
+                                    Page:{" "}
+                                    {categoryquizzes.length > 0
+                                        ? `${pagination.currentPage} of ${pagination.totalPages === 0 ? 1 : pagination.totalPages
+                                        }`
+                                        : 0}
+                                </span>
+                                <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleNextPage} disabled={pagination.currentPage >= pagination.totalPages}><i class="fa-solid fa-caret-right"></i></button>
+                                <button className="btn btn-sm btn-light p-1 m-1 pagination-foward-icons" onClick={handleLastPage} disabled={pagination.currentPage === pagination.totalPages || pagination.totalPages <= 1}><i class="fa-solid fa-forward"></i></button>
+                            </div>
+                        )}
+
 
                     </div>
 
