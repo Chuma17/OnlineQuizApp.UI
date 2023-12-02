@@ -53,7 +53,7 @@ const CreateQuiz = () => {
 
 
                 // Step 2: Associate Categories with Quiz
-                const categoryResponse = await axios.post(`Quiz/add-category-to-quiz/${quizId}`, {                    
+                const categoryResponse = await axios.post(`Quiz/add-category-to-quiz/${quizId}`, {
                     categoryIds: selectedOptions
                 }, {
                     headers: {
@@ -61,9 +61,13 @@ const CreateQuiz = () => {
                     },
                 });
 
-                if (categoryResponse.status === 200) {                    
+                if (categoryResponse.status === 200) {
                     setIsLoading(false);
                     setSuccess(categoryResponse.data);
+                    setQuizName("");
+                    setQuizDescription("");
+                    setCategories([]);
+                    setPreview(null);                    
                 }
             }
         }
@@ -101,6 +105,7 @@ const CreateQuiz = () => {
 
                     console.log(quizPicResponse);
                     setSuccess(quizPicResponse.data.message);
+                    setPreview(null);                    
                     // setError('');
                 }
             }
@@ -317,8 +322,8 @@ const CreateQuiz = () => {
                                                         }
                                                         <div className="text-center">
                                                             <button type="button" className="btn btn-dark w-" onClick={() => fileInput.current.click()}>
-                                                                Choose a picture
-                                                            </button>                                                            
+                                                                <i class="fa-solid fa-image text-light"></i>
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>

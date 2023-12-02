@@ -162,9 +162,7 @@ const AdminUnpublished = () => {
                                                                             <Link to={`/single-admin-quiz/${quiz.quizId}`}>
                                                                                 <img src={quiz.imageUrl || require('./images/QuizDefault.jpg')} className="home-card-image card-img-top p-3" alt="Default Quiz" />
                                                                                 <div className="card-body text-center fs-5">
-                                                                                    <h3 className="card-title">{quiz.quizName}</h3>
-                                                                                    <hr />
-                                                                                    <p className="card-description">{quiz.quizDescription}</p>
+                                                                                    <h3 className="card-title">{quiz.quizName}</h3>                                                                                    
                                                                                 </div>
                                                                             </Link>
 
