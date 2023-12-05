@@ -48,28 +48,28 @@ function UserRegistration(props) {
         }
     }
 
-    useEffect(() => {
-        // let errorTimeoutId;
-        let successTimeoutId;
+    // useEffect(() => {
+    //     // let errorTimeoutId;
+    //     let successTimeoutId;
 
-        // if (error) {
-        //     errorTimeoutId = setTimeout(() => {
-        //         setError(null);
-        //     }, 7000);
-        // }
+    //     // if (error) {
+    //     //     errorTimeoutId = setTimeout(() => {
+    //     //         setError(null);
+    //     //     }, 7000);
+    //     // }
 
-        if (success) {
-            successTimeoutId = setTimeout(() => {
-                setSuccess(null);
-            }, 3000);
-        }
+    //     if (success) {
+    //         successTimeoutId = setTimeout(() => {
+    //             setSuccess(null);
+    //         }, 3000);
+    //     }
 
-        return () => {
-            // clearTimeout(errorTimeoutId);
-            clearTimeout(successTimeoutId);
-        };
+    //     return () => {
+    //         // clearTimeout(errorTimeoutId);
+    //         clearTimeout(successTimeoutId);
+    //     };
 
-    }, [success]);
+    // }, [success]);
 
 
     return <div><>
