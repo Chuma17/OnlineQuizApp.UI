@@ -59,7 +59,6 @@ import SuperAdminUnpublished from './views/SuperAdmin/SuperAdminUnpublished';
 import SuperAdminUserQuizzes from './views/SuperAdmin/SuperAdminUserQuizzes';
 
 //Views
-import HomePage from './views/HomePage';
 import LandingPage from './views/Home/LandingPage';
 
 const ROLES = {
@@ -70,7 +69,12 @@ const ROLES = {
 
 function checkLocalStorageExpiration() {
   const userDetailsTimestamp = parseInt(localStorage.getItem('userDetailsTimestamp'));
-  const expirationTime = (4 * 60 + 55) * 60 * 1000; // 4 hours 55 minutes in milliseconds
+  const days = 9;
+  const hours = 23;
+  const minutes = 50;
+
+  const expirationTime = ((days * 24 + hours) * 60 + minutes) * 60 * 1000;
+
 
   if (userDetailsTimestamp) {
     const currentTime = new Date().getTime();
