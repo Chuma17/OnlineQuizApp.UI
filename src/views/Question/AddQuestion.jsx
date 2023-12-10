@@ -1,8 +1,11 @@
 import "./Question.css"
 import axios from "../../axios/axios";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
+import RenderHtmlComponent from "./RenderHtmlComponent";
 
 const AddQuestion = () => {
     const navigate = useNavigate();
@@ -20,7 +23,7 @@ const AddQuestion = () => {
     const [questionText, setQuestionText] = useState("");
     const [questionTypes, setQuestionTypes] = useState([]);
     const [questionTypeId, setQuestionTypeId] = useState("");
-    
+
     const [profileImage, setProfileImage] = useState();
     const [preview, setPreview] = useState(null);
     const fileInput = useRef(null);
@@ -29,6 +32,18 @@ const AddQuestion = () => {
     const [success, setSuccess] = useState("");
     const [isMainLoading, setIsMainLoading] = useState(false);
     const [isArticleLoading, setIsArticleLoading] = useState(false);
+
+    var toolbarOptions = [
+        ['bold', 'italic', 'underline', { 'color': [] }],
+
+        ['code-block', { 'script': 'sub' }, { 'script': 'super' }, { 'list': 'bullet' }],
+
+        ['clean']
+    ];
+
+    const modules = {
+        toolbar: toolbarOptions
+    }
 
     const user = JSON.parse(localStorage.getItem("userDetails"));
 
@@ -100,7 +115,7 @@ const AddQuestion = () => {
                 console.error(error.response);
             }
         }
-    }    
+    }
 
 
     async function getQuizzes() {
@@ -159,7 +174,7 @@ const AddQuestion = () => {
             } else {
                 setIsArticleLoading(false);
 
-                console.error(error.response);        
+                console.error(error.response);
             }
         }
     }
@@ -400,14 +415,23 @@ const AddQuestion = () => {
         for (let i = 0; i < numberOfOptions; i++) {
             answerTextboxes.push(
                 <div key={i} className="mb-3">
-                    <input
+                    <ReactQuill
+                        modules={modules}
+                        theme="snow"                        
+                        placeholder={`Answer ${i + 1}`}
+                        value={questionAnswers[selectedQuestionId]?.[i] || ''}
+                        onChange={(e) => handleAnswerChange(selectedQuestionId, i, e.target.value)}
+                        required
+
+                    />
+                    {/* <input
                         type="text"
                         className="form-control"
                         placeholder={`Answer ${i + 1}`}
                         value={questionAnswers[selectedQuestionId]?.[i] || ''}
                         onChange={(e) => handleAnswerChange(selectedQuestionId, i, e.target.value)}
                         required
-                    />
+                    /> */}
                 </div>
             );
         }
@@ -435,32 +459,33 @@ const AddQuestion = () => {
         } catch (error) {
 
         }
-    }    
+    }
 
     async function GetQuestCatsQuiz(params) {
         getQuestionTypes();
         getQuizzes();
     }
 
+    const editorRef = useRef(null);
+
+    const handleFormat = (command, value = null) => {
+        document.execCommand(command, false, value);
+    };
+
     return <>
         <div id="page-content">
 
-            <header id="question-header" className="d-flex justify-content-between">                
+            <header id="question-header" className="">
 
-                <div className="">
+                <div className="text-center">
                     Quiz : {questionDetails.quizName == null ? 'NIL' : questionDetails.quizName}
-                </div>
-
-                <div className="">
-                    Category : {questionDetails.categoryName == null ? 'NIL' : questionDetails.categoryName}
-                </div>
-
+                </div>                
 
             </header>
 
             <main>
 
-                <div className="container py-5 h-100">
+                <div className={`container py-5 h-100 ${questionDetails.length == 0 ? 'display-if-question-selected' : ''}`}>
                     <div className="d-flex justify-content-center align-items-center h-100">
                         <div className="col col-xl-11">
                             <div className="card" style={{ borderRadius: '1rem' }}>
@@ -471,24 +496,28 @@ const AddQuestion = () => {
                                             {isMainLoading && <div className="" style={{ textAlign: 'center' }}><Loading /> </div>}
 
                                             <div className="">
-                                                {questionDetails.questionText}
+                                                {
+                                                    <RenderHtmlComponent htmlContent={questionDetails.questionText} />
+                                                }
                                             </div>
 
-                                            <div>
+                                            <div className="">
                                                 <p>(The first answer is the correct one)</p>
                                             </div>
 
                                             <form onSubmit={() => handleAddAnswers(selectedQuestionId)}>
                                                 {renderAnswerTextboxes(selectedQuestionId, questionDetails.numberOfOptions)}
 
-                                                <button type="submit" className="btn btn-success">Add</button>
+                                                <button type="submit" className="btn btn-success ">Add</button>
                                             </form>
 
+                                            <div className={`${questionDetails == [] ? 'text-light' : ''}`}>
 
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div className="col-md-5 col-lg-4 mt-auto mb-auto ms-auto me-auto">
+                                    <div className="col-md-5 col-lg-4 mt-auto mb-auto ms-auto me-auto ">
 
                                         <div>
                                             <input
@@ -569,17 +598,17 @@ const AddQuestion = () => {
                                         {success && <div className=" me-4 ms-4 alert alert-success text-center">{success}</div>}
 
                                         <form>
-                                            <div class="mb-3 me-4 ms-4">
-                                                <label for="recipient-name" class="col-form-label">Question Text:</label>
-                                                <textarea
-                                                    type="text"
-                                                    rows={4}
-                                                    class="form-control"
-                                                    id="recipient-name"
-                                                    value={questionText}
-                                                    onChange={e => setQuestionText(e.target.value)}
-                                                    required
-                                                />
+                                            <div className="mb-4 me-4 ms-4">
+                                                <label className="form-label">Question Text</label>
+                                                {
+                                                    <ReactQuill
+                                                        modules={modules}
+                                                        theme="snow"
+                                                        value={questionText}
+                                                        onChange={setQuestionText}
+
+                                                    />
+                                                }
                                             </div>
 
                                             <div className="mb-4 me-4 ms-4">
@@ -591,7 +620,7 @@ const AddQuestion = () => {
                                                         return <option key={questionType.questionTypeId} value={questionType.questionTypeId}> {questionType.typeName} </option>
                                                     })}
                                                 </select>
-                                            </div>                                            
+                                            </div>
 
                                             <div className="mb-4 me-4 ms-4">
                                                 <label className="form-label" htmlfor="halls">Quiz</label>
@@ -622,12 +651,18 @@ const AddQuestion = () => {
                 <div>
                     {quizquestions.length > 0 ? (
                         quizquestions.map((question, i) => {
-                            const truncatedText = question.questionText.length > 30 ? question.questionText.slice(0, 30) + '...' : question.questionText;
+
+                            let renderedText = <RenderHtmlComponent htmlContent={question.questionText} />
+                            const truncatedText = renderedText.length > 30 ? renderedText.slice(0, 30) + '...' : renderedText;
+                            // const truncatedText = question.questionText.length > 30 ? question.questionText.slice(0, 30) + '...' : question.questionText;
 
                             return (
                                 <div className={`unpublished-questions p-2 d-flex justify-content-between ${selectedQuestionId === question.questionId ? 'selected-question' : ''}`} key={question.questionId}>
                                     <div onClick={() => ShowDetails(question.questionId)} className="question-text me-0">
-                                        <button disabled className="btn btn-dark">Q{i + 1}</button> <span className={`mt-auto mb-auto question-text ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}>{truncatedText}</span>
+                                        <button disabled className="btn btn-dark mb-1">Q{i + 1}</button>
+                                        <span className={`question-text ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}>
+                                            {truncatedText}
+                                        </span>
                                     </div>
                                     <div className="mt-auto mb-auto">
                                         <i onClick={() => DeleteQuestion(question.questionId)} className={`fa-solid fa-trash ms-0 me-2 ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}></i>
@@ -640,7 +675,7 @@ const AddQuestion = () => {
                     )}
 
                 </div>
-            </article>            
+            </article>
 
         </div>
     </>

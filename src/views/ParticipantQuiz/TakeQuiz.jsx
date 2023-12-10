@@ -12,7 +12,6 @@ const TakeQuiz = () => {
     const navigate = useNavigate();
 
     const [quiz, setQuiz] = useState({});
-    const [category, setCategory] = useState([]);
 
     const [loading, setLoading] = useState();
     const [submitloading, setSubmitLoading] = useState();
@@ -49,27 +48,7 @@ const TakeQuiz = () => {
             }
         }
         getQuiz()
-    }, [id]);
-
-
-    useEffect(() => {
-        async function getCategory() {
-            try {
-
-                const response = await axios.get(`Quiz/get-quiz-categories/${id}`, {
-                });
-
-                const { data } = response;
-                if (data) {
-                    setCategory(data);
-                }
-
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        getCategory()
-    }, [id]);
+    }, [id]);    
 
     const handleSelectAnswer = (questionId, answerId) => {
         const updatedSelectedAnswers = { ...selectedAnswers, [questionId]: answerId };

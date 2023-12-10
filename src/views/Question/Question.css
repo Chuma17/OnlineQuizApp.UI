@@ -9,7 +9,6 @@
         "article article article main main main main main main main main main";
 }
 
-
 article {
     grid-area: article;
     max-height: 700px !important;
@@ -43,10 +42,10 @@ main {
 }
 
 .selected-question {
-    background-color: #6C757D;
+    background-color: #a3a9ad;
     padding-top: 15px;
     padding-bottom: 15px;
-    color: white !important;
+    /* color: white !important; */
     border-radius: 5px;
 }
 
@@ -57,6 +56,17 @@ main {
 .quest-picture {
     height: 170px !important;
 }
+
+.text-editor {
+    border: 1px solid #ccc;
+    padding: 10px;
+    min-height: 100px;
+}
+
+.display-if-question-selected{
+    display: none;
+}
+
 
 @media (max-width: 768px) {
     #page-content {
@@ -77,6 +87,6 @@ main {
     .main-question-details {
         display: flex;
         flex-direction: column;
-    }    
-    
+    }
+
 }

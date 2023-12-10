@@ -61,6 +61,8 @@ import SuperAdminUserQuizzes from './views/SuperAdmin/SuperAdminUserQuizzes';
 //Views
 import LandingPage from './views/Home/LandingPage';
 
+import { Editor } from '@tinymce/tinymce-react'
+
 const ROLES = {
   'Admin': "Admin",
   'SuperAdmin': "SuperAdmin",
@@ -162,6 +164,7 @@ const App = () => {
       </Route>
 
     </Routes>
+
   </>
 }
 
