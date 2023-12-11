@@ -8,7 +8,7 @@ const RenderHtmlComponent = ({ htmlContent }) => {
     setContent(htmlContent);
   }, [htmlContent]);
 
-  return <div dangerouslySetInnerHTML={{ __html: content }} />;
+  return <span dangerouslySetInnerHTML={{ __html: content }} />;
 };
 
 export default RenderHtmlComponent;

@@ -118,10 +118,10 @@ const QuizResult = () => {
         <div id="result-page-content">
 
             <header className="d-flex" id="result-header">
-                <div className="">
+                <div className="mt-3 result-header-class">
                     <button className="btn btn-danger" onClick={goBack}><i class="fa-solid fa-arrow-left text-light"></i></button>
                 </div>
-                <div className="d-flex mt-auto mb-auto ms-auto me-auto">
+                <div className="d-flex mt-4 mb-auto ms-auto me-auto result-header-class">
                     <div className="me-3">
                         Score : {resultDetails.score}
                     </div>
@@ -231,6 +231,7 @@ const QuizResult = () => {
                             {combinedData.map((combinedItem, i) => (
                                 <div key={combinedItem.questionID}>
                                     <button disabled className="btn btn-dark">{i + 1}</button>
+                                    <h6 className="mt-2">({combinedItem.score} / {combinedItem.score})</h6>
                                     <h3>{combinedItem.question}</h3>
                                     <div className="question-picture mb-4 mt-4">
                                         <img src={combinedItem.questionImage || require('./images/question.png')} className="question-picture" alt="Default Quiz" />

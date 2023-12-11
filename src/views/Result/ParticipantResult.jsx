@@ -30,7 +30,7 @@ const ParticipantResult = () => {
             const { data } = response;
             if (data) {
                 setIsAsideLoading(false);
-                console.log(data);
+                // console.log(data);
             }
 
             setResults(data);
@@ -138,7 +138,7 @@ const ParticipantResult = () => {
         <div id="result-page-content">
 
             <header className="d-flex justify-content-center" id="result-header">
-                <div className="d-flex mt-auto mb-auto">
+                <div className="d-flex mb-auto mt-3 result-header-class">
                     <div className="me-3">
                         Score : {resultDetails.score}
                     </div>
@@ -196,7 +196,7 @@ const ParticipantResult = () => {
 
                                     {results.length > 0 ? (
                                         results.map((result, i) => {
-                                            
+
                                             const submissionTime = new Date(result.submissionTime);
                                             const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -267,7 +267,7 @@ const ParticipantResult = () => {
 
                     {results.length > 0 ? (
                         results.map((result, i) => {
-                            
+
                             const submissionTime = new Date(result.submissionTime);
                             const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -305,6 +305,14 @@ const ParticipantResult = () => {
                             {combinedData.map((combinedItem, i) => (
                                 <div key={combinedItem.questionID}>
                                     <button disabled className="btn btn-dark">{i + 1}</button>
+
+                                    <h6 className="mt-2">
+                                        {combinedItem.answers.find(answer => answer.answerId === combinedItem.submittedAnswerId && !answer.isCorrect)
+                                            ? `( Score: 0 / ${combinedItem.score} )`
+                                            : `( Score: ${combinedItem.score} / ${combinedItem.score} )`
+                                        }
+                                    </h6>
+
                                     <h3>{combinedItem.question}</h3>
                                     <div className="question-picture mb-4 mt-4">
                                         <img src={combinedItem.questionImage || require('./images/question.png')} className="question-picture" alt="Default Quiz" />

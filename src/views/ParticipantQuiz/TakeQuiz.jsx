@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 import "./ParticipantQuiz.css";
+import RenderHtmlComponent from "../../components/RenderHtmlComponent";
 
 const TakeQuiz = () => {
     let params = useParams();
@@ -79,6 +80,7 @@ const TakeQuiz = () => {
             const { data } = response;
             if (data) {
                 setLoading(false);
+                console.log(data)
                 setQuestions(data)
                 const paginationHeader = JSON.parse(response.headers["pagination"]);
                 setPagination(paginationHeader);
@@ -212,7 +214,8 @@ const TakeQuiz = () => {
                                                             <div>
                                                                 {questions.map((question) => (
                                                                     <div key={question.questionID}>
-                                                                        <h3>{question.question}</h3>
+                                                                        <h6>({question.score} {question.score === 1 ? 'pt' : 'pts'})</h6>
+                                                                        <h3>{<RenderHtmlComponent htmlContent={question.question} />}</h3>
                                                                         <div className="question-picture mb-5 mt-5">
                                                                             <img src={question.questionImage || require('./images/question.png')} className="question-picture" alt="Default Quiz" />
                                                                         </div>
@@ -227,7 +230,7 @@ const TakeQuiz = () => {
                                                                                             checked={selectedAnswers[question.questionID] === answer.answerId}
                                                                                             onChange={(e) => handleSelectAnswer(question.questionID, e.target.value)}
                                                                                         />
-                                                                                        {answer.answerText}
+                                                                                        {<RenderHtmlComponent htmlContent={answer.answerText} />}
                                                                                     </label>
                                                                                 </div>
                                                                             ))}

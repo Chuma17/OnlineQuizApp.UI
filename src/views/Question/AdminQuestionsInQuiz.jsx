@@ -4,6 +4,7 @@ import axios from "../../axios/axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../../components/Loading";
+import RenderHtmlComponent from "../../components/RenderHtmlComponent";
 
 const AdminQuestionsInQuiz = () => {
     let params = useParams();
@@ -167,8 +168,8 @@ const AdminQuestionsInQuiz = () => {
                                                                             </div>
 
                                                                             <div className="col-lg- col-md-9 mb-4 mb-lg-0">
-                                                                                <p className="fs-5"><strong>{question.questionText}</strong></p>
-                                                                                <p><strong>Answer: {question.correctAnswer} </strong></p>
+                                                                                <p className="fs-5"><strong>{<RenderHtmlComponent htmlContent={question.questionText} />}</strong></p>
+                                                                                <p><strong>Answer: {<RenderHtmlComponent htmlContent={question.correctAnswer} />} </strong></p>
 
                                                                                 <div className="mt-2">
                                                                                     {question.questionTypeName}

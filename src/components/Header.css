@@ -2,7 +2,7 @@ link {
     text-decoration: none;
 }
 
-.nav-username{
+.nav-username {
     margin-top: 11px !important;
     margin-bottom: 11px !important;
 }
@@ -70,23 +70,23 @@ link {
         justify-content: space-between;
     }
 
-    .nav-picture {        
+    .nav-picture {
         width: 54px !important;
         height: 53.44px !important;
         /* margin-top: 11px !important;
         margin-bottom: 11px !important; */
         object-fit: cover;
     }
-    
-    .nav-username{
+
+    .nav-username {
         margin-top: 11px !important;
         margin-bottom: 11px !important;
     }
 
-        /* margin-bottom: 11px;
+    /* margin-bottom: 11px;
         object-fit: cover;
     } */
-    
+
 }
 
 @media (min-width: 768px) {

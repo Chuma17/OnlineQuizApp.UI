@@ -22,7 +22,7 @@ const Header = () => {
 
     return <>
 
-        <nav className="navbar navbar-expand-lg navbar-light background-radial-gradient overflow-hidden">
+        <nav className="navbar navbar-expand-lg navbar-light background-radial-gradient overflow-hidden fixed-top p-0">
             <div className="container-fluid">
                 <Link to="/" className="navbar-brand text-light fs-5 p-2">
                     <i className="fas fa-cubes fa-1x me-1" style={{ color: '#ff6219' }}></i> Ramen's Trivia
@@ -122,14 +122,14 @@ const Header = () => {
                             }
 
                             {userInfo &&
-                                <button className="btn btn-light my-2 my-sm-0 btn-sm p-0 me-2">
+                                <button className="btn btn-light btn-sm my-2 p-0 me-2">
                                     <Link to="/change-names" className="text-dark nav-link"><i className="fa-solid fa-gear"></i> </Link>
                                 </button>
                             }
 
                             {userInfo &&
                                 <>
-                                    <button type="button" className="btn btn-danger btn-sm my-2 ms-0 my-sm-0" data-bs-toggle="modal" data-bs-target="#signOutModal">
+                                    <button type="button" className="btn btn-danger btn-sm my-2 ms-0" data-bs-toggle="modal" data-bs-target="#signOutModal">
                                         <i className="fa-solid fa-arrow-right-from-bracket text-light"></i>
                                     </button>
 
@@ -153,9 +153,7 @@ const Header = () => {
                                         </div>
                                     </div>
 
-
                                 </>
-
                             }
                         </div>
                     </div>

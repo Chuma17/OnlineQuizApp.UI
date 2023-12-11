@@ -3,6 +3,7 @@ import axios from "../../axios/axios";
 import { useState, useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import Loading from "../../components/Loading";
+import RenderHtmlComponent from "../../components/RenderHtmlComponent";
 
 const SuperAdminQuestionsInQuiz = () => {
     let params = useParams();
@@ -14,6 +15,7 @@ const SuperAdminQuestionsInQuiz = () => {
 
     const [loading, setLoading] = useState();
     const [questionCount, setQuestionCount] = useState("");
+    const [questionId, setQuestionId] = useState("");
 
     const [questions, setQuestions] = useState([]);
     const user = JSON.parse(localStorage.getItem("userDetails"));
@@ -56,7 +58,7 @@ const SuperAdminQuestionsInQuiz = () => {
     useEffect(() => {
 
         getQuestions()
-    }, [pagination.itemsPerPage, pagination.currentPage, user.accessToken]);
+    }, [pagination.itemsPerPage, pagination.currentPage]);
 
     function handleNextPage() {
         setPagination(prev => {
@@ -84,6 +86,28 @@ const SuperAdminQuestionsInQuiz = () => {
         setPagination(prev => ({ ...prev, currentPage: pagination.totalPages }));
     }
 
+    async function DeleteQuestion(questionId) {
+        try {
+            const deleteResponse = await axios.delete(`Question/delete-question?questionId=${questionId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`
+                    },
+                },
+            );
+
+            if (deleteResponse.status === 200) {
+
+                console.log(deleteResponse);
+                getQuestions();
+
+                // setError('');
+            }
+        } catch (error) {
+
+        }
+    };
+
 
     return <>
         <section className="vh-110 background-radial-gradient overflow-hidden">
@@ -104,7 +128,7 @@ const SuperAdminQuestionsInQuiz = () => {
                                         <li className="nav-item" role="presentation">
                                             <p className="nav-link active" id="adminQuestion-tab" data-bs-toggle="tab" data-bs-target="#adminQuestion-tab-pane" type="button" role="tab" aria-controls="adminQuestion-tab-pane" aria-selected="true"> Questions </p>
                                         </li>
-                                    </Link>                                    
+                                    </Link>
 
                                     <Link to={`/view-superAdmin-quiz-records/${id}?adminId=${adminId}`}>
                                         <li className="nav-item" role="presentation">
@@ -158,8 +182,8 @@ const SuperAdminQuestionsInQuiz = () => {
                                                                             </div>
 
                                                                             <div className="col-lg- col-md-9 mb-4 mb-lg-0">
-                                                                                <p className="fs-5"><strong>{question.questionText}</strong></p>
-                                                                                <p><strong>Answer: {question.correctAnswer} </strong></p>
+                                                                                <p className="fs-5"><strong>{<RenderHtmlComponent htmlContent={question.questionText} />}</strong></p>
+                                                                                <p><strong>Answer: {<RenderHtmlComponent htmlContent={question.correctAnswer} />} </strong></p>
 
                                                                                 <div className="mt-2">
                                                                                     {question.questionTypeName}
@@ -168,13 +192,17 @@ const SuperAdminQuestionsInQuiz = () => {
                                                                                 <div>
                                                                                     {question.categoryName}
                                                                                 </div>
+
+                                                                                <button onClick={() => setQuestionId(question.questionId)} type="button" className="btn btn-danger mt-2" data-bs-toggle="modal" data-bs-target="#deleteQuestion">
+                                                                                    <i className={`fa-solid fa-trash delete-button text-light`}></i>
+                                                                                </button>
                                                                             </div>
 
                                                                             <div>
                                                                                 <hr className="my-3" />
                                                                             </div>
 
-                                                                        </div>
+                                                                        </div >
 
                                                                     </>
 
@@ -207,7 +235,27 @@ const SuperAdminQuestionsInQuiz = () => {
                     </div>
                 </div>
             </div>
-        </section>
+        </section >
+
+        <div className="modal fade" id="deleteQuestion" tabindex="-1" aria-labelledby="deleteQuestionLabel" aria-hidden="true">
+            <div className="modal-dialog text-light">
+                <div className="modal-content bg-dark">
+                    <div className="modal-header">
+                        <h1 className="modal-title fs-5 text-light" id="deleteQuestionLabel">Delete Question</h1>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div className="modal-body text-light">
+                        Are you sure you want to delete this question?
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button className="btn btn-danger text-light" data-bs-dismiss="modal" onClick={() => DeleteQuestion(questionId)}>
+                            Confirm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </>
 }
 

@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
-import RenderHtmlComponent from "./RenderHtmlComponent";
+import RenderHtmlComponent from "../../components/RenderHtmlComponent";
 
 const AddQuestion = () => {
     const navigate = useNavigate();
@@ -23,6 +23,7 @@ const AddQuestion = () => {
     const [questionText, setQuestionText] = useState("");
     const [questionTypes, setQuestionTypes] = useState([]);
     const [questionTypeId, setQuestionTypeId] = useState("");
+    const [existingQuestionPicture, setExistingQuestionPicture] = useState(null);
 
     const [profileImage, setProfileImage] = useState();
     const [preview, setPreview] = useState(null);
@@ -53,7 +54,7 @@ const AddQuestion = () => {
     }
     const savedAnswers = JSON.parse(localStorage.getItem('questionAnswers'));
 
-
+    // Get all unpublished questions from all quizzes
     async function getQuizQuestions() {
         try {
             setIsArticleLoading(true);
@@ -89,7 +90,7 @@ const AddQuestion = () => {
         getQuizQuestions();
     }, [user.accessToken, navigate]);
 
-
+    // Get all question types
     async function getQuestionTypes() {
         try {
             const response = await axios.get(`QuestionType/get-all-questionTypes`, {
@@ -115,9 +116,10 @@ const AddQuestion = () => {
                 console.error(error.response);
             }
         }
-    }
+    };
 
 
+    // Get all quizzes
     async function getQuizzes() {
         try {
 
@@ -137,9 +139,10 @@ const AddQuestion = () => {
             console.error(error)
         }
 
-    }
+    };
 
 
+    // Add questions to the quiz
     async function AddQuestionsToQuiz() {
         try {
 
@@ -177,9 +180,11 @@ const AddQuestion = () => {
                 console.error(error.response);
             }
         }
-    }
+    };
 
-    async function ShowDetails(questionId) {
+
+    // get individual question details
+    async function getQuestion(questionId) {
         try {
             const response = await axios.get(`Question/get-single-question?questionId=${questionId}`,
                 {
@@ -187,17 +192,8 @@ const AddQuestion = () => {
                 });
 
             if (response.status === 200) {
-                clearQuestionDetails();
-                console.log(response.data);
                 const questionResponse = response.data;
-                setQuestionDetails(questionResponse);
-                setSelectedQuestionId(questionId);
-
-                // Save details to local storage
-                localStorage.setItem('questionDetails', JSON.stringify(questionResponse));
-
-                // Set the selected question ID
-                localStorage.setItem('selectedQuestionId', questionId);
+                setExistingQuestionPicture(questionResponse.imageUrl);
             }
 
         } catch (error) {
@@ -214,29 +210,48 @@ const AddQuestion = () => {
         }
     };
 
+
+    // To show the details of the question on the main section
+    async function ShowDetails(questionId) {
+        try {
+            const response = await axios.get(`Question/get-single-question?questionId=${questionId}`,
+                {
+
+                });
+
+            if (response.status === 200) {
+                clearQuestionDetails();
+                // console.log(response.data);
+                const questionResponse = response.data;
+                setQuestionDetails(questionResponse);
+                setSelectedQuestionId(questionId);                
+            }
+
+        } catch (error) {
+
+            if (error.response.status === 401) {
+                window.alert('Your session has expired. Login again!');
+                localStorage.removeItem('userDetails');
+
+                navigate('/login');
+            } else {
+                console.error(error.response);
+                // setError(error.response.data);
+            }
+        }
+    };
+
+    // Delete the preview of the question Picture
     async function DeletePreview(params) {
         setPreview(null);
-    }
-
-    useEffect(() => {
-        const savedQuestionDetails = JSON.parse(localStorage.getItem('questionDetails'));
-        const savedSelectedQuestionId = localStorage.getItem('selectedQuestionId');
-
-
-        if (savedQuestionDetails) {
-            setQuestionDetails(savedQuestionDetails);
-        }
-
-        if (savedSelectedQuestionId === questionDetails.questionId) {
-            // Apply background color
-            setSelectedQuestionId(questionDetails.questionId);
-        }
-    }, [questionDetails.questionId]);
+    };    
 
     function clearQuestionDetails() {
         localStorage.removeItem('questionDetails');
         localStorage.removeItem('selectedQuestionId');
-    }
+    };
+
+    
 
     useEffect(() => {
         let errorTimeoutId;
@@ -245,7 +260,7 @@ const AddQuestion = () => {
         if (error) {
             errorTimeoutId = setTimeout(() => {
                 setError(null);
-            }, 2000);
+            }, 10000);
         }
 
         if (success) {
@@ -284,7 +299,13 @@ const AddQuestion = () => {
 
 
     // Function to add answers to the backend for a specific question
-    const handleAddAnswers = async (selectedQuestionId) => {
+    const handleAddAnswers = async (selectedQuestionId) => {        
+
+        if (questionAnswers.length !== questionDetails.numberOfOptions) {
+            setError("Fill in all the answer boxes");
+            return;
+        }
+
         try {
             setIsMainLoading(true);
 
@@ -320,7 +341,11 @@ const AddQuestion = () => {
 
                 navigate('/login');
             } else {
-                setIsMainLoading(false);
+                if (profileImage) {
+                    AddQuestionPicture(selectedQuestionId);
+                }
+                PublishQuestion(selectedQuestionId);
+                // setIsMainLoading(false);
 
                 console.error(error.response);
                 setError("Error adding answers.");
@@ -329,8 +354,11 @@ const AddQuestion = () => {
     };
 
 
+    // Add Question picture
     const AddQuestionPicture = async (selectedQuestionId) => {
-        if (profileImage) {
+        getQuestion(selectedQuestionId);
+
+        if (profileImage && existingQuestionPicture !== null) {
             try {
 
                 const questionPicResponse = await axios.post(`Question/upload-question-picture?questionId=${selectedQuestionId}`, formData,
@@ -367,8 +395,10 @@ const AddQuestion = () => {
                 }
             }
         }
-    }
+    };
 
+
+    // Publish the question
     const PublishQuestion = async (selectedQuestionId) => {
         try {
 
@@ -406,32 +436,23 @@ const AddQuestion = () => {
                 setError("Error publishing question.");
             }
         }
-    }
+    };
 
 
     // Function to render answer textboxes for a specific question
-    const renderAnswerTextboxes = (selectedQuestionId, numberOfOptions) => {
+    const renderAnswerTextboxes = () => {
         const answerTextboxes = [];
-        for (let i = 0; i < numberOfOptions; i++) {
+        for (let i = 0; i < questionDetails.numberOfOptions; i++) {
             answerTextboxes.push(
                 <div key={i} className="mb-3">
                     <ReactQuill
                         modules={modules}
-                        theme="snow"                        
+                        theme="snow"
                         placeholder={`Answer ${i + 1}`}
                         value={questionAnswers[selectedQuestionId]?.[i] || ''}
-                        onChange={(e) => handleAnswerChange(selectedQuestionId, i, e.target.value)}
+                        onChange={(value) => handleAnswerChange(selectedQuestionId, i, value)}
                         required
-
                     />
-                    {/* <input
-                        type="text"
-                        className="form-control"
-                        placeholder={`Answer ${i + 1}`}
-                        value={questionAnswers[selectedQuestionId]?.[i] || ''}
-                        onChange={(e) => handleAnswerChange(selectedQuestionId, i, e.target.value)}
-                        required
-                    /> */}
                 </div>
             );
         }
@@ -453,33 +474,31 @@ const AddQuestion = () => {
 
                 console.log(deleteResponse);
                 getQuizQuestions();
-                clearQuestionDetails();
+
+                if (selectedQuestionId == questionId) {
+                    setSelectedQuestionId("");
+                }
                 // setError('');
             }
         } catch (error) {
 
         }
-    }
+    };
 
     async function GetQuestCatsQuiz(params) {
         getQuestionTypes();
         getQuizzes();
     }
 
-    const editorRef = useRef(null);
-
-    const handleFormat = (command, value = null) => {
-        document.execCommand(command, false, value);
-    };
 
     return <>
         <div id="page-content">
 
             <header id="question-header" className="">
 
-                <div className="text-center">
+                <div className="text-center mt-3 question-header">
                     Quiz : {questionDetails.quizName == null ? 'NIL' : questionDetails.quizName}
-                </div>                
+                </div>
 
             </header>
 
@@ -494,6 +513,7 @@ const AddQuestion = () => {
                                     <div className="col-md-6 col-lg-7 d-flex align-items-center">
                                         <div className="card-body p-4 p-lg-5 text-black">
                                             {isMainLoading && <div className="" style={{ textAlign: 'center' }}><Loading /> </div>}
+                                            {error && <div className=" alert alert-danger text-center">{error}</div>}
 
                                             <div className="">
                                                 {
@@ -506,9 +526,9 @@ const AddQuestion = () => {
                                             </div>
 
                                             <form onSubmit={() => handleAddAnswers(selectedQuestionId)}>
-                                                {renderAnswerTextboxes(selectedQuestionId, questionDetails.numberOfOptions)}
+                                                {renderAnswerTextboxes()}
 
-                                                <button type="submit" className="btn btn-success ">Add</button>
+                                                <button type="submit" className="btn btn-success">Add</button>
                                             </form>
 
                                             <div className={`${questionDetails == [] ? 'text-light' : ''}`}>
@@ -571,10 +591,21 @@ const AddQuestion = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className={`${questionDetails.length == 0 ? '' : 'display-if-question-selected'}`}>
+                    <div className={`centered-container`}>
+                        <div className="mb-auto mt-auto me-auto ms-auto centered-content fs-5">
+                            <p>
+                                Select a question to proceed
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
             </main>
 
 
-            <article style={{ overflowY: 'auto' }}>
+            <article >
                 <div className="d-flex justify-content-between">
                     <div className="mt-auto mb-auto">
                         Questions in Quiz
@@ -606,7 +637,6 @@ const AddQuestion = () => {
                                                         theme="snow"
                                                         value={questionText}
                                                         onChange={setQuestionText}
-
                                                     />
                                                 }
                                             </div>
@@ -648,7 +678,7 @@ const AddQuestion = () => {
 
                 {isArticleLoading && <div className="mb-3" style={{ textAlign: 'center' }}><Loading /> </div>}
 
-                <div>
+                <div className="question-list" style={{ overflowY: 'auto' }}>
                     {quizquestions.length > 0 ? (
                         quizquestions.map((question, i) => {
 
@@ -657,12 +687,12 @@ const AddQuestion = () => {
                             // const truncatedText = question.questionText.length > 30 ? question.questionText.slice(0, 30) + '...' : question.questionText;
 
                             return (
-                                <div className={`unpublished-questions p-2 d-flex justify-content-between ${selectedQuestionId === question.questionId ? 'selected-question' : ''}`} key={question.questionId}>
+                                <div onClick={() => ShowDetails(question.questionId)} className={`unpublished-questions p-2 d-flex justify-content-between ${selectedQuestionId === question.questionId ? 'selected-question' : ''}`} key={question.questionId}>
                                     <div onClick={() => ShowDetails(question.questionId)} className="question-text me-0">
                                         <button disabled className="btn btn-dark mb-1">Q{i + 1}</button>
-                                        <span className={`question-text ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}>
+                                        <div className={`question-text ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}>
                                             {truncatedText}
-                                        </span>
+                                        </div>
                                     </div>
                                     <div className="mt-auto mb-auto">
                                         <i onClick={() => DeleteQuestion(question.questionId)} className={`fa-solid fa-trash ms-0 me-2 ${selectedQuestionId === question.questionId ? 'text-light' : ''}`}></i>
