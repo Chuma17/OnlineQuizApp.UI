@@ -11,13 +11,16 @@ const ParticipantResult = () => {
     const [combinedData, setCombinedData] = useState([]);
     const [results, setResults] = useState([]);
     const [quizzes, setQuizzes] = useState([]);
-    const [quizId, setQuizId] = useState([]);
+    const [quizId, setQuizId] = useState(null);
 
     const [selectedResultId, setSelectedResultId] = useState("");
     const [resultDetails, setResultDetails] = useState([]);
     const navigate = useNavigate();
 
-    async function getResults(quizId) {
+    async function getResults() {
+        if (quizId == null) {
+            return;
+        }
         try {
             setIsAsideLoading(true);
 
@@ -44,12 +47,11 @@ const ParticipantResult = () => {
 
 
         getResults();
-    }, [user.accessToken]);
+    }, [quizId]);
 
     useEffect(() => {
         async function getQuizzes() {
             try {
-                setLoading(true);
 
                 const response = await axios.get(`Quiz/get-all-published-quizzes`, {
 
@@ -57,7 +59,6 @@ const ParticipantResult = () => {
 
                 const { data } = response;
                 if (data) {
-                    setLoading(false);
                 }
 
                 setQuizzes(data);

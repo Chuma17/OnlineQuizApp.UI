@@ -44,18 +44,18 @@ const AddQuestion = () => {
 
     const modules = {
         toolbar: toolbarOptions
-    }
+    };
 
     const user = JSON.parse(localStorage.getItem("userDetails"));
 
     const formData = new FormData();
     if (profileImage) {
         formData.append("profileImage", profileImage);
-    }
+    };
     const savedAnswers = JSON.parse(localStorage.getItem('questionAnswers'));
 
     // Get all unpublished questions from all quizzes
-    async function getQuizQuestions() {
+    async function getQuizQuestions() {        
         try {
             setIsArticleLoading(true);
 
@@ -220,7 +220,6 @@ const AddQuestion = () => {
                 });
 
             if (response.status === 200) {
-                clearQuestionDetails();
                 // console.log(response.data);
                 const questionResponse = response.data;
                 setQuestionDetails(questionResponse);
@@ -241,16 +240,11 @@ const AddQuestion = () => {
         }
     };
 
+
     // Delete the preview of the question Picture
     async function DeletePreview(params) {
         setPreview(null);
-    };    
-
-    function clearQuestionDetails() {
-        localStorage.removeItem('questionDetails');
-        localStorage.removeItem('selectedQuestionId');
-    };
-
+    };        
     
 
     useEffect(() => {
@@ -277,11 +271,13 @@ const AddQuestion = () => {
 
     }, [error, success]);
 
+
     useEffect(() => {
         if (savedAnswers) {
             setQuestionAnswers(savedAnswers);
         }
     }, []);
+
 
     useEffect(() => {
         localStorage.setItem('questionAnswers', JSON.stringify(questionAnswers));
@@ -415,7 +411,6 @@ const AddQuestion = () => {
             if (response.status === 200) {
                 setIsMainLoading(false);
                 console.log(response.data);
-                clearQuestionDetails();
                 window.location.reload();
 
                 // Add code to handle successful question publishing

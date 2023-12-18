@@ -231,7 +231,12 @@ const QuizResult = () => {
                             {combinedData.map((combinedItem, i) => (
                                 <div key={combinedItem.questionID}>
                                     <button disabled className="btn btn-dark">{i + 1}</button>
-                                    <h6 className="mt-2">({combinedItem.score} / {combinedItem.score})</h6>
+                                    <h6 className="mt-2">
+                                        {combinedItem.answers.find(answer => answer.answerId === combinedItem.submittedAnswerId && !answer.isCorrect)
+                                            ? `( Score: 0 / ${combinedItem.score} )`
+                                            : `( Score: ${combinedItem.score} / ${combinedItem.score} )`
+                                        }
+                                    </h6>
                                     <h3>{combinedItem.question}</h3>
                                     <div className="question-picture mb-4 mt-4">
                                         <img src={combinedItem.questionImage || require('./images/question.png')} className="question-picture" alt="Default Quiz" />

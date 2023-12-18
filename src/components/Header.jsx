@@ -133,25 +133,6 @@ const Header = () => {
                                         <i className="fa-solid fa-arrow-right-from-bracket text-light"></i>
                                     </button>
 
-                                    <div className="modal fade" id="signOutModal" tabindex="-1" aria-labelledby="signOutModalLabel" aria-hidden="true">
-                                        <div className="modal-dialog text-light">
-                                            <div className="modal-content bg-dark">
-                                                <div className="modal-header">
-                                                    <h1 className="modal-title fs-5 text-light" id="signOutModalLabel">Sign Out</h1>
-                                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div className="modal-body text-light">
-                                                    Are you sure you want to sign out?
-                                                </div>
-                                                <div className="modal-footer">
-                                                    <button type="button" className="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                    <button className="btn btn-danger text-light" data-bs-dismiss="modal" onClick={Logout}>
-                                                        Confirm
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                 </>
                             }
@@ -161,6 +142,27 @@ const Header = () => {
                 </div>
             </div>
         </nav>
+
+        <div className="modal fade" id="signOutModal" tabindex="-1" aria-labelledby="signOutModalLabel" aria-hidden="true">
+            <div className="modal-dialog text-light">
+                <div className="modal-content bg-dark">
+                    <div className="modal-header">
+                        <h1 className="modal-title fs-5 text-light" id="signOutModalLabel">Sign Out</h1>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div className="modal-body text-light">
+                        Are you sure you want to sign out?
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button className="btn btn-danger text-light" data-bs-dismiss="modal" onClick={Logout}>
+                            Confirm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </>
 }
