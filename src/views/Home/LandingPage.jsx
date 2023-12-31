@@ -101,7 +101,7 @@ const LandingPage = () => {
     useEffect(() => {
         async function getCategories() {
             try {
-                const response = await axios.get(`Category/get-all-categories`, {
+                const response = await axios.get(`Category/get-all-categories-with-quizzes`, {
 
                 });
 
