@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/OnlineQuizApp.UI/static/css/main.65caeb1c.css",
-    "main.js": "/OnlineQuizApp.UI/static/js/main.a0e2ae51.js",
+    "main.js": "/OnlineQuizApp.UI/static/js/main.f94e9f3e.js",
     "static/js/787.8c1851eb.chunk.js": "/OnlineQuizApp.UI/static/js/787.8c1851eb.chunk.js",
     "static/media/work-quiz.jpg": "/OnlineQuizApp.UI/static/media/work-quiz.9da7ffe0bbe04482c192.jpg",
     "static/media/QuizDefault.jpg": "/OnlineQuizApp.UI/static/media/QuizDefault.4225086e44bc2becaa34.jpg",
@@ -11,11 +11,11 @@
     "static/media/user.png": "/OnlineQuizApp.UI/static/media/user.961568814dceb733c85a.png",
     "index.html": "/OnlineQuizApp.UI/index.html",
     "main.65caeb1c.css.map": "/OnlineQuizApp.UI/static/css/main.65caeb1c.css.map",
-    "main.a0e2ae51.js.map": "/OnlineQuizApp.UI/static/js/main.a0e2ae51.js.map",
+    "main.f94e9f3e.js.map": "/OnlineQuizApp.UI/static/js/main.f94e9f3e.js.map",
     "787.8c1851eb.chunk.js.map": "/OnlineQuizApp.UI/static/js/787.8c1851eb.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.65caeb1c.css",
-    "static/js/main.a0e2ae51.js"
+    "static/js/main.f94e9f3e.js"
   ]
 }
